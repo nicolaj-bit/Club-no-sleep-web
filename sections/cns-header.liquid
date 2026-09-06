@@ -98,7 +98,8 @@
     var overlay = host.classList.contains('cns-header-host--overlay');
 
     function onScroll() {
-      header.classList.toggle('cns-header--solid', window.scrollY > 24);
+      var transparent = host.classList.contains('cns-header-host--overlay');
+      header.classList.toggle('cns-header--solid', !transparent || window.scrollY > 24);
     }
 
     if (overlay) {
@@ -125,6 +126,10 @@
         var open = toggle.getAttribute('aria-expanded') === 'true';
         toggle.setAttribute('aria-expanded', open ? 'false' : 'true');
         panel.hidden = open;
+        /* Åben menu skal have mørk baggrund, også når headeren
+           ellers ligger gennemsigtig over hero'en. */
+        if (open) onScroll();
+        else header.classList.add('cns-header--solid');
       });
     }
   })();
