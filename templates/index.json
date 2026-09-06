@@ -1,75 +1,223 @@
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
+    "cns_hero": {
+      "type": "cns-hero",
+      "settings": {
+        "cns_bg": "night",
+        "cns_anchor": "cns-top",
+        "mark": "Club No Sleep",
+        "heading": "Til dig, der er vågen,",
+        "heading_em": "når resten af verden sover.",
+        "lede": "<p>En dansk app til de timer, ingen taler om. Se hvem der er vågne lige nu, følg barnets søvn, og få svar klokken fire om natten — uden at vække nogen.</p>",
+        "trialnote": "Prøv gratis i 7 dage · Derefter 59 kr. pr. måned · Opsig når som helst",
+        "show_lights": true,
+        "light_count": 46
+      },
       "blocks": {
-        "heading": {
-          "type": "heading",
+        "store_apple": {
+          "type": "store",
           "settings": {
-            "heading": "Browse our latest products",
-            "heading_size": "h0"
+            "icon": "apple",
+            "small_label": "Hent i",
+            "label": "App Store",
+            "url": "https://apps.apple.com/app/id6764388095",
+            "style": "solid"
           }
         },
-        "button": {
-          "type": "buttons",
+        "store_google": {
+          "type": "store",
           "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "icon": "google",
+            "small_label": "Hent på",
+            "label": "Google Play",
+            "url": "https://play.google.com/store/apps/details?id=com.base699f47a86e7e0a874d1159ed.app",
+            "style": "ghost"
           }
         }
       },
-      "block_order": [
-        "heading",
-        "button"
-      ],
+      "block_order": ["store_apple", "store_google"]
+    },
+    "cns_ensomhed": {
+      "type": "cns-hour-text",
       "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "desktop_content_position": "bottom-center",
-        "show_text_box": false,
-        "image_behavior": "none",
-        "desktop_content_alignment": "center",
-        "color_scheme": "scheme-3",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": false,
-        "show_text_below": false
+        "cns_bg": "night-2",
+        "cns_space": "standard",
+        "cns_anchor": "",
+        "hour": "02.14",
+        "quietline": "Der findes en helt særlig form for ensomhed i moderskabet.",
+        "body": "<p>Den kommer snigende om natten, når baby igen er vågen og resten af verden er stille. Frygten for natten starter allerede i løbet af eftermiddagen. Far sover på sofaen, mor sover siddende, og ingen forstår helt, hvad du står i.</p><p>Club No Sleep er skabt til de timer. Ikke for at fikse noget — men for at du ikke skal sidde i dem alene.</p>"
       }
     },
-    "featured_collection": {
-      "type": "featured-collection",
+    "cns_kort": {
+      "type": "cns-map",
       "settings": {
-        "title": "Featured products",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "collection": "all",
-        "products_to_show": 8,
-        "columns_desktop": 4,
-        "color_scheme": "scheme-1",
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "solid",
-        "enable_desktop_slider": false,
-        "swipe_on_mobile": false,
-        "image_ratio": "adapt",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
-        "columns_mobile": "2",
-        "padding_top": 44,
-        "padding_bottom": 36
+        "cns_bg": "night-3",
+        "cns_space": "standard",
+        "cns_anchor": "",
+        "hour": "03.41",
+        "heading": "Et lys i mørket",
+        "body": "<p>Når du starter en søvnlog, tændes dit lys på kortet. Andre vågne mødre ser det, og du ser deres. Ikke navne, ikke adresser — bare lys.</p><p>Vil du skrive til en af dem, kan du det. Vil du bare vide, at de er der, er det også nok. De fleste nætter er det nok.</p>",
+        "count": "<b>7</b> vågne i Danmark"
       }
+    },
+    "cns_appen": {
+      "type": "cns-phones",
+      "settings": {
+        "cns_bg": "night-2",
+        "cns_space": "standard",
+        "cns_anchor": "cns-app",
+        "hour": "04.20",
+        "heading": "Det, du har brug for klokken fire",
+        "show_phones": true,
+        "screen_1_time": "04.20",
+        "screen_1_title": "Søvnlog",
+        "screen_1_timer": "2t 14m",
+        "screen_1_timer_label": "Sover · startet 02.06",
+        "screen_1_rows": "Vågen | 01.12 – 02.06\nSov | 22.40 – 01.12\nVågen | 21.55 – 22.40",
+        "screen_2_time": "03.41",
+        "screen_2_title": "Et lys i mørket",
+        "screen_2_badge": "7 vågne i Danmark"
+      },
+      "blocks": {
+        "feat_1": {
+          "type": "feature",
+          "settings": {
+            "title": "Live søvnlog",
+            "text": "Følg søvnen i realtid. Timeren regner rigtigt, også når appen har været lukket."
+          }
+        },
+        "feat_2": {
+          "type": "feature",
+          "settings": {
+            "title": "Knapper på låseskærmen",
+            "text": "Registrér at barnet er vågnet uden at låse telefonen op."
+          }
+        },
+        "feat_3": {
+          "type": "feature",
+          "settings": {
+            "title": "AI-søvnrådgivning",
+            "text": "Svar på dine spørgsmål, bygget på jeres egne søvndata."
+          }
+        },
+        "feat_4": {
+          "type": "feature",
+          "settings": {
+            "title": "Tigerspring",
+            "text": "Besked når barnet går ind i et nyt udviklingsspring."
+          }
+        },
+        "feat_5": {
+          "type": "feature",
+          "settings": {
+            "title": "Milepæle",
+            "text": "Gem de store øjeblikke med billeder og del dem."
+          }
+        },
+        "feat_6": {
+          "type": "feature",
+          "settings": {
+            "title": "Viden på dansk",
+            "text": "Over hundrede artikler om graviditet, søvn og livet med baby."
+          }
+        }
+      },
+      "block_order": ["feat_1", "feat_2", "feat_3", "feat_4", "feat_5", "feat_6"]
+    },
+    "cns_partner": {
+      "type": "cns-partner",
+      "settings": {
+        "cns_bg": "night-3",
+        "cns_space": "standard",
+        "cns_anchor": "cns-klubben",
+        "hour": "05.55",
+        "heading": "Du skal ikke stå med det hele alene",
+        "body": "<p>Én konto rummer altid en bruger mere, uden at det koster ekstra. Din partner får sin egen adgang på sin egen telefon og kan følge søvnlog, kalender og tigerspring med dig.</p><p>Så er det ikke længere dig, der skal huske det hele og fortælle det videre.</p>"
+      },
+      "blocks": {
+        "person_sara": {
+          "type": "person",
+          "settings": { "name": "Sara", "role": "Dig", "status": "Aktiv", "initial": "" }
+        },
+        "person_nicolaj": {
+          "type": "person",
+          "settings": { "name": "Nicolaj", "role": "Partner", "status": "Aktiv", "initial": "" }
+        },
+        "person_invite": {
+          "type": "invite",
+          "settings": { "label": "Invitér partner" }
+        }
+      },
+      "block_order": ["person_sara", "person_nicolaj", "person_invite"]
+    },
+    "cns_daggry": {
+      "type": "cns-daybreak",
+      "settings": {
+        "from_bg": "night-3",
+        "to_bg": "dawn",
+        "height": 180
+      }
+    },
+    "cns_brev": {
+      "type": "cns-letter",
+      "settings": {
+        "cns_bg": "dawn",
+        "cns_space": "standard",
+        "cns_anchor": "",
+        "hour": "06.30",
+        "heading": "Kom med i klubben",
+        "body": "<p>Vi har været der. Der hvor nætterne er svære, dagene er lange, og ingen helt forstår, hvad du står i.</p><p>Club No Sleep er skabt til dig, som savner et sted at blive spejlet og finde andre, der er vågne sammen med dig. Kom med — for din egen skyld, og for alle de mødre, der føler sig alene netop nu.</p><p>Sammen kan vi mindske ensomheden i moderskabet.</p>",
+        "signature": "Kærligst og kram fra Sara & Nicolaj"
+      }
+    },
+    "cns_medlemskab": {
+      "type": "cns-plan",
+      "settings": {
+        "cns_bg": "dawn",
+        "cns_space": "standard",
+        "tight_top": true,
+        "fade_down": true,
+        "cns_anchor": "cns-pris",
+        "tag": "Prøv gratis i 7 dage",
+        "price": "7 dage gratis",
+        "price_note": "derefter 59 kr. pr. måned",
+        "cta_label": "Hent appen og prøv gratis",
+        "cta_url": "https://apps.apple.com/app/id6764388095",
+        "fine": "Abonnementet fornyes automatisk, indtil du opsiger. Du kan opsige når som helst i App Store eller Google Play — også i prøveperioden."
+      },
+      "blocks": {
+        "benefit_1": {
+          "type": "benefit",
+          "settings": { "text": "Live søvnlog med historik og overblik" }
+        },
+        "benefit_2": {
+          "type": "benefit",
+          "settings": { "text": "Et lys i mørket — se hvem der er vågne" }
+        },
+        "benefit_3": {
+          "type": "benefit",
+          "settings": { "text": "Tigerspring, milepæle og fælles kalender" }
+        },
+        "benefit_4": {
+          "type": "benefit",
+          "settings": { "text": "Over hundrede danske vidensartikler" }
+        },
+        "benefit_5": {
+          "type": "benefit",
+          "settings": { "text": "Din partner med, uden ekstra betaling" }
+        }
+      },
+      "block_order": ["benefit_1", "benefit_2", "benefit_3", "benefit_4", "benefit_5"]
     }
   },
   "order": [
-    "image_banner",
-    "featured_collection"
+    "cns_hero",
+    "cns_ensomhed",
+    "cns_kort",
+    "cns_appen",
+    "cns_partner",
+    "cns_daggry",
+    "cns_brev",
+    "cns_medlemskab"
   ]
 }
