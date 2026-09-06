@@ -9,6 +9,9 @@
 (function () {
   'use strict';
 
+  /* Flere sektioner indlæser den samme fil. Kør kun én gang. */
+  if (window.CNSLights) return;
+
   var mql = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
 
   function reduced() {

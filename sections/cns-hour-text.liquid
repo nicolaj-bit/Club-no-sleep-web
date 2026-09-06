@@ -1,0 +1,100 @@
+{%- comment -%}
+  Club No Sleep — klokkeslæt og tekst.
+
+  Sidens generiske tekstsektion: et klokkeslæt, én stor kursiv linje og et
+  par afsnit brødtekst. Bruges til afsnittet om natteensomhed, og kan
+  tilføjes igen, hver gang natten skal skride videre.
+{%- endcomment -%}
+
+{% render 'cns-palette', id: section.id, bg: section.settings.cns_bg %}
+
+<section
+  id="cns-{{ section.id }}"
+  class="cns cns-section cns-space--{{ section.settings.cns_space }} cns-hour-text cns-bg--{{ section.settings.cns_bg }}"
+>
+  {%- if section.settings.cns_anchor != blank -%}
+    <span class="cns-anchor" id="{{ section.settings.cns_anchor | handle }}"></span>
+  {%- endif -%}
+
+  <div class="cns-wrap">
+    {%- if section.settings.hour != blank -%}
+      <p class="cns-hour">{{ section.settings.hour }}</p>
+    {%- endif -%}
+
+    <div class="cns-prose">
+      {%- if section.settings.quietline != blank -%}
+        <p class="cns-quietline">{{ section.settings.quietline }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.body != blank -%}
+        <div class="cns-lede cns-rte">{{ section.settings.body }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CNS klokkeslæt og tekst",
+  "tag": "section",
+  "class": "cns-hour-text-section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "cns_bg",
+      "label": "Baggrund",
+      "options": [
+        { "value": "night", "label": "Midnat" },
+        { "value": "night-2", "label": "Nat" },
+        { "value": "night-3", "label": "Sidst på natten" },
+        { "value": "dawn", "label": "Daggry" }
+      ],
+      "default": "night-2"
+    },
+    {
+      "type": "select",
+      "id": "cns_space",
+      "label": "Afstand foroven og forneden",
+      "options": [
+        { "value": "kompakt", "label": "Kompakt" },
+        { "value": "standard", "label": "Standard" },
+        { "value": "rummelig", "label": "Rummelig" }
+      ],
+      "default": "standard"
+    },
+    {
+      "type": "text",
+      "id": "cns_anchor",
+      "label": "Anker",
+      "info": "Bruges til at linke hertil fra menuen. Skriver du «pris», bliver linket /#pris."
+    },
+    {
+      "type": "header",
+      "content": "Tekst"
+    },
+    {
+      "type": "text",
+      "id": "hour",
+      "label": "Klokkeslæt",
+      "default": "02.14"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "quietline",
+      "label": "Stor kursiv linje",
+      "default": "Der findes en helt særlig form for ensomhed i moderskabet."
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Brødtekst",
+      "default": "<p>Den kommer snigende om natten, når baby igen er vågen og resten af verden er stille. Frygten for natten starter allerede i løbet af eftermiddagen. Far sover på sofaen, mor sover siddende, og ingen forstår helt, hvad du står i.</p><p>Club No Sleep er skabt til de timer. Ikke for at fikse noget — men for at du ikke skal sidde i dem alene.</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "CNS klokkeslæt og tekst"
+    }
+  ]
+}
+{% endschema %}

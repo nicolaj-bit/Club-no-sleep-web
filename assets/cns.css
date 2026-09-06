@@ -919,3 +919,19 @@
 .cns-header__toggle[aria-expanded='true'] .cns-bar2 {
   transform: translateY(-3px) rotate(-45deg);
 }
+
+/* Usynligt anker, så menupunkter kan pege på en sektion uden at
+   overskriften gemmer sig bag den faste header. */
+.cns-anchor {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  scroll-margin-top: calc(var(--cns-header-h) + 12px);
+}
+
+.cns-phones__heading {
+  margin-bottom: 36px;
+}

@@ -1,0 +1,219 @@
+{%- comment -%}
+  Club No Sleep — hero.
+  Overskrift, underrubrik, butiksknapper og prøveperiodens vilkår.
+  Lysene bagved tegnes på canvas og står stille ved prefers-reduced-motion.
+{%- endcomment -%}
+
+{% render 'cns-palette', id: section.id, bg: section.settings.cns_bg %}
+
+<section
+  id="cns-{{ section.id }}"
+  class="cns cns-hero cns-bg--{{ section.settings.cns_bg }}"
+>
+  {%- if section.settings.cns_anchor != blank -%}
+    <span class="cns-anchor" id="{{ section.settings.cns_anchor | handle }}"></span>
+  {%- endif -%}
+
+  {%- if section.settings.show_lights -%}
+    <canvas
+      class="cns-hero__canvas"
+      data-cns-canvas="stars"
+      data-cns-count="{{ section.settings.light_count }}"
+      data-cns-spread="0.92"
+      aria-hidden="true"
+    ></canvas>
+  {%- endif -%}
+
+  <div class="cns-wrap">
+    {%- if section.settings.mark != blank -%}
+      <p class="cns-mark">{{ section.settings.mark }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.heading != blank or section.settings.heading_em != blank -%}
+      <h1>
+        {{- section.settings.heading -}}
+        {%- if section.settings.heading != blank and section.settings.heading_em != blank -%}
+          <br>
+        {%- endif -%}
+        {%- if section.settings.heading_em != blank -%}
+          <em>{{ section.settings.heading_em }}</em>
+        {%- endif -%}
+      </h1>
+    {%- endif -%}
+
+    {%- if section.settings.lede != blank -%}
+      <div class="cns-lede cns-prose cns-hero__lede cns-rte">{{ section.settings.lede }}</div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="cns-stores">
+        {%- for block in section.blocks -%}
+          <a
+            class="cns-store{% if block.settings.style == 'ghost' %} cns-store--ghost{% endif %}"
+            href="{{ block.settings.url | default: '#' }}"
+            {{ block.shopify_attributes }}
+          >
+            {%- case block.settings.icon -%}
+              {%- when 'apple' -%}
+                <svg width="19" height="19" viewBox="0 0 1000 1000" fill="currentColor" aria-hidden="true" focusable="false"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-42.3-150.3-109.2c-44.3-64.7-82.6-170.4-82.6-271.1 0-169.6 110.7-259.3 219.7-259.3 75.4 0 138.4 45.5 186 45.5 45.5 0 116.9-48.1 200.9-48.1 32.5 0 116.3 3.2 171.8 73.9zm-215.6-104.3c31.2-37 52.3-88.7 52.3-140.3 0-7.1-.6-14.3-1.9-20.1-49.4 1.9-108.2 33.1-143.7 75.4-27.6 31.9-53.5 83.6-53.5 136.2 0 7.7 1.3 15.5 1.9 17.9 3.2.6 8.4 1.3 13.6 1.3 44.3 0 98.5-29.9 131.3-70.4z"/></svg>
+              {%- when 'google' -%}
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M3.6 2.2c-.3.3-.5.8-.5 1.4v16.8c0 .6.2 1.1.5 1.4l.1.1 9.4-9.4v-.2L3.6 2.2zM17 15.6l-3.1-3.1v-.2l3.1-3.1.1.1 3.7 2.1c1.1.6 1.1 1.6 0 2.2L17 15.6zM16 16.6l-3.2-3.2-9.2 9.2c.4.4 1 .4 1.7.1l10.7-6.1zM16 7.4L5.3 1.3c-.7-.4-1.3-.3-1.7.1l9.2 9.2L16 7.4z"/></svg>
+            {%- endcase -%}
+            <span>
+              {%- if block.settings.small_label != blank -%}
+                <small>{{ block.settings.small_label }}</small>
+              {%- endif -%}
+              {{- block.settings.label -}}
+            </span>
+          </a>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.trialnote != blank -%}
+      <p class="cns-trialnote">{{ section.settings.trialnote }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- if section.settings.show_lights -%}
+  <script src="{{ 'cns-lights.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "CNS hero",
+  "tag": "section",
+  "class": "cns-hero-section",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "select",
+      "id": "cns_bg",
+      "label": "Baggrund",
+      "options": [
+        { "value": "night", "label": "Midnat" },
+        { "value": "night-2", "label": "Nat" },
+        { "value": "night-3", "label": "Sidst på natten" },
+        { "value": "dawn", "label": "Daggry" }
+      ],
+      "default": "night"
+    },
+    {
+      "type": "text",
+      "id": "cns_anchor",
+      "label": "Anker",
+      "info": "Bruges til at linke hertil fra menuen. Skriver du «top», bliver linket /#top."
+    },
+    {
+      "type": "header",
+      "content": "Tekst"
+    },
+    {
+      "type": "text",
+      "id": "mark",
+      "label": "Lille linje øverst",
+      "default": "Club No Sleep"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Overskrift, første linje",
+      "default": "Til dig, der er vågen,"
+    },
+    {
+      "type": "text",
+      "id": "heading_em",
+      "label": "Overskrift, kursiv linje",
+      "default": "når resten af verden sover."
+    },
+    {
+      "type": "richtext",
+      "id": "lede",
+      "label": "Underrubrik",
+      "default": "<p>En dansk app til de timer, ingen taler om. Se hvem der er vågne lige nu, følg barnets søvn, og få svar klokken fire om natten — uden at vække nogen.</p>"
+    },
+    {
+      "type": "text",
+      "id": "trialnote",
+      "label": "Linje under knapperne",
+      "info": "Prøveperiodens vilkår skal fremgå tydeligt før køb.",
+      "default": "Prøv gratis i 7 dage · Derefter 59 kr. pr. måned · Opsig når som helst"
+    },
+    {
+      "type": "header",
+      "content": "Lysene bagved"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_lights",
+      "label": "Vis lysene",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "light_count",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "label": "Antal lys",
+      "default": 46
+    }
+  ],
+  "blocks": [
+    {
+      "type": "store",
+      "name": "Butiksknap",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Ikon",
+          "options": [
+            { "value": "apple", "label": "App Store" },
+            { "value": "google", "label": "Google Play" },
+            { "value": "none", "label": "Intet" }
+          ],
+          "default": "apple"
+        },
+        {
+          "type": "text",
+          "id": "small_label",
+          "label": "Lille tekst",
+          "default": "Hent i"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Knaptekst",
+          "default": "App Store"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link"
+        },
+        {
+          "type": "select",
+          "id": "style",
+          "label": "Udseende",
+          "options": [
+            { "value": "solid", "label": "Fyldt" },
+            { "value": "ghost", "label": "Kun kant" }
+          ],
+          "default": "solid"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CNS hero",
+      "blocks": [
+        { "type": "store", "settings": { "icon": "apple", "small_label": "Hent i", "label": "App Store", "style": "solid" } },
+        { "type": "store", "settings": { "icon": "google", "small_label": "Hent på", "label": "Google Play", "style": "ghost" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
