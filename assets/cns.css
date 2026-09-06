@@ -102,7 +102,7 @@
   line-height: 1.3;
 }
 
-.cns p {
+.cns :where(p) {
   margin: 0;
 }
 
@@ -111,8 +111,9 @@
   font-style: italic;
 }
 
-.cns ul,
-.cns ol {
+/* :where() giver nulstillingen specificitet 0, så vores egne
+   klasser længere nede kan vinde over den uden !important. */
+.cns :where(ul, ol) {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -724,7 +725,11 @@
 }
 
 /* ── Overgangen fra nat til daggry ────────────────────────── */
-.cns-daybreak {
+/* Dobbelt klasse er nødvendigt: Dawn skjuler tomme div'er med
+   div:empty { display: none }, som vejer tungere end én klasse alene,
+   og striben har intet indhold. */
+.cns.cns-daybreak {
+  display: block;
   height: 180px;
 }
 
