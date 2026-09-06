@@ -1,0 +1,180 @@
+{%- comment -%}
+  Club No Sleep — partner.
+  Tekst til venstre, et kort med kontoens brugere til højre.
+{%- endcomment -%}
+
+{% render 'cns-palette', id: section.id, bg: section.settings.cns_bg %}
+
+<section
+  id="cns-{{ section.id }}"
+  class="cns cns-section cns-space--{{ section.settings.cns_space }} cns-partner cns-bg--{{ section.settings.cns_bg }}"
+>
+  {%- if section.settings.cns_anchor != blank -%}
+    <span class="cns-anchor" id="{{ section.settings.cns_anchor | handle }}"></span>
+  {%- endif -%}
+
+  <div class="cns-wrap">
+    {%- if section.settings.hour != blank -%}
+      <p class="cns-hour">{{ section.settings.hour }}</p>
+    {%- endif -%}
+
+    <div class="cns-pair">
+      <div>
+        {%- if section.settings.heading != blank -%}
+          <h2>{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.body != blank -%}
+          <div class="cns-lede cns-rte cns-body">{{ section.settings.body }}</div>
+        {%- endif -%}
+      </div>
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="cns-invite" aria-hidden="true">
+          {%- for block in section.blocks -%}
+            <div class="cns-who" {{ block.shopify_attributes }}>
+              {%- if block.type == 'invite' -%}
+                <div class="cns-circle cns-circle--empty">+</div>
+                <div class="cns-nm cns-nm--muted">{{ block.settings.label }}</div>
+              {%- else -%}
+                {%- liquid
+                  assign initial = block.settings.initial
+                  if initial == blank
+                    assign initial = block.settings.name | slice: 0, 1
+                  endif
+                -%}
+                <div class="cns-circle">{{ initial | upcase }}</div>
+                <div class="cns-nm">
+                  {{- block.settings.name -}}
+                  {%- if block.settings.role != blank -%}
+                    <span>{{ block.settings.role }}</span>
+                  {%- endif -%}
+                </div>
+                {%- if block.settings.status != blank -%}
+                  <span class="cns-pill">{{ block.settings.status }}</span>
+                {%- endif -%}
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CNS partner",
+  "tag": "section",
+  "class": "cns-partner-section",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "select",
+      "id": "cns_bg",
+      "label": "Baggrund",
+      "options": [
+        { "value": "night", "label": "Midnat" },
+        { "value": "night-2", "label": "Nat" },
+        { "value": "night-3", "label": "Sidst på natten" },
+        { "value": "dawn", "label": "Daggry" }
+      ],
+      "default": "night-3"
+    },
+    {
+      "type": "select",
+      "id": "cns_space",
+      "label": "Afstand foroven og forneden",
+      "options": [
+        { "value": "kompakt", "label": "Kompakt" },
+        { "value": "standard", "label": "Standard" },
+        { "value": "rummelig", "label": "Rummelig" }
+      ],
+      "default": "standard"
+    },
+    {
+      "type": "text",
+      "id": "cns_anchor",
+      "label": "Anker",
+      "info": "Bruges til at linke hertil fra menuen.",
+      "default": "cns-klubben"
+    },
+    {
+      "type": "header",
+      "content": "Tekst"
+    },
+    {
+      "type": "text",
+      "id": "hour",
+      "label": "Klokkeslæt",
+      "default": "05.55"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Overskrift",
+      "default": "Du skal ikke stå med det hele alene"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Brødtekst",
+      "default": "<p>Én konto rummer altid en bruger mere, uden at det koster ekstra. Din partner får sin egen adgang på sin egen telefon og kan følge søvnlog, kalender og tigerspring med dig.</p><p>Så er det ikke længere dig, der skal huske det hele og fortælle det videre.</p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "person",
+      "name": "Person",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Navn",
+          "default": "Sara"
+        },
+        {
+          "type": "text",
+          "id": "role",
+          "label": "Rolle",
+          "default": "Dig"
+        },
+        {
+          "type": "text",
+          "id": "status",
+          "label": "Mærkat",
+          "default": "Aktiv"
+        },
+        {
+          "type": "text",
+          "id": "initial",
+          "label": "Bogstav i cirklen",
+          "info": "Tomt felt bruger navnets første bogstav."
+        }
+      ]
+    },
+    {
+      "type": "invite",
+      "name": "Invitér-linje",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Tekst",
+          "default": "Invitér partner"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CNS partner",
+      "blocks": [
+        { "type": "person", "settings": { "name": "Sara", "role": "Dig", "status": "Aktiv" } },
+        { "type": "person", "settings": { "name": "Nicolaj", "role": "Partner", "status": "Aktiv" } },
+        { "type": "invite" }
+      ]
+    }
+  ]
+}
+{% endschema %}

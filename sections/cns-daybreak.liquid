@@ -1,0 +1,87 @@
+{%- comment -%}
+  Club No Sleep — daggry.
+  Overgangen fra nat til morgen. Ren dekoration, ingen tekst.
+{%- endcomment -%}
+
+{%- liquid
+  case section.settings.from_bg
+    when 'night'
+      assign from_color = 'var(--cns-night)'
+    when 'night-2'
+      assign from_color = 'var(--cns-night-2)'
+    else
+      assign from_color = 'var(--cns-night-3)'
+  endcase
+
+  case section.settings.to_bg
+    when 'dawn-2'
+      assign to_color = 'var(--cns-dawn-2)'
+    else
+      assign to_color = 'var(--cns-dawn)'
+  endcase
+-%}
+
+{% style %}
+  #cns-{{ section.id }} {
+    height: {{ section.settings.height }}px;
+    background: linear-gradient(
+      180deg,
+      {{ from_color }} 0%,
+      #3a2c21 42%,
+      #8e7159 74%,
+      {{ to_color }} 100%
+    );
+  }
+{% endstyle %}
+
+<div id="cns-{{ section.id }}" class="cns cns-daybreak" aria-hidden="true"></div>
+
+{% schema %}
+{
+  "name": "CNS daggry",
+  "tag": "div",
+  "class": "cns-daybreak-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "En stribe himmel, der letter fra nat til morgen. Placér den, hvor siden skal lysne."
+    },
+    {
+      "type": "select",
+      "id": "from_bg",
+      "label": "Baggrund foroven",
+      "options": [
+        { "value": "night", "label": "Midnat" },
+        { "value": "night-2", "label": "Nat" },
+        { "value": "night-3", "label": "Sidst på natten" }
+      ],
+      "default": "night-3"
+    },
+    {
+      "type": "select",
+      "id": "to_bg",
+      "label": "Baggrund forneden",
+      "options": [
+        { "value": "dawn", "label": "Daggry" },
+        { "value": "dawn-2", "label": "Daggry, dybere" }
+      ],
+      "default": "dawn"
+    },
+    {
+      "type": "range",
+      "id": "height",
+      "min": 60,
+      "max": 320,
+      "step": 10,
+      "unit": "px",
+      "label": "Højde",
+      "default": 180
+    }
+  ],
+  "presets": [
+    {
+      "name": "CNS daggry"
+    }
+  ]
+}
+{% endschema %}

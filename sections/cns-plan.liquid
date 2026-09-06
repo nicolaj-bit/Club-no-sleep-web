@@ -1,0 +1,190 @@
+{%- comment -%}
+  Club No Sleep — medlemskab.
+
+  Prøveperiodens vilkår og prisen skal stå tydeligt før købet, og
+  småteksten om automatisk fornyelse skal blive stående.
+{%- endcomment -%}
+
+{% render 'cns-palette', id: section.id, bg: section.settings.cns_bg %}
+
+{% style %}
+  {%- if section.settings.tight_top -%}
+    #cns-{{ section.id }} {
+      padding-top: 0;
+    }
+  {%- endif -%}
+  {%- if section.settings.fade_down -%}
+    #cns-{{ section.id }} {
+      background: linear-gradient(180deg, var(--cns-bg), var(--cns-dawn-2));
+    }
+  {%- endif -%}
+{% endstyle %}
+
+<section
+  id="cns-{{ section.id }}"
+  class="cns cns-section cns-space--{{ section.settings.cns_space }} cns-plan-block cns-bg--{{ section.settings.cns_bg }}"
+>
+  {%- if section.settings.cns_anchor != blank -%}
+    <span class="cns-anchor" id="{{ section.settings.cns_anchor | handle }}"></span>
+  {%- endif -%}
+
+  <div class="cns-wrap">
+    <div class="cns-plan">
+      {%- if section.settings.tag != blank -%}
+        <span class="cns-tag">{{ section.settings.tag }}</span>
+      {%- endif -%}
+
+      {%- if section.settings.price != blank -%}
+        <div class="cns-free">{{ section.settings.price }}</div>
+      {%- endif -%}
+
+      {%- if section.settings.price_note != blank -%}
+        <p class="cns-then">{{ section.settings.price_note }}</p>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <ul>
+          {%- for block in section.blocks -%}
+            <li {{ block.shopify_attributes }}>
+              <span class="cns-tick">
+                <svg width="9" height="9" viewBox="0 0 12 12" fill="none" aria-hidden="true" focusable="false">
+                  <path d="M2.5 6.5L5 9l4.5-5.5" stroke="#8A6B4E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              {{ block.settings.text }}
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if section.settings.cta_label != blank -%}
+        <a class="cns-cta" href="{{ section.settings.cta_url | default: '#' }}">{{ section.settings.cta_label }}</a>
+      {%- endif -%}
+
+      {%- if section.settings.fine != blank -%}
+        <p class="cns-fine">{{ section.settings.fine }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CNS medlemskab",
+  "tag": "section",
+  "class": "cns-plan-section",
+  "max_blocks": 10,
+  "settings": [
+    {
+      "type": "select",
+      "id": "cns_bg",
+      "label": "Baggrund",
+      "options": [
+        { "value": "night", "label": "Midnat" },
+        { "value": "night-2", "label": "Nat" },
+        { "value": "night-3", "label": "Sidst på natten" },
+        { "value": "dawn", "label": "Daggry" }
+      ],
+      "default": "dawn"
+    },
+    {
+      "type": "select",
+      "id": "cns_space",
+      "label": "Afstand foroven og forneden",
+      "options": [
+        { "value": "kompakt", "label": "Kompakt" },
+        { "value": "standard", "label": "Standard" },
+        { "value": "rummelig", "label": "Rummelig" }
+      ],
+      "default": "standard"
+    },
+    {
+      "type": "checkbox",
+      "id": "tight_top",
+      "label": "Sæt tæt op ad sektionen ovenfor",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "fade_down",
+      "label": "Lad baggrunden dybne nedad",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cns_anchor",
+      "label": "Anker",
+      "info": "Bruges til at linke hertil fra menuen.",
+      "default": "cns-pris"
+    },
+    {
+      "type": "header",
+      "content": "Pris"
+    },
+    {
+      "type": "text",
+      "id": "tag",
+      "label": "Mærkat øverst",
+      "default": "Prøv gratis i 7 dage"
+    },
+    {
+      "type": "text",
+      "id": "price",
+      "label": "Stor linje",
+      "default": "7 dage gratis"
+    },
+    {
+      "type": "text",
+      "id": "price_note",
+      "label": "Linje under prisen",
+      "default": "derefter 59 kr. pr. måned"
+    },
+    {
+      "type": "header",
+      "content": "Knap og småtekst"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Knaptekst",
+      "default": "Hent appen og prøv gratis"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Knappens link"
+    },
+    {
+      "type": "textarea",
+      "id": "fine",
+      "label": "Juridisk småtekst",
+      "info": "Vilkårene for automatisk fornyelse og opsigelse skal stå her.",
+      "default": "Abonnementet fornyes automatisk, indtil du opsiger. Du kan opsige når som helst i App Store eller Google Play — også i prøveperioden."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Linje i medlemskabet",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Tekst",
+          "default": "Live søvnlog med historik og overblik"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CNS medlemskab",
+      "blocks": [
+        { "type": "benefit" },
+        { "type": "benefit" },
+        { "type": "benefit" }
+      ]
+    }
+  ]
+}
+{% endschema %}

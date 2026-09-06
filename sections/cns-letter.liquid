@@ -1,0 +1,105 @@
+{%- comment -%}
+  Club No Sleep — brevet.
+  Overskrift, et par afsnit og en underskrift.
+{%- endcomment -%}
+
+{% render 'cns-palette', id: section.id, bg: section.settings.cns_bg %}
+
+<section
+  id="cns-{{ section.id }}"
+  class="cns cns-section cns-space--{{ section.settings.cns_space }} cns-letter-block cns-bg--{{ section.settings.cns_bg }}"
+>
+  {%- if section.settings.cns_anchor != blank -%}
+    <span class="cns-anchor" id="{{ section.settings.cns_anchor | handle }}"></span>
+  {%- endif -%}
+
+  <div class="cns-wrap">
+    {%- if section.settings.hour != blank -%}
+      <p class="cns-hour">{{ section.settings.hour }}</p>
+    {%- endif -%}
+
+    <div class="cns-letter">
+      {%- if section.settings.heading != blank -%}
+        <h2>{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.body != blank -%}
+        <div class="cns-lede cns-rte cns-body">{{ section.settings.body }}</div>
+      {%- endif -%}
+      {%- if section.settings.signature != blank -%}
+        <p class="cns-sig">{{ section.settings.signature }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CNS brev",
+  "tag": "section",
+  "class": "cns-letter-section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "cns_bg",
+      "label": "Baggrund",
+      "options": [
+        { "value": "night", "label": "Midnat" },
+        { "value": "night-2", "label": "Nat" },
+        { "value": "night-3", "label": "Sidst på natten" },
+        { "value": "dawn", "label": "Daggry" }
+      ],
+      "default": "dawn"
+    },
+    {
+      "type": "select",
+      "id": "cns_space",
+      "label": "Afstand foroven og forneden",
+      "options": [
+        { "value": "kompakt", "label": "Kompakt" },
+        { "value": "standard", "label": "Standard" },
+        { "value": "rummelig", "label": "Rummelig" }
+      ],
+      "default": "standard"
+    },
+    {
+      "type": "text",
+      "id": "cns_anchor",
+      "label": "Anker",
+      "info": "Bruges til at linke hertil fra menuen."
+    },
+    {
+      "type": "header",
+      "content": "Tekst"
+    },
+    {
+      "type": "text",
+      "id": "hour",
+      "label": "Klokkeslæt",
+      "default": "06.30"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Overskrift",
+      "default": "Kom med i klubben"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Brødtekst",
+      "default": "<p>Vi har været der. Der hvor nætterne er svære, dagene er lange, og ingen helt forstår, hvad du står i.</p><p>Club No Sleep er skabt til dig, som savner et sted at blive spejlet og finde andre, der er vågne sammen med dig. Kom med — for din egen skyld, og for alle de mødre, der føler sig alene netop nu.</p><p>Sammen kan vi mindske ensomheden i moderskabet.</p>"
+    },
+    {
+      "type": "text",
+      "id": "signature",
+      "label": "Underskrift",
+      "default": "Kærligst og kram fra Sara & Nicolaj"
+    }
+  ],
+  "presets": [
+    {
+      "name": "CNS brev"
+    }
+  ]
+}
+{% endschema %}
