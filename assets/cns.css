@@ -1,0 +1,907 @@
+/* Club No Sleep — fælles stil for cns-sektionerne.
+   Alt er scopet under .cns, så Dawns egen CSS ikke blander sig.
+   Størrelserne står i px, ikke rem: Dawn sætter rodens skriftstørrelse til
+   62.5% (1rem = 10px), mens designet regnede med 16px. */
+
+:root {
+  /* Natten — brunsort, aldrig neutralt sort */
+  --cns-night: #12100d;
+  --cns-night-2: #1a1611;
+  --cns-night-3: #221c16;
+  /* Lyset */
+  --cns-glow: #f4dcae;
+  --cns-gold: #c8a882;
+  --cns-gold-deep: #a9866a;
+  /* Daggry */
+  --cns-dawn: #f7f1e8;
+  --cns-dawn-2: #efe4d4;
+  --cns-ink: #2a1b10;
+  --cns-ink-soft: #6e5b4b;
+  /* Tekst på nat */
+  --cns-sand: #ede1d0;
+  --cns-sand-soft: #a2917e;
+
+  --cns-measure: 544px;
+  --cns-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --cns-sans: 'Jost', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --cns-header-h: 64px;
+}
+
+/* Grundpaletten. Hver sektion overskriver disse på sit eget id,
+   se snippets/cns-palette.liquid. */
+.cns {
+  --cns-bg: var(--cns-night);
+  --cns-fg: var(--cns-sand);
+  --cns-fg-soft: var(--cns-sand-soft);
+  --cns-accent: var(--cns-gold);
+  --cns-hair: rgba(237, 225, 208, 0.1);
+  --cns-rule: rgba(200, 168, 130, 0.5);
+
+  position: relative;
+  background: var(--cns-bg);
+  color: var(--cns-fg);
+  font-family: var(--cns-sans);
+  font-weight: 300;
+  font-size: 17px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+.cns *,
+.cns *::before,
+.cns *::after {
+  box-sizing: border-box;
+}
+
+.cns-section {
+  padding: clamp(72px, 11vw, 132px) 0;
+}
+
+.cns-space--kompakt {
+  padding: clamp(48px, 7vw, 84px) 0;
+}
+
+.cns-space--rummelig {
+  padding: clamp(96px, 15vw, 176px) 0;
+}
+
+.cns-wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 28px;
+  position: relative;
+}
+
+.cns-prose {
+  max-width: var(--cns-measure);
+}
+
+.cns h1,
+.cns h2,
+.cns h3 {
+  font-family: var(--cns-serif);
+  font-weight: 300;
+  text-wrap: balance;
+  margin: 0;
+  letter-spacing: -0.005em;
+  color: var(--cns-fg);
+}
+
+.cns h1 {
+  font-size: clamp(40px, 7.2vw, 70px);
+  line-height: 1.08;
+}
+
+.cns h2 {
+  font-size: clamp(32px, 4.6vw, 48px);
+  line-height: 1.14;
+}
+
+.cns h3 {
+  font-size: 21px;
+  line-height: 1.3;
+}
+
+.cns p {
+  margin: 0;
+}
+
+.cns em,
+.cns i {
+  font-style: italic;
+}
+
+.cns ul,
+.cns ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cns img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.cns-lede {
+  font-size: 18px;
+  line-height: 1.75;
+  color: var(--cns-fg-soft);
+}
+
+/* Brødtekst fra et richtext-felt: afstand mellem afsnittene */
+.cns-rte > * + * {
+  margin-top: 20px;
+}
+
+.cns-body {
+  margin-top: 22px;
+}
+
+/* Klokkeslættet er sidens struktur — natten skrider frem */
+.cns-hour {
+  font-size: 11px;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0 0 26px;
+  color: var(--cns-accent);
+}
+
+.cns-hour::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  max-width: 120px;
+  background: linear-gradient(90deg, var(--cns-rule), transparent);
+}
+
+/* ── Header ───────────────────────────────────────────────── */
+.cns-header-host {
+  position: relative;
+  z-index: 60;
+  height: var(--cns-header-h);
+}
+
+.cns-header-host--overlay {
+  height: 0;
+}
+
+.cns-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 60;
+  background: transparent;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cns-header--solid {
+  background: rgba(18, 16, 13, 0.94);
+  box-shadow: 0 1px 0 rgba(237, 225, 208, 0.09);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.cns-header__inner {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  min-height: var(--cns-header-h);
+}
+
+.cns-header__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-right: auto;
+  text-decoration: none;
+  color: var(--cns-sand);
+  font-family: var(--cns-serif);
+  font-size: 22px;
+  line-height: 1;
+}
+
+.cns-header__nav {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+
+.cns-header__link {
+  color: var(--cns-sand);
+  text-decoration: none;
+  font-size: 14.5px;
+  letter-spacing: 0.01em;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 2px;
+}
+
+.cns-header__link:hover {
+  border-bottom-color: var(--cns-gold);
+}
+
+.cns-header__cta {
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 18px;
+  border-radius: 999px;
+  text-decoration: none;
+  background: var(--cns-glow);
+  color: #1b1309;
+  font-size: 14px;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  transition: transform 0.18s ease;
+}
+
+.cns-header__cta:hover {
+  transform: translateY(-1px);
+}
+
+.cns-header__toggle {
+  display: none;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--cns-sand);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+.cns-header__panel {
+  border-top: 1px solid rgba(237, 225, 208, 0.09);
+  background: rgba(18, 16, 13, 0.97);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  padding: 18px 28px 24px;
+}
+
+.cns-header__panel .cns-header__link {
+  display: block;
+  padding: 11px 0;
+  font-size: 17px;
+}
+
+.cns-header__panel .cns-header__cta {
+  margin-top: 14px;
+  justify-content: center;
+  width: 100%;
+}
+
+@media (max-width: 759px) {
+  .cns-header__nav,
+  .cns-header__inner > .cns-header__cta {
+    display: none;
+  }
+
+  .cns-header__toggle {
+    display: inline-flex;
+  }
+}
+
+.cns-header a:focus-visible,
+.cns-header button:focus-visible {
+  outline: 2px solid var(--cns-glow);
+  outline-offset: 3px;
+}
+
+/* ── Hero ─────────────────────────────────────────────────── */
+.cns-hero {
+  padding: clamp(96px, 15vw, 168px) 0 clamp(72px, 10vw, 112px);
+  overflow: hidden;
+}
+
+.cns-hero__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.cns-hero .cns-wrap {
+  z-index: 1;
+}
+
+.cns-hero::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 220px;
+  z-index: 0;
+  background: linear-gradient(180deg, transparent, var(--cns-bg));
+}
+
+.cns-mark {
+  font-family: var(--cns-sans);
+  font-size: 11.5px;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--cns-accent);
+  margin: 0 0 34px;
+}
+
+.cns-hero h1 em,
+.cns-hero h1 i {
+  color: var(--cns-glow);
+}
+
+.cns-hero__lede {
+  margin-top: 28px;
+}
+
+/* ── Butiksknapper ────────────────────────────────────────── */
+.cns-stores {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 38px;
+}
+
+.cns-store {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  padding: 13px 22px 13px 18px;
+  border-radius: 12px;
+  text-decoration: none;
+  background: var(--cns-glow);
+  color: #1b1309;
+  font-size: 14.5px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  box-shadow: 0 12px 34px -18px rgba(244, 220, 174, 0.7);
+}
+
+.cns-store--ghost {
+  background: transparent;
+  color: var(--cns-fg);
+  box-shadow: none;
+  border: 1px solid rgba(237, 225, 208, 0.26);
+}
+
+.cns-store:hover {
+  transform: translateY(-2px);
+}
+
+.cns-store:focus-visible {
+  outline: 2px solid var(--cns-glow);
+  outline-offset: 3px;
+}
+
+.cns-store svg {
+  flex-shrink: 0;
+}
+
+.cns-store small {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.62;
+  line-height: 1.5;
+}
+
+.cns-trialnote {
+  margin-top: 20px;
+  font-size: 13.5px;
+  color: var(--cns-fg-soft);
+  letter-spacing: 0.01em;
+}
+
+/* ── Den store kursive linje ──────────────────────────────── */
+.cns-quietline {
+  font-family: var(--cns-serif);
+  font-size: clamp(25.6px, 3.4vw, 34.4px);
+  line-height: 1.42;
+  font-style: italic;
+  color: var(--cns-glow);
+  margin: 0 0 34px;
+  max-width: 22ch;
+}
+
+/* På daggry er glødende creme usynligt — der bruges blækket */
+.cns-bg--dawn .cns-quietline {
+  color: var(--cns-ink);
+}
+
+/* ── Lyskortet ────────────────────────────────────────────── */
+.cns-maprow {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 44px;
+  align-items: center;
+}
+
+@media (min-width: 820px) {
+  .cns-maprow {
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+  }
+}
+
+.cns-mapbox {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: 20px;
+  overflow: hidden;
+  background: radial-gradient(120% 90% at 50% 18%, #241d16 0%, #151109 78%);
+  border: 1px solid rgba(200, 168, 130, 0.16);
+}
+
+.cns-mapbox canvas,
+.cns-mapbox img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cns-count {
+  position: absolute;
+  left: 18px;
+  top: 16px;
+  z-index: 2;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cns-glow);
+}
+
+.cns-count b {
+  font-weight: 400;
+}
+
+/* ── Funktionslisten ──────────────────────────────────────── */
+.cns-feats {
+  display: grid;
+  grid-template-columns: 1fr;
+  border-top: 1px solid var(--cns-hair);
+  margin-top: 56px;
+}
+
+@media (min-width: 760px) {
+  .cns-feats {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 52px;
+  }
+}
+
+.cns-feats li {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--cns-hair);
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+}
+
+.cns-feats .cns-n {
+  font-family: var(--cns-serif);
+  font-size: 15px;
+  color: var(--cns-accent);
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+  width: 1.6em;
+}
+
+.cns-feats .cns-t {
+  font-size: 16px;
+}
+
+.cns-feats .cns-d {
+  display: block;
+  font-size: 13.5px;
+  color: var(--cns-fg-soft);
+  margin-top: 3px;
+  line-height: 1.6;
+}
+
+/* ── Telefonerne ──────────────────────────────────────────── */
+.cns-phones {
+  display: flex;
+  gap: 22px;
+  justify-content: center;
+  align-items: flex-end;
+  margin-top: 8px;
+}
+
+.cns-phone {
+  width: min(232px, 42vw);
+  border-radius: 30px;
+  padding: 9px;
+  flex-shrink: 0;
+  background: #0c0a08;
+  border: 1px solid rgba(237, 225, 208, 0.14);
+  box-shadow: 0 40px 80px -44px rgba(0, 0, 0, 0.9);
+}
+
+.cns-phone--tilt {
+  transform: rotate(-3deg) translateY(-14px);
+}
+
+.cns-phone--tilt2 {
+  transform: rotate(2.5deg);
+}
+
+.cns-screen {
+  border-radius: 23px;
+  overflow: hidden;
+  background: #171310;
+  height: 410px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cns-screen > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cns-scr-top {
+  padding: 13px 15px 9px;
+  font-size: 10px;
+  color: #8a7868;
+  display: flex;
+  justify-content: space-between;
+}
+
+.cns-scr-title {
+  font-family: var(--cns-serif);
+  font-size: 17px;
+  color: #f0e6da;
+  padding: 2px 15px 12px;
+}
+
+.cns-timer {
+  margin: 16px 15px;
+  padding: 22px 16px;
+  border-radius: 16px;
+  text-align: center;
+  background: #221b15;
+  border: 1px solid #2e251d;
+}
+
+.cns-timer .cns-big {
+  font-family: var(--cns-serif);
+  font-size: 34px;
+  color: #f4dcae;
+  line-height: 1;
+}
+
+.cns-timer .cns-lab {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #8a7868;
+  margin-top: 8px;
+}
+
+.cns-rows {
+  padding: 0 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cns-row {
+  background: #1f1913;
+  border-radius: 11px;
+  padding: 9px 12px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #c4b4a2;
+}
+
+.cns-row b {
+  font-weight: 400;
+  color: #8a7868;
+}
+
+.cns-scr-map {
+  flex: 1;
+  position: relative;
+  background: radial-gradient(120% 90% at 50% 30%, #1e1811, #12100c);
+}
+
+.cns-scr-map canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.cns-scr-badge {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #f4dcae;
+  z-index: 2;
+}
+
+/* ── Partner ──────────────────────────────────────────────── */
+.cns-pair {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 38px;
+}
+
+@media (min-width: 820px) {
+  .cns-pair {
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 70px;
+    align-items: center;
+  }
+}
+
+.cns-invite {
+  border-radius: 18px;
+  padding: 22px;
+  background: var(--cns-night-3);
+  border: 1px solid rgba(237, 225, 208, 0.11);
+}
+
+.cns-bg--dawn .cns-invite {
+  background: #fffdfa;
+  border-color: rgba(169, 134, 106, 0.2);
+}
+
+.cns-who {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 11px 0;
+}
+
+.cns-who + .cns-who {
+  border-top: 1px solid var(--cns-hair);
+}
+
+.cns-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: linear-gradient(140deg, var(--cns-gold), var(--cns-gold-deep));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1b1309;
+  font-size: 14px;
+}
+
+.cns-circle--empty {
+  background: none;
+  border: 1px dashed rgba(200, 168, 130, 0.5);
+  color: var(--cns-gold);
+}
+
+.cns-nm {
+  flex: 1;
+  font-size: 14.5px;
+}
+
+.cns-nm span {
+  display: block;
+  font-size: 11.5px;
+  color: var(--cns-fg-soft);
+}
+
+.cns-nm--muted {
+  color: var(--cns-fg-soft);
+}
+
+.cns-pill {
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cns-glow);
+  border: 1px solid rgba(244, 220, 174, 0.34);
+  border-radius: 999px;
+  padding: 4px 11px;
+}
+
+.cns-bg--dawn .cns-pill {
+  color: var(--cns-gold-deep);
+  border-color: rgba(169, 134, 106, 0.4);
+}
+
+/* ── Overgangen fra nat til daggry ────────────────────────── */
+.cns-daybreak {
+  height: 180px;
+}
+
+/* ── Brevet ───────────────────────────────────────────────── */
+.cns-letter {
+  max-width: 608px;
+}
+
+.cns-sig {
+  font-family: var(--cns-serif);
+  font-style: italic;
+  font-size: 22px;
+  color: var(--cns-gold-deep);
+  margin-top: 32px;
+}
+
+/* ── Medlemskab ───────────────────────────────────────────── */
+.cns-plan {
+  max-width: 430px;
+  margin: 0 auto;
+  background: #fffdfa;
+  border-radius: 24px;
+  padding: 40px 32px 32px;
+  text-align: center;
+  border: 1px solid rgba(169, 134, 106, 0.2);
+  box-shadow: 0 30px 70px -34px rgba(42, 27, 16, 0.36);
+  color: var(--cns-ink);
+}
+
+.cns-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #e4cba6, #c8a882);
+  color: #2a1b10;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 6px 15px;
+  border-radius: 999px;
+  margin-bottom: 22px;
+}
+
+.cns-free {
+  font-family: var(--cns-serif);
+  font-size: 43px;
+  line-height: 1;
+  color: var(--cns-ink);
+}
+
+.cns-then {
+  margin-top: 9px;
+  font-size: 14.5px;
+  color: var(--cns-ink-soft);
+}
+
+.cns-plan ul {
+  margin: 28px 0;
+  padding: 22px 0;
+  text-align: left;
+  border-top: 1px solid #efe4d6;
+  border-bottom: 1px solid #efe4d6;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.cns-plan li {
+  display: flex;
+  gap: 12px;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: #3a2a1c;
+}
+
+.cns-tick {
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  background: #e9dac5;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+
+.cns-cta {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  border-radius: 14px;
+  text-decoration: none;
+  background: var(--cns-ink);
+  color: var(--cns-dawn);
+  font-size: 15px;
+  letter-spacing: 0.01em;
+  transition: transform 0.18s ease;
+}
+
+.cns-cta:hover {
+  transform: translateY(-2px);
+}
+
+.cns-cta:focus-visible {
+  outline: 2px solid var(--cns-gold-deep);
+  outline-offset: 3px;
+}
+
+.cns-fine {
+  margin-top: 16px;
+  font-size: 11.5px;
+  line-height: 1.65;
+  color: #8b7a69;
+}
+
+/* ── Bund ─────────────────────────────────────────────────── */
+.cns-footer {
+  padding: 64px 0 44px;
+  color: var(--cns-fg-soft);
+  font-size: 13.5px;
+}
+
+.cns-fgrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 34px;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.cns-footer a {
+  color: var(--cns-fg-soft);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.cns-footer a:hover {
+  border-bottom-color: var(--cns-gold);
+}
+
+.cns-footer a:focus-visible {
+  outline: 2px solid var(--cns-gold);
+  outline-offset: 3px;
+}
+
+.cns-fname {
+  font-family: var(--cns-serif);
+  font-size: 24px;
+  color: var(--cns-fg);
+  margin-bottom: 6px;
+}
+
+.cns-fintro {
+  max-width: 416px;
+}
+
+.cns-flinks {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.cns-fbot {
+  margin-top: 44px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(237, 225, 208, 0.09);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cns *,
+  .cns *::before,
+  .cns *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
