@@ -1,0 +1,280 @@
+{%- comment -%}
+  Club No Sleep — i appen.
+
+  To telefoner og en liste over det, appen kan. Skærmene er tegnet i
+  markup som reserve; vælger man et billede, vises det i stedet.
+{%- endcomment -%}
+
+{% render 'cns-palette', id: section.id, bg: section.settings.cns_bg %}
+
+{%- liquid
+  assign draws_map = false
+  if section.settings.screen_2_image == blank
+    assign draws_map = true
+  endif
+-%}
+
+<section
+  id="cns-{{ section.id }}"
+  class="cns cns-section cns-space--{{ section.settings.cns_space }} cns-phones-block cns-bg--{{ section.settings.cns_bg }}"
+>
+  {%- if section.settings.cns_anchor != blank -%}
+    <span class="cns-anchor" id="{{ section.settings.cns_anchor | handle }}"></span>
+  {%- endif -%}
+
+  <div class="cns-wrap">
+    {%- if section.settings.hour != blank -%}
+      <p class="cns-hour">{{ section.settings.hour }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.heading != blank -%}
+      <h2 class="cns-phones__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    {%- if section.settings.show_phones -%}
+      <div class="cns-phones" aria-hidden="true">
+        <div class="cns-phone cns-phone--tilt">
+          <div class="cns-screen">
+            {%- if section.settings.screen_1_image != blank -%}
+              {{
+                section.settings.screen_1_image
+                | image_url: width: 700
+                | image_tag: loading: 'lazy', widths: '240, 480, 700', sizes: '232px', alt: ''
+              }}
+            {%- else -%}
+              <div class="cns-scr-top">
+                <span>{{ section.settings.screen_1_time }}</span>
+                <span>▪▪▪ ▮</span>
+              </div>
+              <div class="cns-scr-title">{{ section.settings.screen_1_title }}</div>
+              <div class="cns-timer">
+                <div class="cns-big">{{ section.settings.screen_1_timer }}</div>
+                <div class="cns-lab">{{ section.settings.screen_1_timer_label }}</div>
+              </div>
+              <div class="cns-rows">
+                {%- assign rows = section.settings.screen_1_rows | newline_to_br | split: '<br />' -%}
+                {%- for row in rows -%}
+                  {%- assign parts = row | strip | split: '|' -%}
+                  {%- if parts.size > 1 -%}
+                    <div class="cns-row">
+                      <span>{{ parts[0] | strip }}</span>
+                      <b>{{ parts[1] | strip }}</b>
+                    </div>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+
+        <div class="cns-phone cns-phone--tilt2">
+          <div class="cns-screen">
+            {%- if section.settings.screen_2_image != blank -%}
+              {{
+                section.settings.screen_2_image
+                | image_url: width: 700
+                | image_tag: loading: 'lazy', widths: '240, 480, 700', sizes: '232px', alt: ''
+              }}
+            {%- else -%}
+              <div class="cns-scr-top">
+                <span>{{ section.settings.screen_2_time }}</span>
+                <span>▪▪▪ ▮</span>
+              </div>
+              <div class="cns-scr-title">{{ section.settings.screen_2_title }}</div>
+              <div class="cns-scr-map">
+                <span class="cns-scr-badge">{{ section.settings.screen_2_badge }}</span>
+                <canvas data-cns-canvas="denmark" aria-hidden="true"></canvas>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <ul class="cns-feats">
+        {%- for block in section.blocks -%}
+          <li {{ block.shopify_attributes }}>
+            <span class="cns-n">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+            <span class="cns-t">
+              {{- block.settings.title -}}
+              {%- if block.settings.text != blank -%}
+                <span class="cns-d">{{ block.settings.text }}</span>
+              {%- endif -%}
+            </span>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- if section.settings.show_phones and draws_map -%}
+  <script src="{{ 'cns-lights.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "CNS telefoner",
+  "tag": "section",
+  "class": "cns-phones-section",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "select",
+      "id": "cns_bg",
+      "label": "Baggrund",
+      "options": [
+        { "value": "night", "label": "Midnat" },
+        { "value": "night-2", "label": "Nat" },
+        { "value": "night-3", "label": "Sidst på natten" },
+        { "value": "dawn", "label": "Daggry" }
+      ],
+      "default": "night-2"
+    },
+    {
+      "type": "select",
+      "id": "cns_space",
+      "label": "Afstand foroven og forneden",
+      "options": [
+        { "value": "kompakt", "label": "Kompakt" },
+        { "value": "standard", "label": "Standard" },
+        { "value": "rummelig", "label": "Rummelig" }
+      ],
+      "default": "standard"
+    },
+    {
+      "type": "text",
+      "id": "cns_anchor",
+      "label": "Anker",
+      "info": "Bruges til at linke hertil fra menuen.",
+      "default": "cns-app"
+    },
+    {
+      "type": "header",
+      "content": "Tekst"
+    },
+    {
+      "type": "text",
+      "id": "hour",
+      "label": "Klokkeslæt",
+      "default": "04.20"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Overskrift",
+      "default": "Det, du har brug for klokken fire"
+    },
+    {
+      "type": "header",
+      "content": "Telefonerne"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_phones",
+      "label": "Vis telefonerne",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "screen_1_image",
+      "label": "Skærmbillede, venstre telefon",
+      "info": "Uden billede vises den tegnede skærm nedenfor."
+    },
+    {
+      "type": "image_picker",
+      "id": "screen_2_image",
+      "label": "Skærmbillede, højre telefon"
+    },
+    {
+      "type": "header",
+      "content": "Tegnet skærm — venstre"
+    },
+    {
+      "type": "text",
+      "id": "screen_1_time",
+      "label": "Klokkeslæt i statuslinjen",
+      "default": "04.20"
+    },
+    {
+      "type": "text",
+      "id": "screen_1_title",
+      "label": "Titel",
+      "default": "Søvnlog"
+    },
+    {
+      "type": "text",
+      "id": "screen_1_timer",
+      "label": "Timer",
+      "default": "2t 14m"
+    },
+    {
+      "type": "text",
+      "id": "screen_1_timer_label",
+      "label": "Under timeren",
+      "default": "Sover · startet 02.06"
+    },
+    {
+      "type": "textarea",
+      "id": "screen_1_rows",
+      "label": "Linjer i loggen",
+      "info": "Én linje pr. række. Skriv tekst | tidsrum, fx: Vågen | 01.12 – 02.06",
+      "default": "Vågen | 01.12 – 02.06\nSov | 22.40 – 01.12\nVågen | 21.55 – 22.40"
+    },
+    {
+      "type": "header",
+      "content": "Tegnet skærm — højre"
+    },
+    {
+      "type": "text",
+      "id": "screen_2_time",
+      "label": "Klokkeslæt i statuslinjen",
+      "default": "03.41"
+    },
+    {
+      "type": "text",
+      "id": "screen_2_title",
+      "label": "Titel",
+      "default": "Et lys i mørket"
+    },
+    {
+      "type": "text",
+      "id": "screen_2_badge",
+      "label": "Tæller over kortet",
+      "default": "7 vågne i Danmark"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Punkt på listen",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Overskrift",
+          "default": "Live søvnlog"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Beskrivelse",
+          "default": "Følg søvnen i realtid."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CNS telefoner",
+      "blocks": [
+        { "type": "feature" },
+        { "type": "feature" },
+        { "type": "feature" },
+        { "type": "feature" }
+      ]
+    }
+  ]
+}
+{% endschema %}
