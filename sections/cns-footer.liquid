@@ -1,0 +1,144 @@
+{%- comment -%}
+  Club No Sleep — bund.
+
+  Erstatter Dawns egen footer. Ingen nyhedsbrev, ingen betalingsikoner,
+  ingen sociale medier — butikken sælger ikke noget.
+{%- endcomment -%}
+
+{% render 'cns-palette', id: section.id, bg: section.settings.cns_bg %}
+
+<footer id="cns-{{ section.id }}" class="cns cns-footer cns-bg--{{ section.settings.cns_bg }}">
+  <div class="cns-wrap">
+    <div class="cns-fgrid">
+      <div class="cns-fintro">
+        {%- if section.settings.brand != blank -%}
+          <p class="cns-fname">{{ section.settings.brand }}</p>
+        {%- endif -%}
+        {%- if section.settings.intro != blank -%}
+          <p>{{ section.settings.intro }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- assign cns_cols = '1,2' | split: ',' -%}
+      {%- for col in cns_cols -%}
+        {%- assign has_links = false -%}
+        {%- for block in section.blocks -%}
+          {%- if block.settings.column == col -%}
+            {%- assign has_links = true -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if has_links -%}
+          <nav class="cns-flinks">
+            {%- for block in section.blocks -%}
+              {%- if block.settings.column == col -%}
+                <a href="{{ block.settings.url | default: '#' }}" {{ block.shopify_attributes }}>
+                  {{- block.settings.label -}}
+                </a>
+              {%- endif -%}
+            {%- endfor -%}
+          </nav>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.bottom_left != blank or section.settings.bottom_right != blank -%}
+      <div class="cns-fbot">
+        <span>{{ section.settings.bottom_left }}</span>
+        <span>{{ section.settings.bottom_right }}</span>
+      </div>
+    {%- endif -%}
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "CNS bund",
+  "tag": "div",
+  "class": "cns-footer-section",
+  "enabled_on": {
+    "groups": ["footer"]
+  },
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "select",
+      "id": "cns_bg",
+      "label": "Baggrund",
+      "options": [
+        { "value": "night", "label": "Midnat" },
+        { "value": "night-2", "label": "Nat" },
+        { "value": "night-3", "label": "Sidst på natten" },
+        { "value": "dawn", "label": "Daggry" }
+      ],
+      "default": "night"
+    },
+    {
+      "type": "text",
+      "id": "brand",
+      "label": "Navn",
+      "default": "Club No Sleep"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Kort beskrivelse",
+      "default": "Din trygge havn som ny forælder — søvn, fællesskab og viden samlet ét sted. Skabt i Danmark af LALATOTO of Denmark ApS."
+    },
+    {
+      "type": "header",
+      "content": "Nederste linje"
+    },
+    {
+      "type": "text",
+      "id": "bottom_left",
+      "label": "Til venstre",
+      "default": "© 2026 Club No Sleep · Alle rettigheder forbeholdes"
+    },
+    {
+      "type": "text",
+      "id": "bottom_right",
+      "label": "Til højre",
+      "default": "Skabt med omhu i Danmark"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Tekst",
+          "default": "Handelsbetingelser"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link"
+        },
+        {
+          "type": "select",
+          "id": "column",
+          "label": "Kolonne",
+          "options": [
+            { "value": "1", "label": "Første" },
+            { "value": "2", "label": "Anden" }
+          ],
+          "default": "1"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CNS bund",
+      "blocks": [
+        { "type": "link" },
+        { "type": "link" },
+        { "type": "link" }
+      ]
+    }
+  ]
+}
+{% endschema %}

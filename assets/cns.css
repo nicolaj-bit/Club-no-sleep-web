@@ -905,3 +905,17 @@
     transition: none !important;
   }
 }
+
+.cns-header__toggle svg path {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.2s ease;
+}
+
+.cns-header__toggle[aria-expanded='true'] .cns-bar1 {
+  transform: translateY(3px) rotate(45deg);
+}
+
+.cns-header__toggle[aria-expanded='true'] .cns-bar2 {
+  transform: translateY(-3px) rotate(-45deg);
+}

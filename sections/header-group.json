@@ -1,54 +1,41 @@
 {
-  "name": "t:sections.header.name",
+  "name": "Header",
   "type": "header",
   "sections": {
-    "announcement-bar": {
-      "type": "announcement-bar",
+    "cns_header": {
+      "type": "cns-header",
       "settings": {
-        "color_scheme": "scheme-1",
-        "show_line_separator": true,
-        "show_social": false,
-        "auto_rotate": false,
-        "change_slides_speed": 5,
-        "enable_country_selector": false,
-        "enable_language_selector": false
+        "brand": "Club No Sleep",
+        "logo_height": 30,
+        "cta_label": "Hent appen",
+        "cta_url": "https://apps.apple.com/app/id6764388095",
+        "menu_label": "Menu"
       },
       "blocks": {
-        "announcement-bar-0": {
-          "type": "announcement",
+        "link_app": {
+          "type": "menu_link",
           "settings": {
-            "text": "Welcome to our store",
-            "text_alignment": "center",
-            "color_scheme": "scheme-1",
-            "link": ""
+            "label": "Om appen",
+            "url": "/#cns-app"
+          }
+        },
+        "link_klubben": {
+          "type": "menu_link",
+          "settings": {
+            "label": "Klubben",
+            "url": "/#cns-klubben"
+          }
+        },
+        "link_pris": {
+          "type": "menu_link",
+          "settings": {
+            "label": "Pris",
+            "url": "/#cns-pris"
           }
         }
       },
-      "block_order": [
-        "announcement-bar-0"
-      ]
-    },
-    "header": {
-      "type": "header",
-      "settings": {
-        "color_scheme": "scheme-1",
-        "menu_color_scheme": "scheme-1",
-        "logo_position": "middle-left",
-        "menu": "main-menu",
-        "menu_type_desktop": "dropdown",
-        "sticky_header_type": "on-scroll-up",
-        "show_line_separator": true,
-        "enable_country_selector": true,
-        "enable_language_selector": true,
-        "mobile_logo_position": "center",
-        "margin_bottom": 0,
-        "padding_top": 20,
-        "padding_bottom": 20
-      }
+      "block_order": ["link_app", "link_klubben", "link_pris"]
     }
   },
-  "order": [
-    "announcement-bar",
-    "header"
-  ]
+  "order": ["cns_header"]
 }

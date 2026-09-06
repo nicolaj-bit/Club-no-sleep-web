@@ -1,0 +1,221 @@
+{%- comment -%}
+  Club No Sleep — header.
+
+  Erstatter Dawns egen header. Ingen kurv, intet søgefelt, intet log ind —
+  heller ikke i mobilmenuen. Butikken sælger ikke noget.
+
+  Headeren ligger fast øverst og er gennemsigtig over hero'en. Den får mørk
+  baggrund, så snart der scrolles. På sider uden hero starter den mørk.
+{%- endcomment -%}
+
+{%- liquid
+  assign overlay = false
+  if template.name == 'index'
+    assign overlay = true
+  endif
+-%}
+
+<div
+  id="cns-{{ section.id }}"
+  class="cns cns-header-host{% if overlay %} cns-header-host--overlay{% endif %}"
+  data-cns-header-host
+>
+  <header class="cns-header{% unless overlay %} cns-header--solid{% endunless %}" data-cns-header>
+    <div class="cns-wrap cns-header__inner">
+      <a class="cns-header__brand" href="{{ routes.root_url }}">
+        {%- if section.settings.logo != blank -%}
+          {%- liquid
+            assign logo_style = 'height:' | append: section.settings.logo_height | append: 'px;width:auto'
+            assign logo_alt = section.settings.brand | default: shop.name
+          -%}
+          {{
+            section.settings.logo
+            | image_url: height: 160
+            | image_tag: loading: 'eager', alt: logo_alt, style: logo_style
+          }}
+        {%- else -%}
+          {{ section.settings.brand }}
+        {%- endif -%}
+      </a>
+
+      {%- if section.blocks.size > 0 -%}
+        <nav class="cns-header__nav" aria-label="{{ section.settings.brand | escape }}">
+          {%- for block in section.blocks -%}
+            <a
+              class="cns-header__link"
+              href="{{ block.settings.url | default: '#' }}"
+              {{ block.shopify_attributes }}
+            >
+              {{- block.settings.label -}}
+            </a>
+          {%- endfor -%}
+        </nav>
+      {%- endif -%}
+
+      {%- if section.settings.cta_label != blank -%}
+        <a class="cns-header__cta" href="{{ section.settings.cta_url | default: '#' }}">
+          {{- section.settings.cta_label -}}
+        </a>
+      {%- endif -%}
+
+      <button
+        class="cns-header__toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="cns-menu-{{ section.id }}"
+        aria-label="{{ section.settings.menu_label | escape }}"
+        data-cns-toggle
+      >
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true" focusable="false">
+          <path class="cns-bar1" d="M3 8h16" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+          <path class="cns-bar2" d="M3 14h16" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="cns-header__panel" id="cns-menu-{{ section.id }}" hidden data-cns-panel>
+      {%- for block in section.blocks -%}
+        <a class="cns-header__link" href="{{ block.settings.url | default: '#' }}">{{ block.settings.label }}</a>
+      {%- endfor -%}
+      {%- if section.settings.cta_label != blank -%}
+        <a class="cns-header__cta" href="{{ section.settings.cta_url | default: '#' }}">
+          {{- section.settings.cta_label -}}
+        </a>
+      {%- endif -%}
+    </div>
+  </header>
+</div>
+
+<script>
+  (function () {
+    var host = document.getElementById('cns-{{ section.id }}');
+    if (!host || host.dataset.cnsReady === '1') return;
+    host.dataset.cnsReady = '1';
+
+    var header = host.querySelector('[data-cns-header]');
+    var toggle = host.querySelector('[data-cns-toggle]');
+    var panel = host.querySelector('[data-cns-panel]');
+    var overlay = host.classList.contains('cns-header-host--overlay');
+
+    function onScroll() {
+      header.classList.toggle('cns-header--solid', window.scrollY > 24);
+    }
+
+    if (overlay) {
+      /* Er der ingen hero på siden, er der intet at ligge gennemsigtigt
+         over — så bliver headeren mørk med det samme. */
+      var settle = function () {
+        if (document.querySelector('.cns-hero')) {
+          window.addEventListener('scroll', onScroll, { passive: true });
+          onScroll();
+        } else {
+          host.classList.remove('cns-header-host--overlay');
+          header.classList.add('cns-header--solid');
+        }
+      };
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', settle, { once: true });
+      } else {
+        settle();
+      }
+    }
+
+    if (toggle && panel) {
+      toggle.addEventListener('click', function () {
+        var open = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', open ? 'false' : 'true');
+        panel.hidden = open;
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "CNS header",
+  "tag": "div",
+  "class": "cns-header-section",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo",
+      "info": "Uden logo vises navnet nedenfor."
+    },
+    {
+      "type": "range",
+      "id": "logo_height",
+      "min": 16,
+      "max": 56,
+      "step": 2,
+      "unit": "px",
+      "label": "Logohøjde",
+      "default": 30
+    },
+    {
+      "type": "text",
+      "id": "brand",
+      "label": "Navn",
+      "default": "Club No Sleep"
+    },
+    {
+      "type": "header",
+      "content": "Knap til højre"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Knaptekst",
+      "default": "Hent appen"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Knappens link"
+    },
+    {
+      "type": "header",
+      "content": "Tilgængelighed"
+    },
+    {
+      "type": "text",
+      "id": "menu_label",
+      "label": "Tekst til menuknappen på mobil",
+      "info": "Læses højt af skærmlæsere. Vises ikke.",
+      "default": "Menu"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu_link",
+      "name": "Menupunkt",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Tekst",
+          "default": "Menupunkt"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CNS header",
+      "blocks": [
+        { "type": "menu_link" },
+        { "type": "menu_link" }
+      ]
+    }
+  ]
+}
+{% endschema %}

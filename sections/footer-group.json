@@ -1,28 +1,60 @@
 {
-  "name": "t:sections.footer.name",
+  "name": "Footer",
   "type": "footer",
   "sections": {
-    "footer": {
-      "type": "footer",
-      "blocks": {},
-      "block_order": [],
+    "cns_footer": {
+      "type": "cns-footer",
       "settings": {
-        "color_scheme": "scheme-1",
-        "newsletter_enable": true,
-        "newsletter_heading": "Subscribe to our emails",
-        "enable_follow_on_shop": true,
-        "show_social": true,
-        "enable_country_selector": true,
-        "enable_language_selector": true,
-        "payment_enable": true,
-        "show_policy": true,
-        "margin_top": 0,
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
+        "cns_bg": "night",
+        "brand": "Club No Sleep",
+        "intro": "Din trygge havn som ny forælder — søvn, fællesskab og viden samlet ét sted. Skabt i Danmark af LALATOTO of Denmark ApS.",
+        "bottom_left": "© 2026 Club No Sleep · Alle rettigheder forbeholdes",
+        "bottom_right": "Skabt med omhu i Danmark"
+      },
+      "blocks": {
+        "link_handel": {
+          "type": "link",
+          "settings": {
+            "label": "Handelsbetingelser",
+            "url": "/pages/handelsbetingelser",
+            "column": "1"
+          }
+        },
+        "link_privat": {
+          "type": "link",
+          "settings": {
+            "label": "Privatlivspolitik",
+            "url": "/pages/privatlivspolitik",
+            "column": "1"
+          }
+        },
+        "link_mail": {
+          "type": "link",
+          "settings": {
+            "label": "hello@clubnosleep.com",
+            "url": "mailto:hello@clubnosleep.com",
+            "column": "1"
+          }
+        },
+        "link_appstore": {
+          "type": "link",
+          "settings": {
+            "label": "App Store",
+            "url": "https://apps.apple.com/app/id6764388095",
+            "column": "2"
+          }
+        },
+        "link_play": {
+          "type": "link",
+          "settings": {
+            "label": "Google Play",
+            "url": "https://play.google.com/store/apps/details?id=com.base699f47a86e7e0a874d1159ed.app",
+            "column": "2"
+          }
+        }
+      },
+      "block_order": ["link_handel", "link_privat", "link_mail", "link_appstore", "link_play"]
     }
   },
-  "order": [
-    "footer"
-  ]
+  "order": ["cns_footer"]
 }
