@@ -7,7 +7,7 @@
 
 <section
   id="cns-{{ section.id }}"
-  class="cns cns-section cns-space--{{ section.settings.cns_space }} cns-letter-block cns-bg--{{ section.settings.cns_bg }}"
+  class="cns cns-section cns-space--{{ section.settings.cns_space }} cns-letter-block cns-bg--{{ section.settings.cns_bg }}{% if section.settings.continues %} cns-letter-block--continues{% endif %}"
 >
   {%- if section.settings.cns_anchor != blank -%}
     <span class="cns-anchor" id="{{ section.settings.cns_anchor | handle }}"></span>
@@ -43,12 +43,12 @@
       "id": "cns_bg",
       "label": "Baggrund",
       "options": [
-        { "value": "night", "label": "Midnat" },
-        { "value": "night-2", "label": "Nat" },
-        { "value": "night-3", "label": "Sidst på natten" },
-        { "value": "dawn", "label": "Daggry" }
+        { "value": "nat", "label": "Nat" },
+        { "value": "dyb-nat", "label": "Dyb nat" },
+        { "value": "morgen", "label": "Morgen" },
+        { "value": "lys-morgen", "label": "Lys morgen" }
       ],
-      "default": "dawn"
+      "default": "lys-morgen"
     },
     {
       "type": "select",
@@ -60,6 +60,13 @@
         { "value": "rummelig", "label": "Rummelig" }
       ],
       "default": "standard"
+    },
+    {
+      "type": "checkbox",
+      "id": "continues",
+      "label": "Fortsæt solopgangen ind i teksten",
+      "info": "Lader morgenen blive færdig inde i selve teksten i stedet for på en stribe. Slå til, når sektionen ligger lige under solopgangen.",
+      "default": true
     },
     {
       "type": "text",
