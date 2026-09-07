@@ -1,86 +1,113 @@
 {%- comment -%}
-  Club No Sleep — daggry.
-  Overgangen fra nat til morgen. Ren dekoration, ingen tekst.
+  Club No Sleep — solopgangen.
+
+  Overgangen fra nat til morgen. Ikke én farveovergang, men fire lag,
+  som cns.css lægger oven på hinanden:
+
+    1. et meget svagt skær, der stiger op nedefra
+    2. himlen, med tretten farvetrin, så der ikke opstår bånd
+    3. et kornlag, der holder bånd væk på telefonskærme
+    4. de sidste stjerner øverst, tonet ud af en maske
+
+  Værdierne er finjusterede. Små ændringer ødelægger blødheden — derfor
+  er kun højden, den øverste farve og stjernerne til at røre ved.
 {%- endcomment -%}
 
-{%- liquid
-  case section.settings.from_bg
-    when 'night'
-      assign from_color = 'var(--cns-night)'
-    when 'night-2'
-      assign from_color = 'var(--cns-night-2)'
-    else
-      assign from_color = 'var(--cns-night-3)'
-  endcase
-
-  case section.settings.to_bg
-    when 'dawn-2'
-      assign to_color = 'var(--cns-dawn-2)'
-    else
-      assign to_color = 'var(--cns-dawn)'
-  endcase
--%}
+{% render 'cns-palette', id: section.id, bg: section.settings.cns_bg %}
 
 {% style %}
   #cns-{{ section.id }} {
-    height: {{ section.settings.height }}px;
-    background: linear-gradient(
-      180deg,
-      {{ from_color }} 0%,
-      #3a2c21 42%,
-      #8e7159 74%,
-      {{ to_color }} 100%
-    );
+    height: clamp(300px, 40vw, {{ section.settings.height }}px);
   }
 {% endstyle %}
 
-<div id="cns-{{ section.id }}" class="cns cns-daybreak" aria-hidden="true"></div>
+<div id="cns-{{ section.id }}" class="cns cns-daybreak" aria-hidden="true">
+  {%- if section.settings.show_stars -%}
+    <canvas
+      class="cns-stars"
+      data-cns-canvas="stars"
+      data-cns-count="{{ section.settings.star_count }}"
+      data-cns-dim="{{ section.settings.star_dim }}"
+      data-cns-spread="0.6"
+      aria-hidden="true"
+    ></canvas>
+  {%- endif -%}
+</div>
+
+{%- if section.settings.show_stars -%}
+  <script src="{{ 'cns-lights.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
 
 {% schema %}
 {
-  "name": "CNS daggry",
+  "name": "CNS solopgang",
   "tag": "div",
   "class": "cns-daybreak-section",
   "settings": [
     {
       "type": "paragraph",
-      "content": "En stribe himmel, der letter fra nat til morgen. Placér den, hvor siden skal lysne."
+      "content": "Himlen, der lysner fra nat til morgen. Placér den dér, hvor siden skal skifte."
     },
     {
       "type": "select",
-      "id": "from_bg",
-      "label": "Baggrund foroven",
+      "id": "cns_bg",
+      "label": "Baggrund",
+      "info": "Den øverste farve. Vælg den samme som sektionen ovenfor, så overgangen bliver usynlig.",
       "options": [
-        { "value": "night", "label": "Midnat" },
-        { "value": "night-2", "label": "Nat" },
-        { "value": "night-3", "label": "Sidst på natten" }
+        { "value": "nat", "label": "Nat" },
+        { "value": "dyb-nat", "label": "Dyb nat" },
+        { "value": "morgen", "label": "Morgen" },
+        { "value": "lys-morgen", "label": "Lys morgen" }
       ],
-      "default": "night-3"
-    },
-    {
-      "type": "select",
-      "id": "to_bg",
-      "label": "Baggrund forneden",
-      "options": [
-        { "value": "dawn", "label": "Daggry" },
-        { "value": "dawn-2", "label": "Daggry, dybere" }
-      ],
-      "default": "dawn"
+      "default": "nat"
     },
     {
       "type": "range",
       "id": "height",
-      "min": 60,
-      "max": 320,
-      "step": 10,
+      "min": 300,
+      "max": 700,
+      "step": 20,
       "unit": "px",
       "label": "Højde",
-      "default": 180
+      "info": "Højden på store skærme. På små skærme skrumper den af sig selv.",
+      "default": 460
+    },
+    {
+      "type": "header",
+      "content": "Stjernerne"
+    },
+    {
+      "type": "paragraph",
+      "content": "De sidste stjerner øverst, som går ud i takt med at himlen lysner."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stars",
+      "label": "Vis stjernerne",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "star_count",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "label": "Antal stjerner",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "star_dim",
+      "min": 0.1,
+      "max": 1,
+      "step": 0.05,
+      "label": "Styrke",
+      "default": 0.45
     }
   ],
   "presets": [
     {
-      "name": "CNS daggry"
+      "name": "CNS solopgang"
     }
   ]
 }

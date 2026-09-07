@@ -8,7 +8,7 @@
 
 <section
   id="cns-{{ section.id }}"
-  class="cns cns-hero cns-bg--{{ section.settings.cns_bg }}"
+  class="cns cns-hero cns-starfield cns-bg--{{ section.settings.cns_bg }}"
 >
   {%- if section.settings.cns_anchor != blank -%}
     <span class="cns-anchor" id="{{ section.settings.cns_anchor | handle }}"></span>
@@ -16,10 +16,11 @@
 
   {%- if section.settings.show_lights -%}
     <canvas
-      class="cns-hero__canvas"
+      class="cns-stars{% if section.settings.fade_stars %} cns-stars--fade{% endif %}"
       data-cns-canvas="stars"
       data-cns-count="{{ section.settings.light_count }}"
-      data-cns-spread="0.92"
+      data-cns-spread="{{ section.settings.light_spread }}"
+      data-cns-dim="{{ section.settings.light_dim }}"
       aria-hidden="true"
     ></canvas>
   {%- endif -%}
@@ -92,12 +93,12 @@
       "id": "cns_bg",
       "label": "Baggrund",
       "options": [
-        { "value": "night", "label": "Midnat" },
-        { "value": "night-2", "label": "Nat" },
-        { "value": "night-3", "label": "Sidst på natten" },
-        { "value": "dawn", "label": "Daggry" }
+        { "value": "nat", "label": "Nat" },
+        { "value": "dyb-nat", "label": "Dyb nat" },
+        { "value": "morgen", "label": "Morgen" },
+        { "value": "lys-morgen", "label": "Lys morgen" }
       ],
-      "default": "night"
+      "default": "dyb-nat"
     },
     {
       "type": "text",
@@ -142,12 +143,12 @@
     },
     {
       "type": "header",
-      "content": "Lysene bagved"
+      "content": "Stjernerne"
     },
     {
       "type": "checkbox",
       "id": "show_lights",
-      "label": "Vis lysene",
+      "label": "Vis stjernerne",
       "default": true
     },
     {
@@ -156,8 +157,33 @@
       "min": 0,
       "max": 120,
       "step": 2,
-      "label": "Antal lys",
+      "label": "Antal stjerner",
       "default": 46
+    },
+    {
+      "type": "range",
+      "id": "light_dim",
+      "min": 0.2,
+      "max": 1,
+      "step": 0.05,
+      "label": "Styrke",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "light_spread",
+      "min": 0.3,
+      "max": 1,
+      "step": 0.02,
+      "label": "Hvor langt ned stjernerne når",
+      "default": 0.92
+    },
+    {
+      "type": "checkbox",
+      "id": "fade_stars",
+      "label": "Ton stjernerne ud mod bunden",
+      "info": "Slå fra, når sektionen nedenfor fortsætter stjernefeltet — ellers opstår der en synlig kant mellem de to.",
+      "default": false
     }
   ],
   "blocks": [

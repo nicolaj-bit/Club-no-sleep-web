@@ -4,21 +4,29 @@
   Skriver farvevariablerne på sektionens eget id, så to udgaver af samme
   sektion med hver sin baggrund ikke smitter af på hinanden.
 
+  Farverne selv står som temaindstillinger under «Club No Sleep — farver»
+  og hentes ind i layout/theme.liquid.
+
   Kald:
     {% render 'cns-palette', id: section.id, bg: section.settings.cns_bg %}
 {%- endcomment -%}
 {%- liquid
-  assign cns_bg = bg | default: 'night'
+  assign cns_bg = bg | default: 'nat'
 -%}
 {% style %}
   #cns-{{ id }} {
     {%- case cns_bg -%}
-      {%- when 'night-2' -%}
-        --cns-bg: var(--cns-night-2);
-      {%- when 'night-3' -%}
-        --cns-bg: var(--cns-night-3);
-      {%- when 'dawn' -%}
-        --cns-bg: var(--cns-dawn);
+      {%- when 'dyb-nat' -%}
+        --cns-bg: var(--cns-night-deep);
+      {%- when 'morgen' -%}
+        --cns-bg: var(--cns-morning);
+        --cns-fg: var(--cns-ink);
+        --cns-fg-soft: var(--cns-ink-soft);
+        --cns-accent: var(--cns-gold-deep);
+        --cns-hair: rgba(169, 134, 106, 0.18);
+        --cns-rule: rgba(169, 134, 106, 0.45);
+      {%- when 'lys-morgen' -%}
+        --cns-bg: var(--cns-morning-light);
         --cns-fg: var(--cns-ink);
         --cns-fg-soft: var(--cns-ink-soft);
         --cns-accent: var(--cns-gold-deep);

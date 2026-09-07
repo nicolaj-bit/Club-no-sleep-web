@@ -10,10 +10,24 @@
 
 <section
   id="cns-{{ section.id }}"
-  class="cns cns-section cns-space--{{ section.settings.cns_space }} cns-hour-text cns-bg--{{ section.settings.cns_bg }}"
+  class="cns cns-section cns-space--{{ section.settings.cns_space }} cns-hour-text cns-bg--{{ section.settings.cns_bg }}{% if section.settings.show_stars %} cns-starfield{% endif %}"
 >
   {%- if section.settings.cns_anchor != blank -%}
     <span class="cns-anchor" id="{{ section.settings.cns_anchor | handle }}"></span>
+  {%- endif -%}
+
+  {%- comment -%}
+    Stjernefeltet fortsætter ned fra hero'en og tynder ud. Samme kode som
+    i hero og solopgangen — kun tætheden og styrken er forskellig.
+  {%- endcomment -%}
+  {%- if section.settings.show_stars -%}
+    <canvas
+      class="cns-stars{% if section.settings.fade_stars %} cns-stars--fade{% endif %}"
+      data-cns-canvas="stars"
+      data-cns-count="{{ section.settings.star_count }}"
+      data-cns-dim="{{ section.settings.star_dim }}"
+      aria-hidden="true"
+    ></canvas>
   {%- endif -%}
 
   <div class="cns-wrap">
@@ -29,9 +43,22 @@
       {%- if section.settings.body != blank -%}
         <div class="cns-lede cns-rte">{{ section.settings.body }}</div>
       {%- endif -%}
+
+      {%- comment -%}
+        Lange tekster — handelsbetingelser, privatlivspolitik — skrives i
+        Shopifys almindelige sideeditor og hentes ind her, i stedet for at
+        skulle klemmes ned i et enkelt felt i temaeditoren.
+      {%- endcomment -%}
+      {%- if section.settings.show_page_content and page.content != blank -%}
+        <div class="cns-lede cns-rte cns-body">{{ page.content }}</div>
+      {%- endif -%}
     </div>
   </div>
 </section>
+
+{%- if section.settings.show_stars -%}
+  <script src="{{ 'cns-lights.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
 
 {% schema %}
 {
@@ -44,12 +71,12 @@
       "id": "cns_bg",
       "label": "Baggrund",
       "options": [
-        { "value": "night", "label": "Midnat" },
-        { "value": "night-2", "label": "Nat" },
-        { "value": "night-3", "label": "Sidst på natten" },
-        { "value": "dawn", "label": "Daggry" }
+        { "value": "nat", "label": "Nat" },
+        { "value": "dyb-nat", "label": "Dyb nat" },
+        { "value": "morgen", "label": "Morgen" },
+        { "value": "lys-morgen", "label": "Lys morgen" }
       ],
-      "default": "night-2"
+      "default": "dyb-nat"
     },
     {
       "type": "select",
@@ -89,6 +116,51 @@
       "id": "body",
       "label": "Brødtekst",
       "default": "<p>Den kommer snigende om natten, når baby igen er vågen og resten af verden er stille. Frygten for natten starter allerede i løbet af eftermiddagen. Far sover på sofaen, mor sover siddende, og ingen forstår helt, hvad du står i.</p><p>Club No Sleep er skabt til de timer. Ikke for at fikse noget — men for at du ikke skal sidde i dem alene.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_page_content",
+      "label": "Vis sidens tekst fra Shopify",
+      "info": "Til lange sider som handelsbetingelser: skriv teksten i Shopifys sideeditor i stedet for i feltet ovenfor.",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Stjernerne"
+    },
+    {
+      "type": "paragraph",
+      "content": "Slå til, når sektionen ligger lige under hero'en, så himlen løber videre ned gennem teksten."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stars",
+      "label": "Vis stjernerne",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "star_count",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "label": "Antal stjerner",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "star_dim",
+      "min": 0.2,
+      "max": 1,
+      "step": 0.05,
+      "label": "Styrke",
+      "default": 0.7
+    },
+    {
+      "type": "checkbox",
+      "id": "fade_stars",
+      "label": "Ton stjernerne ud mod bunden",
+      "default": true
     }
   ],
   "presets": [
