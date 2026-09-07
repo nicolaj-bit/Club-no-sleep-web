@@ -1466,5 +1466,95 @@
         "label": "t:settings_schema.customer_accounts.settings.customer_account_menu.label"
       }
     ]
+  },
+  {
+    "name": "Club No Sleep — farver",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Farverne til landingssidens cns-sektioner. Hver sektion vælger selv én af de fire baggrunde under «Baggrund»."
+      },
+      {
+        "type": "header",
+        "content": "Baggrunde"
+      },
+      {
+        "type": "color",
+        "id": "cns_bg_night",
+        "label": "Nat",
+        "default": "#221C16"
+      },
+      {
+        "type": "color",
+        "id": "cns_bg_night_deep",
+        "label": "Dyb nat",
+        "default": "#12100D"
+      },
+      {
+        "type": "color",
+        "id": "cns_bg_morning",
+        "label": "Morgen",
+        "default": "#D0C1AA"
+      },
+      {
+        "type": "color",
+        "id": "cns_bg_morning_light",
+        "label": "Lys morgen",
+        "default": "#DDD0BC"
+      },
+      {
+        "type": "header",
+        "content": "Lyset"
+      },
+      {
+        "type": "color",
+        "id": "cns_glow",
+        "label": "Skær",
+        "info": "Stjernerne, den store kursive linje og de fyldte knapper.",
+        "default": "#F4DCAE"
+      },
+      {
+        "type": "color",
+        "id": "cns_gold",
+        "label": "Guld",
+        "info": "Klokkeslæt og fine streger på nat.",
+        "default": "#C8A882"
+      },
+      {
+        "type": "color",
+        "id": "cns_gold_deep",
+        "label": "Dybt guld",
+        "info": "Det samme, men på morgen.",
+        "default": "#A9866A"
+      },
+      {
+        "type": "header",
+        "content": "Tekst"
+      },
+      {
+        "type": "color",
+        "id": "cns_sand",
+        "label": "Tekst på nat",
+        "default": "#EDE1D0"
+      },
+      {
+        "type": "color",
+        "id": "cns_sand_soft",
+        "label": "Dæmpet tekst på nat",
+        "default": "#A2917E"
+      },
+      {
+        "type": "color",
+        "id": "cns_ink",
+        "label": "Tekst på morgen",
+        "default": "#2A1B10"
+      },
+      {
+        "type": "color",
+        "id": "cns_ink_soft",
+        "label": "Dæmpet tekst på morgen",
+        "default": "#5A4838"
+      }
+    ]
   }
 ]

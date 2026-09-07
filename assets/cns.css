@@ -4,19 +4,20 @@
    62.5% (1rem = 10px), mens designet regnede med 16px. */
 
 :root {
-  /* Natten — brunsort, aldrig neutralt sort */
-  --cns-night: #12100d;
-  --cns-night-2: #1a1611;
-  --cns-night-3: #221c16;
+  /* Natten — brunsort, aldrig neutralt sort.
+     Værdierne er standard; theme.liquid overskriver dem med
+     temaindstillingerne, så de kan rettes ét sted. */
+  --cns-night: #221c16;
+  --cns-night-deep: #12100d;
   /* Lyset */
   --cns-glow: #f4dcae;
   --cns-gold: #c8a882;
   --cns-gold-deep: #a9866a;
-  /* Daggry */
-  --cns-dawn: #f7f1e8;
-  --cns-dawn-2: #efe4d4;
+  /* Morgen */
+  --cns-morning: #d0c1aa;
+  --cns-morning-light: #ddd0bc;
   --cns-ink: #2a1b10;
-  --cns-ink-soft: #6e5b4b;
+  --cns-ink-soft: #5a4838;
   /* Tekst på nat */
   --cns-sand: #ede1d0;
   --cns-sand-soft: #a2917e;
@@ -25,12 +26,16 @@
   --cns-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
   --cns-sans: 'Jost', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --cns-header-h: 64px;
+
+  /* Kornlaget. Uden det bånder store farveovergange på telefonskærme —
+     det er den enkeltting, der gør en himmel troværdig. */
+  --cns-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 /* Grundpaletten. Hver sektion overskriver disse på sit eget id,
    se snippets/cns-palette.liquid. */
 .cns {
-  --cns-bg: var(--cns-night);
+  --cns-bg: var(--cns-night-deep);
   --cns-fg: var(--cns-sand);
   --cns-fg-soft: var(--cns-sand-soft);
   --cns-accent: var(--cns-gold);
@@ -301,27 +306,51 @@
   overflow: hidden;
 }
 
-.cns-hero__canvas {
+/* ── Stjernefeltet ────────────────────────────────────────
+   Samme canvas i hero, i sektionen under den og i solopgangen.
+   Kun tætheden og styrken er forskellig. */
+.cns-starfield {
+  overflow: hidden;
+}
+
+.cns-stars {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   display: block;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Masken gør, at feltet aldrig slutter et sted, øjet kan se.
+   Hero'en får den ikke: dér fortsætter feltet ned i næste sektion,
+   og en maske ville lave netop den kant, den skulle undgå. */
+.cns-stars--fade {
+  -webkit-mask-image: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.86) 30%,
+    rgba(0, 0, 0, 0.5) 62%,
+    rgba(0, 0, 0, 0.18) 86%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.86) 30%,
+    rgba(0, 0, 0, 0.5) 62%,
+    rgba(0, 0, 0, 0.18) 86%,
+    transparent 100%
+  );
+}
+
+.cns-starfield > .cns-wrap {
+  z-index: 1;
 }
 
 .cns-hero .cns-wrap {
   z-index: 1;
-}
-
-.cns-hero::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 220px;
-  z-index: 0;
-  background: linear-gradient(180deg, transparent, var(--cns-bg));
 }
 
 .cns-mark {
@@ -413,8 +442,15 @@
   max-width: 22ch;
 }
 
-/* På daggry er glødende creme usynligt — der bruges blækket */
-.cns-bg--dawn .cns-quietline {
+/* Baggrunden skifter ikke i et spring, men glider gennem hele sektionen,
+   så hero'ens himmel fortsætter ned i teksten. */
+.cns-hour-text.cns-starfield {
+  background: linear-gradient(180deg, var(--cns-bg) 0%, #141109 55%, var(--cns-bg) 100%);
+}
+
+/* På morgen er glødende creme usynligt — der bruges blækket */
+.cns-bg--morgen .cns-quietline,
+.cns-bg--lys-morgen .cns-quietline {
   color: var(--cns-ink);
 }
 
@@ -655,11 +691,12 @@
 .cns-invite {
   border-radius: 18px;
   padding: 22px;
-  background: var(--cns-night-3);
+  background: var(--cns-night);
   border: 1px solid rgba(237, 225, 208, 0.11);
 }
 
-.cns-bg--dawn .cns-invite {
+.cns-bg--morgen .cns-invite,
+.cns-bg--lys-morgen .cns-invite {
   background: #fffdfa;
   border-color: rgba(169, 134, 106, 0.2);
 }
@@ -719,21 +756,114 @@
   padding: 4px 11px;
 }
 
-.cns-bg--dawn .cns-pill {
+.cns-bg--morgen .cns-pill,
+.cns-bg--lys-morgen .cns-pill {
   color: var(--cns-gold-deep);
   border-color: rgba(169, 134, 106, 0.4);
 }
 
 /* ── Overgangen fra nat til daggry ────────────────────────── */
-/* Dobbelt klasse er nødvendigt: Dawn skjuler tomme div'er med
+/* ── Solopgangen ──────────────────────────────────────────
+   En rigtig morgenhimmel er ikke én lige farveovergang. Den er fire
+   ting oven på hinanden: nattens farve der slipper sit tag, et varmt
+   skær der stiger op nedefra, et kornlag mod bånd, og de sidste
+   stjerner øverst. Værdierne er finjusterede — små ændringer
+   ødelægger blødheden.
+
+   Dobbelt klasse er nødvendigt: Dawn skjuler tomme div'er med
    div:empty { display: none }, som vejer tungere end én klasse alene,
-   og striben har intet indhold. */
+   og striben er tom, hvis stjernerne slås fra. */
 .cns.cns-daybreak {
   display: block;
-  height: 180px;
+  position: relative;
+  overflow: hidden;
+  background:
+    /* Skæret er næsten væk. Kun nok til at man aner en retning i lyset. */
+    radial-gradient(
+      190% 105% at 50% 132%,
+      rgba(255, 232, 204, 0.14) 0%,
+      rgba(228, 200, 168, 0.08) 38%,
+      rgba(150, 116, 88, 0.03) 66%,
+      rgba(60, 44, 32, 0) 88%
+    ),
+    /* Himlen. Gråtonet taupe frem for kobber — næsten uden farve, kun en
+       langsom lysning. Slutter ikke i creme, men i en varm sandtone, som
+       brevsektionen derunder fortsætter fra. */
+    linear-gradient(
+      180deg,
+      var(--cns-bg) 0%,
+      #262019 12%,
+      #2b241c 24%,
+      #322a21 35%,
+      #3a3226 45%,
+      #443b2c 54%,
+      #514634 62%,
+      #625440 70%,
+      #75664e 77%,
+      #8c7c60 84%,
+      #a39176 90%,
+      #b9a78c 96%,
+      #c8b79c 100%
+    );
 }
 
-/* ── Brevet ───────────────────────────────────────────────── */
+/* Stjernerne, der endnu ikke er gået ud, holder ved øverst */
+.cns-daybreak .cns-stars {
+  -webkit-mask-image: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.35) 26%,
+    transparent 52%
+  );
+  mask-image: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.35) 26%,
+    transparent 52%
+  );
+}
+
+.cns-daybreak::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.045;
+  mix-blend-mode: overlay;
+  background-image: var(--cns-grain);
+}
+
+/* ── Brevet ─────────────────────────────────────────────────
+   Samler solopgangen op, hvor den slap, og lader morgenen blive
+   færdig inde i selve teksten frem for på en stribe. */
+.cns-letter-block--continues {
+  background: linear-gradient(
+    180deg,
+    #c8b79c 0%,
+    #cebea5 18%,
+    #d4c5af 38%,
+    #d9cbb6 58%,
+    #dbceba 76%,
+    var(--cns-bg) 94%
+  );
+}
+
+/* Samme kornlag som i solopgangen, så de to flader ligner hinanden */
+.cns-letter-block--continues::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  background-image: var(--cns-grain);
+}
+
+.cns-letter-block--continues > .cns-wrap {
+  z-index: 1;
+}
+
 .cns-letter {
   max-width: 608px;
 }
@@ -750,7 +880,7 @@
 .cns-plan {
   max-width: 430px;
   margin: 0 auto;
-  background: #fffdfa;
+  background: #faf5ec;
   border-radius: 24px;
   padding: 40px 32px 32px;
   text-align: center;
@@ -822,7 +952,7 @@
   border-radius: 14px;
   text-decoration: none;
   background: var(--cns-ink);
-  color: var(--cns-dawn);
+  color: var(--cns-morning-light);
   font-size: 15px;
   letter-spacing: 0.01em;
   transition: transform 0.18s ease;

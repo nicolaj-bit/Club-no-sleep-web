@@ -291,6 +291,26 @@
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap"
     >
     {{ 'cns.css' | asset_url | stylesheet_tag }}
+
+    {%- comment -%}
+      Farverne kommer fra temaindstillingerne, så de kan rettes ét sted.
+      Blokken står efter cns.css og overskriver dens standardværdier.
+    {%- endcomment -%}
+    {% style %}
+      :root {
+        --cns-night: {{ settings.cns_bg_night }};
+        --cns-night-deep: {{ settings.cns_bg_night_deep }};
+        --cns-morning: {{ settings.cns_bg_morning }};
+        --cns-morning-light: {{ settings.cns_bg_morning_light }};
+        --cns-glow: {{ settings.cns_glow }};
+        --cns-gold: {{ settings.cns_gold }};
+        --cns-gold-deep: {{ settings.cns_gold_deep }};
+        --cns-sand: {{ settings.cns_sand }};
+        --cns-sand-soft: {{ settings.cns_sand_soft }};
+        --cns-ink: {{ settings.cns_ink }};
+        --cns-ink-soft: {{ settings.cns_ink_soft }};
+      }
+    {% endstyle %}
     <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
 
     {%- if settings.cart_type == 'drawer' -%}

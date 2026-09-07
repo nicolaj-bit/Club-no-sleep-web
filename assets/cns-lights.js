@@ -18,6 +18,11 @@
     return !!(mql && mql.matches);
   }
 
+  function num(el, attr, fallback) {
+    var v = parseFloat(el.getAttribute(attr));
+    return isNaN(v) ? fallback : v;
+  }
+
   /* Alle levende canvas'er, så de kan stoppes igen ved section:unload */
   var live = [];
 
@@ -122,10 +127,9 @@
   /* ── Lysene bag hero ──────────────────────────────────────
      Små stjerner, der ånder i utakt. */
   function stars(canvas) {
-    var count = parseInt(canvas.getAttribute('data-cns-count'), 10);
-    if (isNaN(count)) count = 46;
-    var spread = parseFloat(canvas.getAttribute('data-cns-spread'));
-    if (isNaN(spread)) spread = 1;
+    var count = num(canvas, 'data-cns-count', 46);
+    var spread = num(canvas, 'data-cns-spread', 1);
+    var dim = num(canvas, 'data-cns-dim', 1);
 
     var pts = [];
 
@@ -137,8 +141,10 @@
             x: Math.random() * w,
             y: Math.random() * h * spread,
             r: 0.7 + Math.random() * 1.7,
-            a: 0.18 + Math.random() * 0.5,
-            s: 0.4 + Math.random() * 1.1,
+            a: (0.26 + Math.random() * 0.54) * dim,
+            /* Blinket: hver stjerne har sin egen periode på 3,5-8 sekunder.
+               Langsomt og uregelmæssigt, så det ikke virker mekanisk. */
+            per: 3500 + Math.random() * 4500,
             p: Math.random() * Math.PI * 2
           });
         }
@@ -146,15 +152,20 @@
       draw: function (ctx, w, h, t, still) {
         for (var i = 0; i < pts.length; i++) {
           var d = pts[i];
-          var pulse = still ? 1 : 0.62 + 0.38 * Math.sin((t / 1400) * d.s + d.p);
+          /* sin² giver en blød kurve: længe tændt, kort dæmpet — som et
+             åndedrag. Fra 12 til 100 procent, så blinket faktisk kan ses. */
+          var sn = Math.sin((t / d.per) * Math.PI * 2 + d.p);
+          var pulse = still ? 1 : 0.12 + 0.88 * (sn * sn);
           var a = d.a * pulse;
-          var g = ctx.createRadialGradient(d.x, d.y, 0, d.x, d.y, d.r * 7);
+          /* Skæret vokser og skrumper med lyset, ikke kun styrken */
+          var halo = d.r * (5 + 4 * pulse);
+          var g = ctx.createRadialGradient(d.x, d.y, 0, d.x, d.y, halo);
           g.addColorStop(0, 'rgba(244,220,174,' + a + ')');
           g.addColorStop(0.35, 'rgba(226,192,138,' + a * 0.3 + ')');
           g.addColorStop(1, 'rgba(226,192,138,0)');
           ctx.fillStyle = g;
           ctx.beginPath();
-          ctx.arc(d.x, d.y, d.r * 7, 0, Math.PI * 2);
+          ctx.arc(d.x, d.y, halo, 0, Math.PI * 2);
           ctx.fill();
           ctx.fillStyle = 'rgba(255,246,228,' + Math.min(1, a * 1.5) + ')';
           ctx.beginPath();
