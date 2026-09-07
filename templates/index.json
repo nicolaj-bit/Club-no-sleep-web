@@ -3,7 +3,7 @@
     "cns_hero": {
       "type": "cns-hero",
       "settings": {
-        "cns_bg": "night",
+        "cns_bg": "dyb-nat",
         "cns_anchor": "cns-top",
         "mark": "Club No Sleep",
         "heading": "Til dig, der er vågen,",
@@ -11,7 +11,10 @@
         "lede": "<p>En dansk app til de timer, ingen taler om. Se hvem der er vågne lige nu, følg barnets søvn, og få svar klokken fire om natten — uden at vække nogen.</p>",
         "trialnote": "Prøv gratis i 7 dage · Derefter 59 kr. pr. måned · Opsig når som helst",
         "show_lights": true,
-        "light_count": 46
+        "light_count": 46,
+        "light_dim": 1,
+        "light_spread": 0.92,
+        "fade_stars": false
       },
       "blocks": {
         "store_apple": {
@@ -35,23 +38,30 @@
           }
         }
       },
-      "block_order": ["store_apple", "store_google"]
+      "block_order": [
+        "store_apple",
+        "store_google"
+      ]
     },
     "cns_ensomhed": {
       "type": "cns-hour-text",
       "settings": {
-        "cns_bg": "night-2",
+        "cns_bg": "dyb-nat",
         "cns_space": "standard",
         "cns_anchor": "",
         "hour": "02.14",
         "quietline": "Der findes en helt særlig form for ensomhed i moderskabet.",
-        "body": "<p>Den kommer snigende om natten, når baby igen er vågen og resten af verden er stille. Frygten for natten starter allerede i løbet af eftermiddagen. Far sover på sofaen, mor sover siddende, og ingen forstår helt, hvad du står i.</p><p>Club No Sleep er skabt til de timer. Ikke for at fikse noget — men for at du ikke skal sidde i dem alene.</p>"
+        "body": "<p>Den kommer snigende om natten, når baby igen er vågen og resten af verden er stille. Frygten for natten starter allerede i løbet af eftermiddagen. Far sover på sofaen, mor sover siddende, og ingen forstår helt, hvad du står i.</p><p>Club No Sleep er skabt til de timer. Ikke for at fikse noget — men for at du ikke skal sidde i dem alene.</p>",
+        "show_stars": true,
+        "star_count": 26,
+        "star_dim": 0.7,
+        "fade_stars": true
       }
     },
     "cns_kort": {
       "type": "cns-map",
       "settings": {
-        "cns_bg": "night-3",
+        "cns_bg": "nat",
         "cns_space": "standard",
         "cns_anchor": "",
         "hour": "03.41",
@@ -63,7 +73,7 @@
     "cns_appen": {
       "type": "cns-phones",
       "settings": {
-        "cns_bg": "night-2",
+        "cns_bg": "dyb-nat",
         "cns_space": "standard",
         "cns_anchor": "cns-app",
         "hour": "04.20",
@@ -122,12 +132,19 @@
           }
         }
       },
-      "block_order": ["feat_1", "feat_2", "feat_3", "feat_4", "feat_5", "feat_6"]
+      "block_order": [
+        "feat_1",
+        "feat_2",
+        "feat_3",
+        "feat_4",
+        "feat_5",
+        "feat_6"
+      ]
     },
     "cns_partner": {
       "type": "cns-partner",
       "settings": {
-        "cns_bg": "night-3",
+        "cns_bg": "nat",
         "cns_space": "standard",
         "cns_anchor": "cns-klubben",
         "hour": "05.55",
@@ -137,43 +154,62 @@
       "blocks": {
         "person_sara": {
           "type": "person",
-          "settings": { "name": "Sara", "role": "Dig", "status": "Aktiv", "initial": "" }
+          "settings": {
+            "name": "Sara",
+            "role": "Dig",
+            "status": "Aktiv",
+            "initial": ""
+          }
         },
         "person_nicolaj": {
           "type": "person",
-          "settings": { "name": "Nicolaj", "role": "Partner", "status": "Aktiv", "initial": "" }
+          "settings": {
+            "name": "Nicolaj",
+            "role": "Partner",
+            "status": "Aktiv",
+            "initial": ""
+          }
         },
         "person_invite": {
           "type": "invite",
-          "settings": { "label": "Invitér partner" }
+          "settings": {
+            "label": "Invitér partner"
+          }
         }
       },
-      "block_order": ["person_sara", "person_nicolaj", "person_invite"]
+      "block_order": [
+        "person_sara",
+        "person_nicolaj",
+        "person_invite"
+      ]
     },
     "cns_daggry": {
       "type": "cns-daybreak",
       "settings": {
-        "from_bg": "night-3",
-        "to_bg": "dawn",
-        "height": 180
+        "cns_bg": "nat",
+        "height": 460,
+        "show_stars": true,
+        "star_count": 14,
+        "star_dim": 0.45
       }
     },
     "cns_brev": {
       "type": "cns-letter",
       "settings": {
-        "cns_bg": "dawn",
+        "cns_bg": "lys-morgen",
         "cns_space": "standard",
         "cns_anchor": "",
         "hour": "06.30",
         "heading": "Kom med i klubben",
         "body": "<p>Vi har været der. Der hvor nætterne er svære, dagene er lange, og ingen helt forstår, hvad du står i.</p><p>Club No Sleep er skabt til dig, som savner et sted at blive spejlet og finde andre, der er vågne sammen med dig. Kom med — for din egen skyld, og for alle de mødre, der føler sig alene netop nu.</p><p>Sammen kan vi mindske ensomheden i moderskabet.</p>",
-        "signature": "Kærligst og kram fra Sara & Nicolaj"
+        "signature": "Kærligst og kram fra Sara & Nicolaj",
+        "continues": true
       }
     },
     "cns_medlemskab": {
       "type": "cns-plan",
       "settings": {
-        "cns_bg": "dawn",
+        "cns_bg": "lys-morgen",
         "cns_space": "standard",
         "tight_top": true,
         "fade_down": true,
@@ -188,26 +224,42 @@
       "blocks": {
         "benefit_1": {
           "type": "benefit",
-          "settings": { "text": "Live søvnlog med historik og overblik" }
+          "settings": {
+            "text": "Live søvnlog med historik og overblik"
+          }
         },
         "benefit_2": {
           "type": "benefit",
-          "settings": { "text": "Et lys i mørket — se hvem der er vågne" }
+          "settings": {
+            "text": "Et lys i mørket — se hvem der er vågne"
+          }
         },
         "benefit_3": {
           "type": "benefit",
-          "settings": { "text": "Tigerspring, milepæle og fælles kalender" }
+          "settings": {
+            "text": "Tigerspring, milepæle og fælles kalender"
+          }
         },
         "benefit_4": {
           "type": "benefit",
-          "settings": { "text": "Over hundrede danske vidensartikler" }
+          "settings": {
+            "text": "Over hundrede danske vidensartikler"
+          }
         },
         "benefit_5": {
           "type": "benefit",
-          "settings": { "text": "Din partner med, uden ekstra betaling" }
+          "settings": {
+            "text": "Din partner med, uden ekstra betaling"
+          }
         }
       },
-      "block_order": ["benefit_1", "benefit_2", "benefit_3", "benefit_4", "benefit_5"]
+      "block_order": [
+        "benefit_1",
+        "benefit_2",
+        "benefit_3",
+        "benefit_4",
+        "benefit_5"
+      ]
     }
   },
   "order": [
