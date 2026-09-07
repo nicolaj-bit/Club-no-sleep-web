@@ -1,0 +1,19 @@
+{
+  "sections": {
+    "cns_tekst": {
+      "type": "cns-hour-text",
+      "settings": {
+        "cns_bg": "dyb-nat",
+        "cns_space": "standard",
+        "cns_anchor": "",
+        "hour": "",
+        "quietline": "Privatlivspolitik",
+        "body": "<p>Sådan behandler vi dine oplysninger.</p>",
+        "show_page_content": true
+      }
+    }
+  },
+  "order": [
+    "cns_tekst"
+  ]
+}

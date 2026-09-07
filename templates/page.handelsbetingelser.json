@@ -1,0 +1,19 @@
+{
+  "sections": {
+    "cns_tekst": {
+      "type": "cns-hour-text",
+      "settings": {
+        "cns_bg": "dyb-nat",
+        "cns_space": "standard",
+        "cns_anchor": "",
+        "hour": "",
+        "quietline": "Handelsbetingelser",
+        "body": "<p>Vilkårene for medlemskabet af Club No Sleep.</p>",
+        "show_page_content": true
+      }
+    }
+  },
+  "order": [
+    "cns_tekst"
+  ]
+}

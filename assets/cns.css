@@ -145,6 +145,43 @@
   margin-top: 22px;
 }
 
+/* Overskrifter inde i en brødtekst — typisk sider som handelsbetingelser,
+   hvor teksten skrives i Shopifys sideeditor. Sidesektionernes h2 er
+   alt for stor til at dele et dokument op. */
+.cns .cns-rte :where(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--cns-serif);
+  font-size: 25px;
+  line-height: 1.3;
+  font-weight: 300;
+  color: var(--cns-fg);
+  margin-top: 40px;
+}
+
+.cns .cns-rte :where(h3, h4, h5, h6) {
+  font-size: 20px;
+  margin-top: 32px;
+}
+
+.cns .cns-rte > :first-child {
+  margin-top: 0;
+}
+
+.cns .cns-rte :where(ul, ol) {
+  list-style: revert;
+  padding-left: 22px;
+}
+
+.cns .cns-rte :where(li) + :where(li) {
+  margin-top: 8px;
+}
+
+.cns .cns-rte :where(a) {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--cns-accent);
+}
+
 /* Klokkeslættet er sidens struktur — natten skrider frem */
 .cns-hour {
   font-size: 11px;
