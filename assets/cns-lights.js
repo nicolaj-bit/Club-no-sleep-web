@@ -40,22 +40,26 @@
     var onScreen = true;
     var ro = null;
     var io = null;
+    var sized = false;
 
     function measure() {
       var r = canvas.getBoundingClientRect();
-      var nw = Math.max(1, Math.round(r.width));
-      var nh = Math.max(1, Math.round(r.height));
-      if (nw === w && nh === h) return false;
-      w = nw;
-      h = nh;
+      /* Under to pixels er målingen ikke klar — layoutet er ikke faldet på
+         plads endnu. Lad det forrige billede stå, til en rigtig måling
+         kommer, i stedet for at låse canvasset fast i én pixels bredde. */
+      if (r.width < 2 || r.height < 2) return false;
+      if (r.width === w && r.height === h) return false;
+      w = r.width;
+      h = r.height;
       canvas.width = Math.round(w * dpr);
       canvas.height = Math.round(h * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      if (spec.layout) spec.layout(w, h);
+      sized = true;
       return true;
     }
 
     function paint(t) {
+      if (!sized) return;
       ctx.clearRect(0, 0, w, h);
       spec.draw(ctx, w, h, t, reduced());
     }
@@ -76,12 +80,30 @@
       raf = null;
     }
 
+    /* Slår den første måling fejl, prøver vi igen på de næste billeder.
+       ResizeObserver fanger de fleste tilfælde, men ikke dem, hvor
+       elementets kasse aldrig ændrer sig — den blev bare målt for tidligt.
+       Afgrænset til halvandet sekund, så der ikke kører en løkke for evigt. */
+    var forsoeg = 0;
+    function ensureSized() {
+      if (sized || !alive) return;
+      if (measure()) {
+        paint(0);
+        return;
+      }
+      if (++forsoeg < 90) requestAnimationFrame(ensureSized);
+    }
+
     function resized() {
-      if (measure() || reduced()) paint(0);
+      /* Kører løkken, tegner den selv næste billede. Står den stille —
+         fordi bevægelse er slået fra, eller sektionen er ude af syne —
+         skal der tegnes her, for canvas.width nulstiller billedet. */
+      if (measure() && raf === null) paint(0);
     }
 
     measure();
     paint(0);
+    ensureSized();
 
     if (window.ResizeObserver) {
       ro = new ResizeObserver(resized);
@@ -124,34 +146,41 @@
     };
   }
 
-  /* ── Lysene bag hero ──────────────────────────────────────
-     Små stjerner, der ånder i utakt. */
+  /* ── Stjernefeltet ────────────────────────────────────────
+     Positionerne gemmes som forholdstal mellem 0 og 1 — ALDRIG i pixels.
+     Måler man canvasset, før layoutet er faldet på plads (og det sker i
+     Shopifys temaeditor hele tiden), bliver en pixelposition regnet ud fra
+     en forkert bredde, og stjernerne ender som en klump i venstre side.
+     Med forholdstal kan en forkert måling ikke ødelægge noget — den giver
+     ét forkert billede, som retter sig selv ved næste måling.
+
+     Feltet bygges én gang. Byggede man det fra målingen, ville stjernerne
+     få nye tilfældige pladser, hver gang vinduet ændrede størrelse. */
   function stars(canvas) {
     var count = num(canvas, 'data-cns-count', 46);
     var spread = num(canvas, 'data-cns-spread', 1);
     var dim = num(canvas, 'data-cns-dim', 1);
 
     var pts = [];
+    for (var i = 0; i < count; i++) {
+      pts.push({
+        nx: Math.random(),
+        ny: Math.random() * spread,
+        r: 0.7 + Math.random() * 1.7,
+        a: (0.26 + Math.random() * 0.54) * dim,
+        /* Blinket: hver stjerne har sin egen periode på 3,5-8 sekunder.
+           Langsomt og uregelmæssigt, så det ikke virker mekanisk. */
+        per: 3500 + Math.random() * 4500,
+        p: Math.random() * Math.PI * 2
+      });
+    }
 
     return engine(canvas, {
-      layout: function (w, h) {
-        pts = [];
-        for (var i = 0; i < count; i++) {
-          pts.push({
-            x: Math.random() * w,
-            y: Math.random() * h * spread,
-            r: 0.7 + Math.random() * 1.7,
-            a: (0.26 + Math.random() * 0.54) * dim,
-            /* Blinket: hver stjerne har sin egen periode på 3,5-8 sekunder.
-               Langsomt og uregelmæssigt, så det ikke virker mekanisk. */
-            per: 3500 + Math.random() * 4500,
-            p: Math.random() * Math.PI * 2
-          });
-        }
-      },
       draw: function (ctx, w, h, t, still) {
         for (var i = 0; i < pts.length; i++) {
           var d = pts[i];
+          var x = d.nx * w;
+          var y = d.ny * h;
           /* sin² giver en blød kurve: længe tændt, kort dæmpet — som et
              åndedrag. Fra 12 til 100 procent, så blinket faktisk kan ses. */
           var sn = Math.sin((t / d.per) * Math.PI * 2 + d.p);
@@ -159,17 +188,17 @@
           var a = d.a * pulse;
           /* Skæret vokser og skrumper med lyset, ikke kun styrken */
           var halo = d.r * (5 + 4 * pulse);
-          var g = ctx.createRadialGradient(d.x, d.y, 0, d.x, d.y, halo);
+          var g = ctx.createRadialGradient(x, y, 0, x, y, halo);
           g.addColorStop(0, 'rgba(244,220,174,' + a + ')');
           g.addColorStop(0.35, 'rgba(226,192,138,' + a * 0.3 + ')');
           g.addColorStop(1, 'rgba(226,192,138,0)');
           ctx.fillStyle = g;
           ctx.beginPath();
-          ctx.arc(d.x, d.y, halo, 0, Math.PI * 2);
+          ctx.arc(x, y, halo, 0, Math.PI * 2);
           ctx.fill();
           ctx.fillStyle = 'rgba(255,246,228,' + Math.min(1, a * 1.5) + ')';
           ctx.beginPath();
-          ctx.arc(d.x, d.y, d.r * 0.62, 0, Math.PI * 2);
+          ctx.arc(x, y, d.r * 0.62, 0, Math.PI * 2);
           ctx.fill();
         }
       }
