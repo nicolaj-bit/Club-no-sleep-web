@@ -22,6 +22,15 @@
   --cns-sand: #ede1d0;
   --cns-sand-soft: #a2917e;
 
+  /* De gamle variabelnavne peger videre på de nye. Et tema, hvis
+     sektionsfiler endnu ikke er opdateret, bruger stadig --cns-night-3 og
+     --cns-dawn. Uden de her linjer bliver de opslag ugyldige, og så
+     kasserer browseren hele baggrunden og efterlader en hvid flade. */
+  --cns-night-2: var(--cns-night-deep);
+  --cns-night-3: var(--cns-night);
+  --cns-dawn: var(--cns-morning-light);
+  --cns-dawn-2: var(--cns-morning);
+
   --cns-measure: 544px;
   --cns-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
   --cns-sans: 'Jost', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
