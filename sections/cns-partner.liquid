@@ -7,8 +7,24 @@
 
 <section
   id="cns-{{ section.id }}"
-  class="cns cns-section cns-space--{{ section.settings.cns_space }} cns-partner cns-bg--{{ section.settings.cns_bg }}"
+  class="cns cns-section cns-space--{{ section.settings.cns_space }} cns-partner cns-bg--{{ section.settings.cns_bg }}{% if section.settings.show_stars %} cns-starfield{% endif %}"
 >
+  {%- comment -%}
+    Canvasset er første barn, så feltet ligger bagest. Indholdet nedenfor
+    ligger i .cns-wrap, som starfield-reglen løfter op over det.
+  {%- endcomment -%}
+  {%- if section.settings.show_stars -%}
+    <canvas
+      class="cns-starfield__canvas cns-stars{% if section.settings.star_mask != 'ingen' %} cns-starfield__canvas--{{ section.settings.star_mask }} cns-stars--{{ section.settings.star_mask }}{% endif %}"
+      data-cns-canvas="stars"
+      data-cns-count="{{ section.settings.star_count }}"
+      data-cns-spread="{{ section.settings.star_spread | divided_by: 100.0 }}"
+      data-cns-dim="{{ section.settings.star_dim | divided_by: 100.0 }}"
+      data-cns-halo="{{ section.settings.star_halo | divided_by: 100.0 }}"
+      aria-hidden="true"
+    ></canvas>
+  {%- endif -%}
+
   {%- if section.settings.cns_anchor != blank -%}
     <span class="cns-anchor" id="{{ section.settings.cns_anchor | handle }}"></span>
   {%- endif -%}
@@ -60,6 +76,10 @@
     </div>
   </div>
 </section>
+
+{%- if section.settings.show_stars -%}
+  <script src="{{ 'cns-lights.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
 
 {% schema %}
 {
@@ -119,6 +139,71 @@
       "id": "body",
       "label": "Brødtekst",
       "default": "<p>Én konto rummer altid en bruger mere, uden at det koster ekstra. Din partner får sin egen adgang på sin egen telefon og kan følge søvnlog, kalender og tigerspring med dig.</p><p>Så er det ikke længere dig, der skal huske det hele og fortælle det videre.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Stjernerne"
+    },
+    {
+      "type": "paragraph",
+      "content": "Himlen åbner sig lige før solopgangen. Stjernerne er stærkest i bunden, dér hvor solopgangen begynder."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stars",
+      "label": "Vis stjernerne",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "star_count",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "label": "Antal stjerner",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "star_dim",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Styrke",
+      "default": 90
+    },
+    {
+      "type": "range",
+      "id": "star_halo",
+      "min": 40,
+      "max": 150,
+      "step": 2,
+      "unit": "%",
+      "label": "Skær",
+      "info": "Mindre skær lægger stjernen længere bagud i billedet.",
+      "default": 82
+    },
+    {
+      "type": "range",
+      "id": "star_spread",
+      "min": 30,
+      "max": 100,
+      "step": 2,
+      "unit": "%",
+      "label": "Hvor langt ned stjernerne når",
+      "default": 98
+    },
+    {
+      "type": "select",
+      "id": "star_mask",
+      "label": "Maskens retning",
+      "options": [
+        { "value": "rise", "label": "Toner ind mod bunden" },
+        { "value": "fade", "label": "Toner ud mod bunden" },
+        { "value": "ingen", "label": "Ingen maske" }
+      ],
+      "default": "rise"
     }
   ],
   "blocks": [

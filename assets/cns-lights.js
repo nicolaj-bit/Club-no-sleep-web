@@ -160,6 +160,7 @@
     var count = num(canvas, 'data-cns-count', 46);
     var spread = num(canvas, 'data-cns-spread', 1);
     var dim = num(canvas, 'data-cns-dim', 1);
+    var halo = num(canvas, 'data-cns-halo', 1);
 
     var pts = [];
     for (var i = 0; i < count; i++) {
@@ -186,19 +187,21 @@
           var sn = Math.sin((t / d.per) * Math.PI * 2 + d.p);
           var pulse = still ? 1 : 0.12 + 0.88 * (sn * sn);
           var a = d.a * pulse;
-          /* Skæret vokser og skrumper med lyset, ikke kun styrken */
-          var halo = d.r * (5 + 4 * pulse);
-          var g = ctx.createRadialGradient(x, y, 0, x, y, halo);
+          /* Skæret vokser og skrumper med lyset, ikke kun styrken.
+             halo skruer det samlede skær op og ned — mindre skær lægger
+             stjernen længere bagud i billedet. */
+          var glo = d.r * (5 + 4 * pulse) * halo;
+          var g = ctx.createRadialGradient(x, y, 0, x, y, glo);
           g.addColorStop(0, 'rgba(244,220,174,' + a + ')');
           g.addColorStop(0.35, 'rgba(226,192,138,' + a * 0.3 + ')');
           g.addColorStop(1, 'rgba(226,192,138,0)');
           ctx.fillStyle = g;
           ctx.beginPath();
-          ctx.arc(x, y, halo, 0, Math.PI * 2);
+          ctx.arc(x, y, glo, 0, Math.PI * 2);
           ctx.fill();
-          ctx.fillStyle = 'rgba(255,246,228,' + Math.min(1, a * 1.5) + ')';
+          ctx.fillStyle = 'rgba(255,246,228,' + Math.min(1, a * 1.35) + ')';
           ctx.beginPath();
-          ctx.arc(x, y, d.r * 0.62, 0, Math.PI * 2);
+          ctx.arc(x, y, d.r * 0.55 * halo, 0, Math.PI * 2);
           ctx.fill();
         }
       }

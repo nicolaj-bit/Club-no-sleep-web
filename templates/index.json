@@ -149,7 +149,13 @@
         "cns_anchor": "cns-klubben",
         "hour": "05.55",
         "heading": "Du skal ikke stå med det hele alene",
-        "body": "<p>Én konto rummer altid en bruger mere, uden at det koster ekstra. Din partner får sin egen adgang på sin egen telefon og kan følge søvnlog, kalender og tigerspring med dig.</p><p>Så er det ikke længere dig, der skal huske det hele og fortælle det videre.</p>"
+        "body": "<p>Én konto rummer altid en bruger mere, uden at det koster ekstra. Din partner får sin egen adgang på sin egen telefon og kan følge søvnlog, kalender og tigerspring med dig.</p><p>Så er det ikke længere dig, der skal huske det hele og fortælle det videre.</p>",
+        "show_stars": true,
+        "star_count": 56,
+        "star_dim": 90,
+        "star_halo": 82,
+        "star_spread": 98,
+        "star_mask": "rise"
       },
       "blocks": {
         "person_sara": {

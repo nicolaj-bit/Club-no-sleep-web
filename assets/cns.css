@@ -410,6 +410,29 @@
   );
 }
 
+/* 05.55 — sektionen lige før solopgangen. Her vender masken: stjernerne
+   kommer til syne nedefter og er stærkest i bunden, præcis hvor
+   solopgangen begynder. Solopgangens eget felt fører dem videre. */
+.cns-starfield__canvas--rise,
+.cns-stars--rise {
+  -webkit-mask-image: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.28) 16%,
+    rgba(0, 0, 0, 0.66) 46%,
+    rgba(0, 0, 0, 0.92) 76%,
+    rgba(0, 0, 0, 1) 100%
+  );
+  mask-image: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.28) 16%,
+    rgba(0, 0, 0, 0.66) 46%,
+    rgba(0, 0, 0, 0.92) 76%,
+    rgba(0, 0, 0, 1) 100%
+  );
+}
+
 .cns-starfield > .cns-wrap {
   z-index: 1;
 }
