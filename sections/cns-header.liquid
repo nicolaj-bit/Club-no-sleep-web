@@ -8,6 +8,15 @@
   baggrund, så snart der scrolles. På sider uden hero starter den mørk.
 {%- endcomment -%}
 
+{%- comment -%}
+  Butiksadresserne står i temaindstillingerne, så de kan rettes ét sted.
+  Reserveværdien sikrer, at knappen aldrig står med et tomt link.
+{%- endcomment -%}
+{%- liquid
+  assign cns_ios = settings.cns_app_store_url | default: 'https://apps.apple.com/app/id6764388095'
+  assign cns_android = settings.cns_google_play_url | default: 'https://play.google.com/store/apps/details?id=com.base699f47a86e7e0a874d1159ed.app'
+-%}
+
 {%- liquid
   assign overlay = false
   if template.name == 'index'
@@ -53,7 +62,14 @@
       {%- endif -%}
 
       {%- if section.settings.cta_label != blank -%}
-        <a class="cns-header__cta" href="{{ section.settings.cta_url | default: '#' }}">
+        <a
+          class="cns-header__cta"
+          href="{{ cns_ios }}"
+          data-cns-store-link
+          data-cns-ios="{{ cns_ios }}"
+          data-cns-android="{{ cns_android }}"
+          data-cns-scroll-to="{{ section.settings.scroll_to | handle }}"
+        >
           {{- section.settings.cta_label -}}
         </a>
       {%- endif -%}
@@ -78,7 +94,14 @@
         <a class="cns-header__link" href="{{ block.settings.url | default: '#' }}">{{ block.settings.label }}</a>
       {%- endfor -%}
       {%- if section.settings.cta_label != blank -%}
-        <a class="cns-header__cta" href="{{ section.settings.cta_url | default: '#' }}">
+        <a
+          class="cns-header__cta"
+          href="{{ cns_ios }}"
+          data-cns-store-link
+          data-cns-ios="{{ cns_ios }}"
+          data-cns-android="{{ cns_android }}"
+          data-cns-scroll-to="{{ section.settings.scroll_to | handle }}"
+        >
           {{- section.settings.cta_label -}}
         </a>
       {%- endif -%}
@@ -135,6 +158,8 @@
   })();
 </script>
 
+<script src="{{ 'cns-store.js' | asset_url }}" defer="defer"></script>
+
 {% schema %}
 {
   "name": "CNS header",
@@ -178,9 +203,11 @@
       "default": "Hent appen"
     },
     {
-      "type": "url",
-      "id": "cta_url",
-      "label": "Knappens link"
+      "type": "text",
+      "id": "scroll_to",
+      "label": "Rul til (anker) på computer",
+      "info": "På computer kan man ikke installere appen. Så ruller knappen hen til sektionen med dette anker i stedet.",
+      "default": "cns-pris"
     },
     {
       "type": "header",

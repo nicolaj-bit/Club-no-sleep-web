@@ -8,8 +8,8 @@
         "brand": "Club No Sleep",
         "logo_height": 30,
         "cta_label": "Hent appen",
-        "cta_url": "https://apps.apple.com/app/id6764388095",
-        "menu_label": "Menu"
+        "menu_label": "Menu",
+        "scroll_to": "cns-pris"
       },
       "blocks": {
         "link_app": {
@@ -34,8 +34,14 @@
           }
         }
       },
-      "block_order": ["link_app", "link_klubben", "link_pris"]
+      "block_order": [
+        "link_app",
+        "link_klubben",
+        "link_pris"
+      ]
     }
   },
-  "order": ["cns_header"]
+  "order": [
+    "cns_header"
+  ]
 }

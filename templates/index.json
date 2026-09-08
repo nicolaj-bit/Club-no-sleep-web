@@ -266,8 +266,10 @@
         "price": "7 dage gratis",
         "price_note": "derefter 59 kr. pr. måned",
         "cta_label": "Hent appen og prøv gratis",
-        "cta_url": "https://apps.apple.com/app/id6764388095",
-        "fine": "Abonnementet fornyes automatisk, indtil du opsiger. Du kan opsige når som helst i App Store eller Google Play — også i prøveperioden."
+        "fine": "Abonnementet fornyes automatisk, indtil du opsiger. Du kan opsige når som helst i App Store eller Google Play — også i prøveperioden.",
+        "cta_label_ios": "Hent i App Store",
+        "cta_label_android": "Hent på Google Play",
+        "scroll_to": "cns-top"
       }
     }
   },

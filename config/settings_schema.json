@@ -1556,5 +1556,25 @@
         "default": "#5A4838"
       }
     ]
+  },
+  {
+    "name": "Club No Sleep — app",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Adresserne til appen i de to butikker. Knappen «Hent appen» vælger selv den rigtige ud fra besøgendes telefon."
+      },
+      {
+        "type": "url",
+        "id": "cns_app_store_url",
+        "label": "App Store",
+        "info": "Bruges også som knappens almindelige link, hvis JavaScript fejler."
+      },
+      {
+        "type": "url",
+        "id": "cns_google_play_url",
+        "label": "Google Play"
+      }
+    ]
   }
 ]
