@@ -1,21 +1,16 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "cns_hero": {
       "type": "cns-hero",
-      "settings": {
-        "cns_bg": "dyb-nat",
-        "cns_anchor": "cns-top",
-        "mark": "Club No Sleep",
-        "heading": "Til dig, der er vågen,",
-        "heading_em": "når resten af verden sover.",
-        "lede": "<p>En dansk app til de timer, ingen taler om. Se hvem der er vågne lige nu, følg barnets søvn, og få svar klokken fire om natten — uden at vække nogen.</p>",
-        "trialnote": "Prøv gratis i 7 dage · Derefter 59 kr. pr. måned · Opsig når som helst",
-        "show_lights": true,
-        "light_count": 46,
-        "light_dim": 100,
-        "light_spread": 92,
-        "fade_stars": false
-      },
       "blocks": {
         "store_apple": {
           "type": "store",
@@ -41,7 +36,21 @@
       "block_order": [
         "store_apple",
         "store_google"
-      ]
+      ],
+      "settings": {
+        "cns_bg": "dyb-nat",
+        "cns_anchor": "cns-top",
+        "mark": "Club No Sleep",
+        "heading": "Til dig, der er vågen,",
+        "heading_em": "når resten af verden sover.",
+        "lede": "<p>En dansk app til de timer, ingen taler om. Se hvem der er vågne lige nu, følg barnets søvn, og få svar klokken fire om natten — uden at vække nogen.</p>",
+        "trialnote": "Prøv gratis i 7 dage · Derefter 59 kr. pr. måned · Opsig når som helst",
+        "show_lights": true,
+        "light_count": 46,
+        "light_dim": 100,
+        "light_spread": 92,
+        "fade_stars": false
+      }
     },
     "cns_ensomhed": {
       "type": "cns-hour-text",
@@ -52,6 +61,7 @@
         "hour": "02.14",
         "quietline": "Der findes en helt særlig form for ensomhed i moderskabet.",
         "body": "<p>Den kommer snigende om natten, når baby igen er vågen og resten af verden er stille. Frygten for natten starter allerede i løbet af eftermiddagen. Far sover på sofaen, mor sover siddende, og ingen forstår helt, hvad du står i.</p><p>Club No Sleep er skabt til de timer. Ikke for at fikse noget — men for at du ikke skal sidde i dem alene.</p>",
+        "show_page_content": false,
         "show_stars": true,
         "star_count": 26,
         "star_dim": 70,
@@ -72,22 +82,6 @@
     },
     "cns_appen": {
       "type": "cns-phones",
-      "settings": {
-        "cns_bg": "dyb-nat",
-        "cns_space": "standard",
-        "cns_anchor": "cns-app",
-        "hour": "04.20",
-        "heading": "Det, du har brug for klokken fire",
-        "show_phones": true,
-        "screen_1_time": "04.20",
-        "screen_1_title": "Søvnlog",
-        "screen_1_timer": "2t 14m",
-        "screen_1_timer_label": "Sover · startet 02.06",
-        "screen_1_rows": "Vågen | 01.12 – 02.06\nSov | 22.40 – 01.12\nVågen | 21.55 – 22.40",
-        "screen_2_time": "03.41",
-        "screen_2_title": "Et lys i mørket",
-        "screen_2_badge": "7 vågne i Danmark"
-      },
       "blocks": {
         "feat_1": {
           "type": "feature",
@@ -139,24 +133,26 @@
         "feat_4",
         "feat_5",
         "feat_6"
-      ]
+      ],
+      "settings": {
+        "cns_bg": "dyb-nat",
+        "cns_space": "standard",
+        "cns_anchor": "cns-app",
+        "hour": "04.20",
+        "heading": "Det, du har brug for klokken fire",
+        "show_phones": true,
+        "screen_1_time": "04.20",
+        "screen_1_title": "Søvnlog",
+        "screen_1_timer": "2t 14m",
+        "screen_1_timer_label": "Sover · startet 02.06",
+        "screen_1_rows": "Vågen | 01.12 – 02.06\nSov | 22.40 – 01.12\nVågen | 21.55 – 22.40",
+        "screen_2_time": "03.41",
+        "screen_2_title": "Et lys i mørket",
+        "screen_2_badge": "7 vågne i Danmark"
+      }
     },
     "cns_partner": {
       "type": "cns-partner",
-      "settings": {
-        "cns_bg": "nat",
-        "cns_space": "standard",
-        "cns_anchor": "cns-klubben",
-        "hour": "05.55",
-        "heading": "Du skal ikke stå med det hele alene",
-        "body": "<p>Én konto rummer altid en bruger mere, uden at det koster ekstra. Din partner får sin egen adgang på sin egen telefon og kan følge søvnlog, kalender og tigerspring med dig.</p><p>Så er det ikke længere dig, der skal huske det hele og fortælle det videre.</p>",
-        "show_stars": true,
-        "star_count": 56,
-        "star_dim": 90,
-        "star_halo": 82,
-        "star_spread": 98,
-        "star_mask": "rise"
-      },
       "blocks": {
         "person_sara": {
           "type": "person",
@@ -175,19 +171,26 @@
             "status": "Aktiv",
             "initial": ""
           }
-        },
-        "person_invite": {
-          "type": "invite",
-          "settings": {
-            "label": "Invitér partner"
-          }
         }
       },
       "block_order": [
         "person_sara",
-        "person_nicolaj",
-        "person_invite"
-      ]
+        "person_nicolaj"
+      ],
+      "settings": {
+        "cns_bg": "nat",
+        "cns_space": "standard",
+        "cns_anchor": "cns-klubben",
+        "hour": "05.55",
+        "heading": "Du skal ikke stå med det hele alene",
+        "body": "<p>Én konto rummer altid en bruger mere, uden at det koster ekstra. Din partner får sin egen adgang på sin egen telefon og kan følge søvnlog, kalender og tigerspring med dig.</p><p>Så er det ikke længere dig, der skal huske det hele og fortælle det videre.</p>",
+        "show_stars": true,
+        "star_count": 56,
+        "star_dim": 90,
+        "star_halo": 82,
+        "star_spread": 98,
+        "star_mask": "rise"
+      }
     },
     "cns_daggry": {
       "type": "cns-daybreak",
@@ -204,29 +207,16 @@
       "settings": {
         "cns_bg": "lys-morgen",
         "cns_space": "standard",
+        "continues": true,
         "cns_anchor": "",
         "hour": "06.30",
         "heading": "Kom med i klubben",
         "body": "<p>Vi har været der. Der hvor nætterne er svære, dagene er lange, og ingen helt forstår, hvad du står i.</p><p>Club No Sleep er skabt til dig, som savner et sted at blive spejlet og finde andre, der er vågne sammen med dig. Kom med — for din egen skyld, og for alle de mødre, der føler sig alene netop nu.</p><p>Sammen kan vi mindske ensomheden i moderskabet.</p>",
-        "signature": "Kærligst og kram fra Sara & Nicolaj",
-        "continues": true
+        "signature": "Kærligst og kram fra Sara & Nicolaj"
       }
     },
     "cns_medlemskab": {
       "type": "cns-plan",
-      "settings": {
-        "cns_bg": "lys-morgen",
-        "cns_space": "standard",
-        "tight_top": true,
-        "fade_down": true,
-        "cns_anchor": "cns-pris",
-        "tag": "Prøv gratis i 7 dage",
-        "price": "7 dage gratis",
-        "price_note": "derefter 59 kr. pr. måned",
-        "cta_label": "Hent appen og prøv gratis",
-        "cta_url": "https://apps.apple.com/app/id6764388095",
-        "fine": "Abonnementet fornyes automatisk, indtil du opsiger. Du kan opsige når som helst i App Store eller Google Play — også i prøveperioden."
-      },
       "blocks": {
         "benefit_1": {
           "type": "benefit",
@@ -265,7 +255,20 @@
         "benefit_3",
         "benefit_4",
         "benefit_5"
-      ]
+      ],
+      "settings": {
+        "cns_bg": "lys-morgen",
+        "cns_space": "standard",
+        "tight_top": true,
+        "fade_down": true,
+        "cns_anchor": "cns-pris",
+        "tag": "Prøv gratis i 7 dage",
+        "price": "7 dage gratis",
+        "price_note": "derefter 59 kr. pr. måned",
+        "cta_label": "Hent appen og prøv gratis",
+        "cta_url": "https://apps.apple.com/app/id6764388095",
+        "fine": "Abonnementet fornyes automatisk, indtil du opsiger. Du kan opsige når som helst i App Store eller Google Play — også i prøveperioden."
+      }
     }
   },
   "order": [
