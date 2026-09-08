@@ -295,20 +295,25 @@
     {%- comment -%}
       Farverne kommer fra temaindstillingerne, så de kan rettes ét sted.
       Blokken står efter cns.css og overskriver dens standardværdier.
+
+      default-filteret er ikke pynt. Er en indstilling tom — for eksempel
+      fordi butikkens gemte indstillinger er ældre end farvegruppen —
+      bliver variablen tom, og så kasserer browseren hver eneste
+      erklæring, der bruger den. Resultatet er hvide flader.
     {%- endcomment -%}
     {% style %}
       :root {
-        --cns-night: {{ settings.cns_bg_night }};
-        --cns-night-deep: {{ settings.cns_bg_night_deep }};
-        --cns-morning: {{ settings.cns_bg_morning }};
-        --cns-morning-light: {{ settings.cns_bg_morning_light }};
-        --cns-glow: {{ settings.cns_glow }};
-        --cns-gold: {{ settings.cns_gold }};
-        --cns-gold-deep: {{ settings.cns_gold_deep }};
-        --cns-sand: {{ settings.cns_sand }};
-        --cns-sand-soft: {{ settings.cns_sand_soft }};
-        --cns-ink: {{ settings.cns_ink }};
-        --cns-ink-soft: {{ settings.cns_ink_soft }};
+        --cns-night: {{ settings.cns_bg_night | default: '#221C16' }};
+        --cns-night-deep: {{ settings.cns_bg_night_deep | default: '#12100D' }};
+        --cns-morning: {{ settings.cns_bg_morning | default: '#D0C1AA' }};
+        --cns-morning-light: {{ settings.cns_bg_morning_light | default: '#DDD0BC' }};
+        --cns-glow: {{ settings.cns_glow | default: '#F4DCAE' }};
+        --cns-gold: {{ settings.cns_gold | default: '#C8A882' }};
+        --cns-gold-deep: {{ settings.cns_gold_deep | default: '#A9866A' }};
+        --cns-sand: {{ settings.cns_sand | default: '#EDE1D0' }};
+        --cns-sand-soft: {{ settings.cns_sand_soft | default: '#A2917E' }};
+        --cns-ink: {{ settings.cns_ink | default: '#2A1B10' }};
+        --cns-ink-soft: {{ settings.cns_ink_soft | default: '#5A4838' }};
       }
     {% endstyle %}
     <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">

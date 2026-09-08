@@ -819,6 +819,24 @@
 }
 
 /* ── Overgangen fra nat til daggry ────────────────────────── */
+/* Sidste net. Skulle en sektions baggrund alligevel blive kasseret,
+   skinner Shopifys indpakning igennem i stedet for Dawns hvide side. */
+.cns-header-section,
+.cns-hero-section,
+.cns-hour-text-section,
+.cns-map-section,
+.cns-phones-section,
+.cns-partner-section,
+.cns-daybreak-section,
+.cns-footer-section {
+  background-color: #12100d;
+}
+
+.cns-letter-section,
+.cns-plan-section {
+  background-color: #ddd0bc;
+}
+
 /* ── Solopgangen ──────────────────────────────────────────
    En rigtig morgenhimmel er ikke én lige farveovergang. Den er fire
    ting oven på hinanden: nattens farve der slipper sit tag, et varmt
@@ -833,7 +851,14 @@
   display: block;
   position: relative;
   overflow: hidden;
-  background:
+  /* Fast reservefarve i sin egen erklæring. Bliver himlen nedenfor
+     kasseret — én ugyldig værdi kasserer hele erklæringen — så bliver
+     sektionen mørk i stedet for hvid. En hvid flade midt i en mørk side
+     er den værst tænkelige fejltilstand. background-color og
+     background-image er to forskellige egenskaber, så den ene overlever,
+     når den anden dør. Derfor ikke background-genvejen her. */
+  background-color: #221c16;
+  background-image:
     /* Skæret er næsten væk. Kun nok til at man aner en retning i lyset. */
     radial-gradient(
       190% 105% at 50% 132%,
