@@ -16,7 +16,7 @@
 
   {%- if section.settings.show_lights -%}
     <canvas
-      class="cns-stars{% if section.settings.fade_stars %} cns-stars--fade{% endif %}"
+      class="cns-starfield__canvas cns-stars{% if section.settings.fade_stars %} cns-starfield__canvas--fade cns-stars--fade{% endif %}"
       data-cns-canvas="stars"
       data-cns-count="{{ section.settings.light_count }}"
       data-cns-spread="{{ section.settings.light_spread }}"

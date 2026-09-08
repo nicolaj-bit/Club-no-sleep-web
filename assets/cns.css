@@ -346,16 +346,34 @@
 /* ── Stjernefeltet ────────────────────────────────────────
    Samme canvas i hero, i sektionen under den og i solopgangen.
    Kun tætheden og styrken er forskellig. */
+/* inset:0 virker kun, hvis ophavet er position:relative. .cns sætter det
+   allerede, men klassen skal også kunne bruges alene. */
 .cns-starfield {
+  position: relative;
   overflow: hidden;
 }
 
+/* Hvert canvas i en cns-sektion er en dekoration, der skal fylde sit ophav
+   helt ud. Reglen rammer på klasserne alene — intet id og ingen
+   barn-selektor — og .cns canvas er sikkerhedsnettet: kommer markup og
+   stilark nogensinde ud af trit, falder canvasset ikke tilbage til sin
+   egen standardstørrelse på 300 x 150 og lander i det normale flow.
+   Uden display:block får det desuden en linjehøjde med, og så passer
+   kassens højde ikke med billedets. */
+.cns canvas,
+.cns-starfield__canvas,
+.cns-map__canvas,
+.cns-phone__canvas,
 .cns-stars {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   display: block;
+}
+
+.cns-starfield__canvas,
+.cns-stars {
   z-index: 0;
   pointer-events: none;
 }
@@ -363,6 +381,7 @@
 /* Masken gør, at feltet aldrig slutter et sted, øjet kan se.
    Hero'en får den ikke: dér fortsætter feltet ned i næste sektion,
    og en maske ville lave netop den kant, den skulle undgå. */
+.cns-starfield__canvas--fade,
 .cns-stars--fade {
   -webkit-mask-image: linear-gradient(
     180deg,
@@ -845,6 +864,7 @@
 }
 
 /* Stjernerne, der endnu ikke er gået ud, holder ved øverst */
+.cns-daybreak .cns-starfield__canvas,
 .cns-daybreak .cns-stars {
   -webkit-mask-image: linear-gradient(
     180deg,
