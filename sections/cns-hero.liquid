@@ -19,8 +19,8 @@
       class="cns-starfield__canvas cns-stars{% if section.settings.fade_stars %} cns-starfield__canvas--fade cns-stars--fade{% endif %}"
       data-cns-canvas="stars"
       data-cns-count="{{ section.settings.light_count }}"
-      data-cns-spread="{{ section.settings.light_spread }}"
-      data-cns-dim="{{ section.settings.light_dim }}"
+      data-cns-spread="{{ section.settings.light_spread | divided_by: 100.0 }}"
+      data-cns-dim="{{ section.settings.light_dim | divided_by: 100.0 }}"
       aria-hidden="true"
     ></canvas>
   {%- endif -%}
@@ -163,20 +163,22 @@
     {
       "type": "range",
       "id": "light_dim",
-      "min": 0.2,
-      "max": 1,
-      "step": 0.05,
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
       "label": "Styrke",
-      "default": 1
+      "default": 100
     },
     {
       "type": "range",
       "id": "light_spread",
-      "min": 0.3,
-      "max": 1,
-      "step": 0.02,
+      "min": 30,
+      "max": 100,
+      "step": 2,
+      "unit": "%",
       "label": "Hvor langt ned stjernerne når",
-      "default": 0.92
+      "default": 92
     },
     {
       "type": "checkbox",

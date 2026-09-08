@@ -12,8 +12,8 @@
         "trialnote": "Prøv gratis i 7 dage · Derefter 59 kr. pr. måned · Opsig når som helst",
         "show_lights": true,
         "light_count": 46,
-        "light_dim": 1,
-        "light_spread": 0.92,
+        "light_dim": 100,
+        "light_spread": 92,
         "fade_stars": false
       },
       "blocks": {
@@ -54,7 +54,7 @@
         "body": "<p>Den kommer snigende om natten, når baby igen er vågen og resten af verden er stille. Frygten for natten starter allerede i løbet af eftermiddagen. Far sover på sofaen, mor sover siddende, og ingen forstår helt, hvad du står i.</p><p>Club No Sleep er skabt til de timer. Ikke for at fikse noget — men for at du ikke skal sidde i dem alene.</p>",
         "show_stars": true,
         "star_count": 26,
-        "star_dim": 0.7,
+        "star_dim": 70,
         "fade_stars": true
       }
     },
@@ -190,7 +190,7 @@
         "height": 460,
         "show_stars": true,
         "star_count": 14,
-        "star_dim": 0.45
+        "star_dim": 45
       }
     },
     "cns_brev": {

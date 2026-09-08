@@ -25,7 +25,7 @@
       class="cns-starfield__canvas cns-stars{% if section.settings.fade_stars %} cns-starfield__canvas--fade cns-stars--fade{% endif %}"
       data-cns-canvas="stars"
       data-cns-count="{{ section.settings.star_count }}"
-      data-cns-dim="{{ section.settings.star_dim }}"
+      data-cns-dim="{{ section.settings.star_dim | divided_by: 100.0 }}"
       aria-hidden="true"
     ></canvas>
   {%- endif -%}
@@ -150,11 +150,12 @@
     {
       "type": "range",
       "id": "star_dim",
-      "min": 0.2,
-      "max": 1,
-      "step": 0.05,
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
       "label": "Styrke",
-      "default": 0.7
+      "default": 70
     },
     {
       "type": "checkbox",
