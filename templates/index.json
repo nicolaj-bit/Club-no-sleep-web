@@ -71,13 +71,13 @@
     "cns_kort": {
       "type": "cns-map",
       "settings": {
-        "cns_bg": "nat",
+        "cns_bg": "dyb-nat",
         "cns_space": "standard",
         "cns_anchor": "",
         "hour": "03.41",
         "heading": "Et lys i mørket",
         "body": "<p>Når du starter en søvnlog, tændes dit lys på kortet. Andre vågne mødre ser det, og du ser deres. Ikke navne, ikke adresser — bare lys.</p><p>Vil du skrive til en af dem, kan du det. Vil du bare vide, at de er der, er det også nok. De fleste nætter er det nok.</p>",
-        "count": "<b>7</b> vågne i Danmark"
+        "count": "<strong>7</strong> vågne i Danmark"
       }
     },
     "cns_appen": {
@@ -266,10 +266,10 @@
         "price": "7 dage gratis",
         "price_note": "derefter 59 kr. pr. måned",
         "cta_label": "Hent appen og prøv gratis",
-        "fine": "Abonnementet fornyes automatisk, indtil du opsiger. Du kan opsige når som helst i App Store eller Google Play — også i prøveperioden.",
         "cta_label_ios": "Hent i App Store",
         "cta_label_android": "Hent på Google Play",
-        "scroll_to": "cns-top"
+        "scroll_to": "cns-top",
+        "fine": "Abonnementet fornyes automatisk, indtil du opsiger. Du kan opsige når som helst i App Store eller Google Play — også i prøveperioden."
       }
     }
   },
