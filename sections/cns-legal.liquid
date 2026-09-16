@@ -1,0 +1,261 @@
+{%- comment -%}
+  Club No Sleep — juridisk side.
+
+  Indholdet skrives som en almindelig Shopify-side i admin og hentes ind
+  med page.content. Der står ingen juridisk tekst i temaet.
+
+  Siden er lang og skal læses igennem, så den står på morgenfarverne og
+  ikke på nattefarverne. Flere tusind ord hvid-på-mørk er ulæseligt.
+{%- endcomment -%}
+
+{% render 'cns-palette', id: section.id, bg: section.settings.cns_bg %}
+
+{%- liquid
+  comment
+    «Senest opdateret» hentes ud af teksten, så datoen kun står ét sted —
+    i selve dokumentet. Sidste forekomst bruges: står den både i toppen
+    og i bunden, er det den nederste, der er den gældende.
+  endcomment
+  assign cns_opdateret = ''
+  assign cns_noegle = section.settings.updated_prefix
+  if cns_noegle != blank and page.content contains cns_noegle
+    assign cns_efter = page.content | split: cns_noegle | last
+    assign cns_opdateret = cns_efter | split: '<' | first | strip_html | strip
+  endif
+-%}
+
+{% style %}
+  {%- comment -%}
+    Udskriftsreglerne står her og ikke i cns.css, fordi de skal gælde
+    header og footer, som ligger uden for sektionen. Blokken findes kun
+    på sider med den her sektion, så ingen andre sider påvirkes.
+  {%- endcomment -%}
+  @media print {
+    .cns-header-host,
+    .cns-header-section,
+    .cns-footer-section,
+    .cns-footer {
+      display: none !important;
+    }
+
+    body {
+      background: #fff !important;
+    }
+  }
+{% endstyle %}
+
+<section
+  id="cns-{{ section.id }}"
+  class="cns cns-legal cns-bg--{{ section.settings.cns_bg }}"
+>
+  <div class="cns-wrap cns-legal__inner">
+    <header class="cns-legal__head">
+      <h1 class="cns-legal__title">{{ page.title | default: section.settings.fallback_title }}</h1>
+      {%- if cns_opdateret != blank -%}
+        <p class="cns-legal__meta">{{ section.settings.updated_label }} {{ cns_opdateret }}</p>
+      {%- endif -%}
+    </header>
+
+    {%- if section.settings.show_toc -%}
+      <nav class="cns-legal__toc" aria-label="{{ section.settings.toc_title | escape }}" data-cns-legal-toc-wrap hidden>
+        <p class="cns-legal__toc-title">{{ section.settings.toc_title }}</p>
+        <ol data-cns-legal-toc></ol>
+      </nav>
+    {%- endif -%}
+
+    <div
+      class="cns-legal__body"
+      data-cns-legal-body
+      data-cns-updated-prefix="{{ section.settings.updated_prefix | escape }}"
+      {% if section.settings.hide_first_heading %}data-cns-hide-first-heading{% endif %}
+    >
+      {{ page.content }}
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var rod = document.getElementById('cns-{{ section.id }}');
+    if (!rod || rod.dataset.cnsReady === '1') return;
+    rod.dataset.cnsReady = '1';
+
+    var krop = rod.querySelector('[data-cns-legal-body]');
+    if (!krop) return;
+
+    /* Teksten begynder som regel med sin egen titel og sin egen
+       «Senest opdateret», og begge dele står allerede øverst på siden.
+       Kun de indledende gentagelser skjules — datoen nederst i
+       dokumentet bliver stående, for dér hører den til. */
+    if (krop.hasAttribute('data-cns-hide-first-heading')) {
+      var foerste = krop.firstElementChild;
+      if (foerste && foerste.tagName === 'H2') foerste.hidden = true;
+
+      var praefiks = (krop.dataset.cnsUpdatedPrefix || '').trim();
+      if (praefiks) {
+        var start = krop.children;
+        for (var n = 0; n < Math.min(3, start.length); n++) {
+          var el = start[n];
+          if (el.tagName === 'P' && el.textContent.trim().indexOf(praefiks) === 0) {
+            el.hidden = true;
+            break;
+          }
+        }
+      }
+    }
+
+    var ramme = rod.querySelector('[data-cns-legal-toc-wrap]');
+    var liste = rod.querySelector('[data-cns-legal-toc]');
+    if (!ramme || !liste) return;
+
+    var overskrifter = [];
+    var alle = krop.querySelectorAll('h2');
+    for (var i = 0; i < alle.length; i++) {
+      if (!alle[i].hidden) overskrifter.push(alle[i]);
+    }
+
+    /* Under to afsnit er en indholdsfortegnelse bare støj. */
+    if (overskrifter.length < 2) return;
+
+    var punkter = [];
+    for (var j = 0; j < overskrifter.length; j++) {
+      var h = overskrifter[j];
+      if (!h.id) h.id = 'afsnit-' + (j + 1);
+
+      var a = document.createElement('a');
+      a.href = '#' + h.id;
+      a.textContent = h.textContent;
+
+      var li = document.createElement('li');
+      li.appendChild(a);
+      liste.appendChild(li);
+      punkter.push({ h: h, a: a });
+    }
+    ramme.hidden = false;
+
+    var blødt = !(
+      window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    );
+
+    liste.addEventListener('click', function (e) {
+      var a = e.target.closest ? e.target.closest('a') : null;
+      if (!a) return;
+      var maal = document.getElementById(a.getAttribute('href').slice(1));
+      if (!maal) return;
+      e.preventDefault();
+      maal.scrollIntoView({ behavior: blødt ? 'smooth' : 'auto', block: 'start' });
+      if (history.replaceState) history.replaceState(null, '', a.getAttribute('href'));
+    });
+
+    /* Markér det afsnit, man er nået til. */
+    var venter = false;
+    function marker() {
+      venter = false;
+      var graense = (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--cns-header-h')) || 64) + 40;
+      var aktiv = punkter[0];
+      for (var k = 0; k < punkter.length; k++) {
+        if (punkter[k].h.getBoundingClientRect().top <= graense) aktiv = punkter[k];
+      }
+      for (var m = 0; m < punkter.length; m++) {
+        if (punkter[m] === aktiv) punkter[m].a.setAttribute('aria-current', 'true');
+        else punkter[m].a.removeAttribute('aria-current');
+      }
+    }
+    window.addEventListener(
+      'scroll',
+      function () {
+        if (venter) return;
+        venter = true;
+        requestAnimationFrame(marker);
+      },
+      { passive: true }
+    );
+    marker();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "CNS juridisk side",
+  "tag": "section",
+  "class": "cns-legal-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Teksten skrives som en almindelig side under Online Store → Pages. Sektionen henter den ind — skriv ikke juridisk tekst i temaeditoren."
+    },
+    {
+      "type": "select",
+      "id": "cns_bg",
+      "label": "Baggrund",
+      "info": "Lange tekster skal stå lyst. Mørk baggrund med flere tusind ord er ulæseligt.",
+      "options": [
+        { "value": "lys-morgen", "label": "Lys morgen" },
+        { "value": "morgen", "label": "Morgen" },
+        { "value": "nat", "label": "Nat" },
+        { "value": "dyb-nat", "label": "Dyb nat" }
+      ],
+      "default": "lys-morgen"
+    },
+    {
+      "type": "text",
+      "id": "fallback_title",
+      "label": "Titel, hvis siden mangler en",
+      "default": "Juridisk"
+    },
+    {
+      "type": "header",
+      "content": "Senest opdateret"
+    },
+    {
+      "type": "text",
+      "id": "updated_prefix",
+      "label": "Find datoen efter denne tekst",
+      "info": "Teksten søges i sidens indhold, og det der står lige efter, vises øverst. Tøm feltet for at slå linjen fra.",
+      "default": "Senest opdateret:"
+    },
+    {
+      "type": "text",
+      "id": "updated_label",
+      "label": "Etiket øverst på siden",
+      "default": "Senest opdateret"
+    },
+    {
+      "type": "header",
+      "content": "Indholdsfortegnelse"
+    },
+    {
+      "type": "paragraph",
+      "content": "Bygges af sidens afsnitsoverskrifter. Vises kun på skærme bredere end 1000 pixels — på mobil er den i vejen."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_toc",
+      "label": "Vis indholdsfortegnelse",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "toc_title",
+      "label": "Overskrift",
+      "default": "Indhold"
+    },
+    {
+      "type": "header",
+      "content": "Gentagelser øverst"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_first_heading",
+      "label": "Skjul tekstens egen titel og dato øverst",
+      "info": "Dokumenter begynder som regel med deres titel og «Senest opdateret». Begge dele står allerede øverst på siden. Datoen nederst i dokumentet bliver stående.",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "CNS juridisk side"
+    }
+  ]
+}
+{% endschema %}

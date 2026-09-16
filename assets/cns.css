@@ -1184,3 +1184,270 @@
 .cns-phones__heading {
   margin-bottom: 36px;
 }
+
+/* ── Juridiske sider ───────────────────────────────────────
+   Flere tusind ords brødtekst, der skal læses igennem. Lys baggrund,
+   smal tekstbredde og rigelig luft over overskrifterne. */
+.cns-legal {
+  padding: clamp(48px, 7vw, 88px) 0 clamp(72px, 10vw, 120px);
+}
+
+.cns-legal__inner {
+  display: block;
+}
+
+.cns-legal__head {
+  margin-bottom: clamp(40px, 5vw, 64px);
+}
+
+.cns-legal__title {
+  font-size: clamp(32px, 4.6vw, 46px);
+  line-height: 1.12;
+}
+
+/* Det første en advokat eller en butiksmedarbejder skal se */
+.cns-legal__meta {
+  margin-top: 14px;
+  font-size: 13.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cns-fg-soft);
+}
+
+.cns-legal__body {
+  max-width: 68ch;
+  font-size: 17px;
+  line-height: 1.75;
+  /* Dawn arver en bogstavafstand ned på brødteksten. Den skal væk her,
+     ellers holder 68ch ikke som mål for, hvor mange tegn der er på
+     linjen — og tekstbredden er hele pointen på en lang side. */
+  letter-spacing: normal;
+  color: var(--cns-fg);
+}
+
+.cns-legal__body h2 {
+  font-family: var(--cns-serif);
+  font-weight: 300;
+  font-size: 28px;
+  line-height: 1.22;
+  color: var(--cns-fg);
+  margin: 56px 0 14px;
+}
+
+.cns-legal__body h3 {
+  font-family: var(--cns-serif);
+  font-weight: 300;
+  font-size: 21px;
+  line-height: 1.3;
+  color: var(--cns-fg);
+  margin: 36px 0 10px;
+}
+
+.cns-legal__body > :first-child {
+  margin-top: 0;
+}
+
+/* Klikker man i indholdsfortegnelsen, må overskriften ikke havne
+   inde under den faste header. */
+.cns-legal__body h2,
+.cns-legal__body h3 {
+  scroll-margin-top: calc(var(--cns-header-h) + 24px);
+}
+
+.cns-legal__body p {
+  margin: 0 0 18px;
+  /* Adresse- og kontaktblokke er skrevet med linjeskift inde i afsnittet.
+     Uden pre-line klistrer de sammen til én linje, og det er præcis de
+     blokke, en advokat eller en butiksmedarbejder leder efter.
+
+     Kun på afsnittene — sad den på beholderen, ville linjeskiftene
+     mellem elementerne også tælle med som luft. */
+  white-space: pre-line;
+}
+
+.cns-legal__body ul,
+.cns-legal__body ol {
+  list-style: disc;
+  margin: 18px 0 22px;
+  padding-left: 26px;
+}
+
+.cns-legal__body ol {
+  list-style: decimal;
+}
+
+.cns-legal__body li {
+  margin-bottom: 10px;
+  padding-left: 4px;
+}
+
+.cns-legal__body li::marker {
+  color: var(--cns-accent);
+}
+
+.cns-legal__body strong {
+  font-weight: 500;
+  color: var(--cns-fg);
+}
+
+.cns-legal__body em {
+  font-style: italic;
+  color: var(--cns-fg-soft);
+}
+
+.cns-legal__body a {
+  color: var(--cns-gold-deep);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.cns-legal__body hr {
+  border: 0;
+  height: 1px;
+  background: rgba(90, 72, 56, 0.22);
+  margin: 40px 0;
+}
+
+/* Dokumenterne sætter en streg foran hver overskrift. Stregens egen luft
+   og overskriftens luft lægger sig oven i hinanden, og så bliver der for
+   langt ned til teksten. */
+.cns-legal__body hr + h2,
+.cns-legal__body hr + h3 {
+  margin-top: 26px;
+}
+
+.cns-legal__body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 22px 0;
+  font-size: 15.5px;
+}
+
+.cns-legal__body th,
+.cns-legal__body td {
+  border: 1px solid rgba(90, 72, 56, 0.22);
+  padding: 9px 12px;
+  text-align: left;
+}
+
+/* ── Indholdsfortegnelsen ──────────────────────────────────
+   Kun på brede skærme. På mobil er den i vejen. */
+.cns-legal__toc {
+  display: none;
+}
+
+@media (min-width: 1000px) {
+  .cns-legal__inner {
+    display: grid;
+    grid-template-columns: 236px minmax(0, 1fr);
+    gap: 56px;
+    align-items: start;
+  }
+
+  .cns-legal__head {
+    grid-column: 1 / -1;
+  }
+
+  .cns-legal__toc {
+    display: block;
+    position: sticky;
+    top: calc(var(--cns-header-h) + 24px);
+    max-height: calc(100vh - var(--cns-header-h) - 56px);
+    overflow-y: auto;
+    font-size: 13.5px;
+    line-height: 1.45;
+  }
+}
+
+.cns-legal__toc-title {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--cns-fg-soft);
+  margin-bottom: 14px;
+}
+
+.cns-legal__toc ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-left: 1px solid rgba(90, 72, 56, 0.2);
+}
+
+.cns-legal__toc li {
+  margin: 0;
+}
+
+.cns-legal__toc a {
+  display: block;
+  padding: 7px 0 7px 14px;
+  margin-left: -1px;
+  border-left: 1px solid transparent;
+  color: var(--cns-fg-soft);
+  text-decoration: none;
+}
+
+.cns-legal__toc a:hover {
+  color: var(--cns-fg);
+}
+
+.cns-legal__toc a[aria-current='true'] {
+  color: var(--cns-fg);
+  border-left-color: var(--cns-gold-deep);
+}
+
+.cns-legal__toc a:focus-visible {
+  outline: 2px solid var(--cns-gold-deep);
+  outline-offset: 2px;
+}
+
+/* ── Udskrift ──────────────────────────────────────────────
+   Juridiske sider bliver printet oftere, end man tror. */
+@media print {
+  .cns-legal {
+    background: #fff !important;
+    color: #000 !important;
+    padding: 0 !important;
+  }
+
+  .cns-legal .cns-wrap {
+    max-width: none;
+    padding: 0;
+  }
+
+  .cns-legal__inner {
+    display: block !important;
+  }
+
+  .cns-legal__toc {
+    display: none !important;
+  }
+
+  .cns-legal__body,
+  .cns-legal__body h2,
+  .cns-legal__body h3,
+  .cns-legal__body strong,
+  .cns-legal__title {
+    color: #000 !important;
+    max-width: none;
+  }
+
+  .cns-legal__meta,
+  .cns-legal__body em {
+    color: #333 !important;
+  }
+
+  .cns-legal__body a {
+    color: #000 !important;
+  }
+
+  .cns-legal__body h2,
+  .cns-legal__body h3 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  .cns-legal__body hr {
+    background: #bbb !important;
+  }
+}

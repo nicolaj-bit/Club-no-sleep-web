@@ -1,0 +1,17 @@
+{
+  "sections": {
+    "cns_legal": {
+      "type": "cns-legal",
+      "settings": {
+        "cns_bg": "lys-morgen",
+        "fallback_title": "Juridisk",
+        "updated_prefix": "Senest opdateret:",
+        "updated_label": "Senest opdateret",
+        "show_toc": true,
+        "toc_title": "Indhold",
+        "hide_first_heading": true
+      }
+    }
+  },
+  "order": ["cns_legal"]
+}
