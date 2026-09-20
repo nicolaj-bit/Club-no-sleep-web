@@ -29,21 +29,35 @@
         {%- endif -%}
       </div>
 
-      <div class="cns-mapbox">
-        {%- if section.settings.image != blank -%}
-          {{
-            section.settings.image
-            | image_url: width: 900
-            | image_tag: loading: 'lazy', sizes: '(min-width: 820px) 480px, 92vw', widths: '400, 600, 900', alt: ''
-          }}
-        {%- else -%}
-          <canvas class="cns-map__canvas" data-cns-canvas="denmark" aria-hidden="true"></canvas>
-        {%- endif -%}
+      {%- if section.settings.image != blank -%}
+        {%- comment -%}
+          Et rigtigt skærmbillede vises i telefonens egen ramme — samme stil
+          som telefonerne i cns-phones — og følger billedets proportioner.
+          Ingen fast 4:5, ellers bliver en høj telefonskærm beskåret.
 
-        {%- if section.settings.count != blank -%}
-          <p class="cns-count">{{ section.settings.count }}</p>
-        {%- endif -%}
-      </div>
+          Tælleren udelades her: appens egen tæller er med på skærmbilledet,
+          og to tællere oven på hinanden ligner en fejl.
+        {%- endcomment -%}
+        <div class="cns-map__phone">
+          <div class="cns-phone cns-map__frame">
+            <div class="cns-screen cns-screen--auto">
+              {{
+                section.settings.image
+                | image_url: width: 900
+                | image_tag: loading: 'lazy', sizes: '(min-width: 820px) 340px, 62vw', widths: '300, 600, 900', alt: ''
+              }}
+            </div>
+          </div>
+        </div>
+      {%- else -%}
+        <div class="cns-mapbox">
+          <canvas class="cns-map__canvas" data-cns-canvas="denmark" aria-hidden="true"></canvas>
+
+          {%- if section.settings.count != blank -%}
+            <p class="cns-count">{{ section.settings.count }}</p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
     </div>
   </div>
 </section>
@@ -117,14 +131,14 @@
       "type": "inline_richtext",
       "id": "count",
       "label": "Tæller over kortet",
-      "info": "Tallet står fedt: <b>7</b> vågne i Danmark.",
+      "info": "Tallet står fedt: <b>7</b> vågne i Danmark. Vises ikke, når der er valgt et billede — dér er appens egen tæller med på skærmbilledet.",
       "default": "<b>7</b> vågne i Danmark"
     },
     {
       "type": "image_picker",
       "id": "image",
       "label": "Billede i stedet for det tegnede kort",
-      "info": "Uden billede tegnes kortet med lys, der blinker."
+      "info": "Vises i en telefonramme i billedets egne proportioner, så et skærmbillede ikke beskæres. Uden billede tegnes kortet med lys, der blinker."
     }
   ],
   "presets": [

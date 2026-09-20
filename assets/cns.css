@@ -1451,3 +1451,36 @@
     background: #bbb !important;
   }
 }
+
+/* ── Skærmbillede i stedet for det tegnede kort ────────────
+   Telefonens egen ramme fra cns-phones, men uden fast højde: her er det
+   billedet, der bestemmer proportionerne. Et skærmbillede i fuld bredde
+   bliver uforholdsmæssigt højt og skubber alt andet ned, så rammen
+   holdes smal og centreres i sin halvdel. */
+.cns-map__phone {
+  display: flex;
+  justify-content: center;
+}
+
+.cns-map__frame {
+  width: min(300px, 62vw);
+}
+
+@media (min-width: 820px) {
+  .cns-map__frame {
+    width: min(340px, 100%);
+  }
+}
+
+/* Skærmen har fast højde i cns-phones, fordi indholdet dér er tegnet. */
+.cns-screen--auto {
+  display: block;
+  height: auto;
+}
+
+.cns-map__frame .cns-screen > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
