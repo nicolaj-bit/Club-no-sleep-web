@@ -77,7 +77,8 @@
         "hour": "03.41",
         "heading": "Et lys i mørket",
         "body": "<p>Når du starter en søvnlog, tændes dit lys på kortet. Andre vågne mødre ser det, og du ser deres. Ikke navne, ikke adresser — bare lys.</p><p>Vil du skrive til en af dem, kan du det. Vil du bare vide, at de er der, er det også nok. De fleste nætter er det nok.</p>",
-        "count": "<strong>7</strong> vågne i Danmark"
+        "count": "<strong>7</strong> vågne i Danmark",
+        "image": "shopify://shop_images/etlys-186.png"
       }
     },
     "cns_appen": {
@@ -141,6 +142,8 @@
         "hour": "04.20",
         "heading": "Det, du har brug for klokken fire",
         "show_phones": true,
+        "screen_1_image": "shopify://shop_images/IMG_2332.png",
+        "screen_2_image": "shopify://shop_images/IMG_2585.png",
         "screen_1_time": "04.20",
         "screen_1_title": "Søvnlog",
         "screen_1_timer": "2t 14m",
