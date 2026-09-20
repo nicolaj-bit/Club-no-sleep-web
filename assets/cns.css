@@ -663,16 +663,24 @@
 
 .cns-screen {
   border-radius: 23px;
+  /* overflow: hidden holder skærmbilledet inde bag de afrundede hjørner.
+     Uden den ville der stå en lys kant mellem billede og ramme. */
   overflow: hidden;
   background: #171310;
-  height: 410px;
+  /* Forholdet på en iPhone-skærm. Før stod her en fast højde, og så
+     passede et rigtigt skærmbillede ikke. Med forholdet på rammen er de
+     to telefoner altid lige høje — også når kun den ene har et billede. */
+  aspect-ratio: 9 / 19.5;
   display: flex;
   flex-direction: column;
 }
 
 .cns-screen > img {
+  display: block;
   width: 100%;
   height: 100%;
+  /* Rammen har skærmbilledets eget forhold, så cover beskærer intet —
+     den sikrer bare, at der aldrig står en stribe baggrund langs kanten. */
   object-fit: cover;
 }
 
@@ -1472,10 +1480,12 @@
   }
 }
 
-/* Skærmen har fast højde i cns-phones, fordi indholdet dér er tegnet. */
+/* I cns-phones har skærmen telefonens forhold. Her er det billedet, der
+   bestemmer, så forholdet slås fra. */
 .cns-screen--auto {
   display: block;
   height: auto;
+  aspect-ratio: auto;
 }
 
 .cns-map__frame .cns-screen > img {
