@@ -1582,13 +1582,19 @@
     "settings": [
       {
         "type": "paragraph",
-        "content": "Google Tag Manager indlæses kun, hvis der står et id herunder. GA4 sættes op inde i Tag Manager — ikke her. Målingen begynder først, når den besøgende har sagt ja i cookiebanneret."
+        "content": "Udfyld ét af felterne. Er begge tomme, hentes der intet fra Google overhovedet. Målingen begynder først, når den besøgende har sagt ja i cookiebanneret."
+      },
+      {
+        "type": "text",
+        "id": "cns_ga4_id",
+        "label": "GA4-målings-id",
+        "info": "Formen G-XXXXXXXXXX. Bruges, når der måles med Google Analytics alene."
       },
       {
         "type": "text",
         "id": "cns_gtm_id",
         "label": "Google Tag Manager-id",
-        "info": "Formen GTM-XXXXXXX. Tomt felt slår al måling fra, og så hentes der intet fra Google."
+        "info": "Formen GTM-XXXXXXX. Udfyldes kun, hvis der senere kommer en Tag Manager. Står den her, overtager den målingen af knapklik, så intet tælles dobbelt."
       }
     ]
   }

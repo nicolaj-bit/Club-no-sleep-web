@@ -1,9 +1,10 @@
 {%- comment -%}
   Club No Sleep — måling.
 
-  Google Tag Manager indlæses herfra, og kun hvis der står et id i
-  temaindstillingerne. Står feltet tomt, skrives der ingenting ud, og
-  siden henter ikke en eneste linje fra Google.
+  Google Analytics — eller Tag Manager, hvis den en dag kommer til —
+  indlæses herfra, og kun hvis der står et id i temaindstillingerne.
+  Står begge felter tomme, skrives der ingenting ud, og siden henter
+  ikke en eneste linje fra Google.
 
   Hvorfor i temaet og ikke som en «Custom pixel» under Kundehændelser:
   en custom pixel kører i en iframe med sandbox-attribut og kan ikke se
@@ -20,7 +21,8 @@
 {%- endcomment -%}
 
 {%- assign gtm_id = settings.cns_gtm_id | strip -%}
-{%- if gtm_id != blank -%}
+{%- assign ga4_id = settings.cns_ga4_id | strip -%}
+{%- if gtm_id != blank or ga4_id != blank -%}
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() {
@@ -87,9 +89,22 @@
           }
         );
       }
+      /* Resten af temaet skal vide, hvilken af de to veje der er i brug.
+         GA4 alene og Tag Manager opsamler nemlig hændelser forskelligt. */
+      window.CNSMaaling = { gtm: {% if gtm_id != blank %}true{% else %}false{% endif %}, ga4: {% if ga4_id != blank %}true{% else %}false{% endif %} };
     })();
   </script>
 
+  {%- if ga4_id != blank -%}
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ ga4_id | url_encode }}"></script>
+    <script>
+      /* GA4 uden Tag Manager. Samtykket er allerede sat ovenfor. */
+      gtag('js', new Date());
+      gtag('config', {{ ga4_id | json }});
+    </script>
+  {%- endif -%}
+
+  {%- if gtm_id != blank -%}
   <script>
     /* Google Tag Manager. Står efter samtykkeblokken med vilje. */
     (function (w, d, s, l, i) {
@@ -103,4 +118,5 @@
       f.parentNode.insertBefore(j, f);
     })(window, document, 'script', 'dataLayer', {{ gtm_id | json }});
   </script>
+  {%- endif -%}
 {%- endif -%}

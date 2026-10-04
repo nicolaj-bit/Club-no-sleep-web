@@ -35,22 +35,36 @@
     );
   }
 
-  /* Besked til Google Tag Manager om, at knappen blev brugt, og hvilken
-     butik den besøgende blev sendt til.
+  /* Besked om, at knappen blev brugt, og hvilken butik den besøgende
+     blev sendt til.
 
-     dataLayer oprettes ikke her. Findes den ikke, er Tag Manager slået
-     fra i temaindstillingerne, og så skal der heller ikke samles noget
-     op. Samtykket afgør derefter inde i Tag Manager, om hændelsen
-     overhovedet sendes videre til Google. */
+     Findes CNSMaaling ikke, står målefeltet tomt i temaindstillingerne,
+     og så skal der heller ikke samles noget op. Samtykket afgør derefter
+     hos Google, om hændelsen overhovedet må bruges.
+
+     De to veje opsamler forskelligt: Tag Manager lytter efter event-
+     nøglen i dataLayer, mens GA4 alene kun hører efter gtag. Er begge
+     sat op, ejer Tag Manager målingen, så intet tælles dobbelt. */
   function meld(el, maal) {
-    if (!window.dataLayer) return;
+    var m = window.CNSMaaling;
+    if (!m) return;
+
     var platform = 'computer';
     if (maal) platform = maal === el.dataset.cnsIos ? 'ios' : 'android';
-    window.dataLayer.push({
-      event: 'cns_hent_app',
-      cns_platform: platform,
-      cns_placering: el.dataset.cnsPlacering || 'ukendt',
-    });
+    var placering = el.dataset.cnsPlacering || 'ukendt';
+
+    if (m.gtm && window.dataLayer) {
+      window.dataLayer.push({
+        event: 'cns_hent_app',
+        cns_platform: platform,
+        cns_placering: placering,
+      });
+    } else if (m.ga4 && typeof window.gtag === 'function') {
+      window.gtag('event', 'cns_hent_app', {
+        cns_platform: platform,
+        cns_placering: placering,
+      });
+    }
   }
 
   function bind(root) {
