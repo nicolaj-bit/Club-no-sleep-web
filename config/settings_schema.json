@@ -1576,5 +1576,20 @@
         "label": "Google Play"
       }
     ]
+  },
+  {
+    "name": "Club No Sleep — måling",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Google Tag Manager indlæses kun, hvis der står et id herunder. GA4 sættes op inde i Tag Manager — ikke her. Målingen begynder først, når den besøgende har sagt ja i cookiebanneret."
+      },
+      {
+        "type": "text",
+        "id": "cns_gtm_id",
+        "label": "Google Tag Manager-id",
+        "info": "Formen GTM-XXXXXXX. Tomt felt slår al måling fra, og så hentes der intet fra Google."
+      }
+    ]
   }
 ]

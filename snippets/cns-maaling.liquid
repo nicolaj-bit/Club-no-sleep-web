@@ -1,0 +1,106 @@
+{%- comment -%}
+  Club No Sleep — måling.
+
+  Google Tag Manager indlæses herfra, og kun hvis der står et id i
+  temaindstillingerne. Står feltet tomt, skrives der ingenting ud, og
+  siden henter ikke en eneste linje fra Google.
+
+  Hvorfor i temaet og ikke som en «Custom pixel» under Kundehændelser:
+  en custom pixel kører i en iframe med sandbox-attribut og kan ikke se
+  den øverste ramme. window.location peger på selve sandkassen, ikke på
+  den side den besøgende kigger på — og alle triggere, der aflæser
+  siden (rullehøjde, klik på et element, synlighed), virker slet ikke.
+  Det er præcis dem, vi skal bruge på en landingsside. Til gengæld er
+  samtykket så vores eget ansvar, og det er det, blokken nedenfor gør.
+
+  Samtykke: Google får besked om, at alting er afvist, FØR Tag Manager
+  indlæses. Først når den besøgende siger ja i Shopifys cookiebanner,
+  sendes en opdatering. Rækkefølgen er ikke til forhandling — en
+  «update», der kommer efter de første tags er sendt, er for sen.
+{%- endcomment -%}
+
+{%- assign gtm_id = settings.cns_gtm_id | strip -%}
+{%- if gtm_id != blank -%}
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    /* Udgangspunktet er nej til alt undtagen det sikkerhedsmæssigt
+       nødvendige. wait_for_update giver banneret et halvt sekund til at
+       svare, så en besøgende der allerede har sagt ja, ikke når at blive
+       målt forkert i det første øjeblik. */
+    gtag('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied',
+      functionality_storage: 'denied',
+      personalization_storage: 'denied',
+      security_storage: 'granted',
+      wait_for_update: 500,
+    });
+
+    (function () {
+      'use strict';
+
+      function opdater(analyse, markedsf, praef) {
+        gtag('consent', 'update', {
+          ad_storage: markedsf ? 'granted' : 'denied',
+          ad_user_data: markedsf ? 'granted' : 'denied',
+          ad_personalization: markedsf ? 'granted' : 'denied',
+          analytics_storage: analyse ? 'granted' : 'denied',
+          functionality_storage: praef ? 'granted' : 'denied',
+          personalization_storage: praef ? 'granted' : 'denied',
+          security_storage: 'granted',
+        });
+      }
+
+      /* Shopify udsender kun denne hændelse, NÅR samtykket ændrer sig —
+         ikke når man begynder at lytte. Derfor skal den nuværende
+         tilstand også læses én gang ved start. Uden det ville en
+         besøgende, der sagde ja i går, blive målt som et nej i dag.
+
+         Bemærk at navnene er forskellige de to steder: hændelsen hedder
+         analyticsAllowed, metoden hedder analyticsProcessingAllowed. */
+      document.addEventListener('visitorConsentCollected', function (e) {
+        var d = (e && e.detail) || {};
+        opdater(d.analyticsAllowed, d.marketingAllowed, d.preferencesAllowed);
+      });
+
+      function laesNuvaerende() {
+        var p = window.Shopify && window.Shopify.customerPrivacy;
+        if (!p || typeof p.analyticsProcessingAllowed !== 'function') return;
+        opdater(
+          p.analyticsProcessingAllowed(),
+          p.marketingAllowed(),
+          p.preferencesProcessingAllowed()
+        );
+      }
+
+      if (window.Shopify && typeof window.Shopify.loadFeatures === 'function') {
+        window.Shopify.loadFeatures(
+          [{ name: 'consent-tracking-api', version: '0.1' }],
+          function (fejl) {
+            if (!fejl) laesNuvaerende();
+          }
+        );
+      }
+    })();
+  </script>
+
+  <script>
+    /* Google Tag Manager. Står efter samtykkeblokken med vilje. */
+    (function (w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+      var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s),
+        dl = l != 'dataLayer' ? '&l=' + l : '';
+      j.async = true;
+      j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+      f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', {{ gtm_id | json }});
+  </script>
+{%- endif -%}

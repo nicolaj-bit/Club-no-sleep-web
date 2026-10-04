@@ -35,6 +35,24 @@
     );
   }
 
+  /* Besked til Google Tag Manager om, at knappen blev brugt, og hvilken
+     butik den besøgende blev sendt til.
+
+     dataLayer oprettes ikke her. Findes den ikke, er Tag Manager slået
+     fra i temaindstillingerne, og så skal der heller ikke samles noget
+     op. Samtykket afgør derefter inde i Tag Manager, om hændelsen
+     overhovedet sendes videre til Google. */
+  function meld(el, maal) {
+    if (!window.dataLayer) return;
+    var platform = 'computer';
+    if (maal) platform = maal === el.dataset.cnsIos ? 'ios' : 'android';
+    window.dataLayer.push({
+      event: 'cns_hent_app',
+      cns_platform: platform,
+      cns_placering: el.dataset.cnsPlacering || 'ukendt',
+    });
+  }
+
   function bind(root) {
     var nodes = (root || document).querySelectorAll('[data-cns-store-link]');
 
@@ -54,6 +72,8 @@
 
       el.addEventListener('click', function (e) {
         var maal = cnsStoreUrl(this.dataset.cnsIos, this.dataset.cnsAndroid);
+
+        meld(this, maal);
 
         /* Adressen skiftes lige før browseren følger linket. Fejler
            JavaScript, står App Store-adressen der stadig i markup'en. */
