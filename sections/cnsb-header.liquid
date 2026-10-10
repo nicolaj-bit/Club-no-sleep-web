@@ -11,7 +11,17 @@
 
 <div class="cnsb cnsb-header">
   <div class="cnsb-wrap cnsb-header__row">
-    <a class="cnsb-header__brand" href="/">{{ section.settings.brand }}</a>
+    <a class="cnsb-header__brand" href="/">
+      {%- if section.settings.logo != blank -%}
+        {%- liquid
+          assign logo_style = 'height:' | append: section.settings.logo_height | append: 'px;width:auto'
+          assign logo_alt = section.settings.brand | default: shop.name
+        -%}
+        {{ section.settings.logo | image_url: width: 480 | image_tag: loading: 'eager', alt: logo_alt, style: logo_style }}
+      {%- else -%}
+        {{ section.settings.brand }}
+      {%- endif -%}
+    </a>
 
     {%- if section.blocks.size > 0 -%}
       <nav class="cnsb-header__nav">
@@ -42,6 +52,8 @@
   "name": "B — header",
   "tag": "section",
   "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo", "info": "Uden logo vises navnet nedenfor." },
+    { "type": "range", "id": "logo_height", "label": "Logoets højde", "min": 16, "max": 64, "step": 1, "unit": "px", "default": 30 },
     { "type": "text", "id": "brand", "label": "Navn", "default": "Club No Sleep" },
     { "type": "text", "id": "cta_label", "label": "Knappens tekst", "default": "Hent appen" },
     { "type": "text", "id": "scroll_to", "label": "Rul til", "info": "Ankerets navn, hvis besøgende er på en computer.", "default": "b-pris" }
