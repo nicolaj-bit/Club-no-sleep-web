@@ -395,11 +395,12 @@
         "kicker": "Medlemskab",
         "title": "Prøv klubben i en uge",
         "badge": "7 dage gratis",
-        "price_note": "Derefter det beløb, der står i App Store og Google Play.",
+        "price_note": "De første 7 dage er gratis.",
         "cta_label": "Hent appen",
         "cta_label_ios": "Hent i App Store",
         "cta_label_android": "Hent på Google Play",
-        "fine": "Prøveperioden løber i 7 dage og går derefter automatisk over i et abonnement, medmindre du opsiger den mindst 24 timer før. Opsigelsen sker i App Store eller Google Play."
+        "fine": "Abonnementet fornyes automatisk, indtil du opsiger. Du kan opsige når som helst i App Store eller Google Play — også i prøveperioden.",
+        "price": "59 kr. pr. måned"
       },
       "blocks": {
         "b1": {
