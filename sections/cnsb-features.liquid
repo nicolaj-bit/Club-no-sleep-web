@@ -1,0 +1,82 @@
+{%- comment -%}
+  Side B — alt appen kan. Hvert kort er en blok, så rækkefølgen og
+  teksten kan rettes i temaeditoren uden kode. Ikonet er et billede og
+  ikke indbygget, så det kan skiftes uden en ny runde her.
+{%- endcomment -%}
+
+<section class="cnsb cnsb-section{% if section.settings.bg != 'cream' %} cnsb-section--{{ section.settings.bg }}{% endif %}">
+  {%- if section.settings.anchor != blank -%}
+    <span id="{{ section.settings.anchor | handle }}"></span>
+  {%- endif -%}
+
+  <div class="cnsb-wrap">
+    <div class="cnsb-head cnsb-center">
+      {%- if section.settings.kicker != blank -%}
+        <p class="cnsb-kicker">{{ section.settings.kicker }}</p>
+      {%- endif -%}
+      <h2 class="cnsb-h2">{{ section.settings.title }}</h2>
+      {%- if section.settings.lead != blank -%}
+        <p class="cnsb-lead" style="margin-top: 16px;">{{ section.settings.lead }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <ul class="cnsb-grid">
+        {%- for block in section.blocks -%}
+          <li class="cnsb-card" {{ block.shopify_attributes }}>
+            <div class="cnsb-card__ikon">
+              {%- if block.settings.icon != blank -%}
+                {{ block.settings.icon | image_url: width: 88 | image_tag: alt: '', loading: 'lazy' }}
+              {%- else -%}
+                <svg width="18" height="18" viewBox="0 0 20 18" fill="none" aria-hidden="true" focusable="false">
+                  <path d="M10 17C10 17 1 10.5 1 5C1 2.8 2.8 1 5 1C6.8 1 8.5 2.2 10 4C11.5 2.2 13.2 1 15 1C17.2 1 19 2.8 19 5C19 10.5 10 17 10 17Z" fill="currentColor"/>
+                </svg>
+              {%- endif -%}
+            </div>
+            <h3 class="cnsb-h3">{{ block.settings.title }}</h3>
+            {%- if block.settings.text != blank -%}
+              <p class="cnsb-body">{{ block.settings.text }}</p>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "B — alt appen kan",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "bg",
+      "label": "Baggrund",
+      "options": [
+        { "value": "cream", "label": "Cremehvid" },
+        { "value": "soft", "label": "Lys sand" },
+        { "value": "sand", "label": "Sand" }
+      ],
+      "default": "cream"
+    },
+    { "type": "text", "id": "anchor", "label": "Ankernavn" },
+    { "type": "text", "id": "kicker", "label": "Lille overskrift" },
+    { "type": "text", "id": "title", "label": "Overskrift", "default": "Dette finder du i appen" },
+    { "type": "textarea", "id": "lead", "label": "Brødtekst" }
+  ],
+  "max_blocks": 12,
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Funktion",
+      "settings": [
+        { "type": "image_picker", "id": "icon", "label": "Ikon" },
+        { "type": "text", "id": "title", "label": "Overskrift" },
+        { "type": "textarea", "id": "text", "label": "Tekst" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "B — alt appen kan" }]
+}
+{% endschema %}

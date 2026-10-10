@@ -1,0 +1,110 @@
+{%- comment -%}
+  Side B — åbning. Taler til en gravid, der leder efter oplysninger,
+  ikke til en der allerede er overbevist. Derfor står punkterne under
+  knapperne: de svarer på «hvad får jeg» uden at hun skal rulle.
+{%- endcomment -%}
+
+{%- liquid
+  assign ios = settings.cns_app_store_url | default: 'https://apps.apple.com/app/id6764388095'
+  assign android = settings.cns_google_play_url | default: 'https://play.google.com/store/apps/details?id=com.base699f47a86e7e0a874d1159ed.app'
+-%}
+
+<section class="cnsb cnsb-section cnsb-hero{% if section.settings.bg != 'cream' %} cnsb-section--{{ section.settings.bg }}{% endif %}">
+  <div class="cnsb-wrap">
+    <div class="cnsb-hero__grid">
+      <div>
+        {%- if section.settings.badge != blank -%}
+          <span class="cnsb-badge">{{ section.settings.badge }}</span>
+        {%- endif -%}
+
+        <h1 class="cnsb-h1">{{ section.settings.title }}</h1>
+
+        {%- if section.settings.lead != blank -%}
+          <p class="cnsb-lead cnsb-hero__lead">{{ section.settings.lead }}</p>
+        {%- endif -%}
+
+        <div class="cnsb-btns cnsb-hero__btns">
+          {%- if section.settings.cta_label != blank -%}
+            <a
+              class="cnsb-btn"
+              href="{{ ios }}"
+              data-cns-store-link
+              data-cns-ios="{{ ios }}"
+              data-cns-android="{{ android }}"
+              data-cns-label-ios="{{ section.settings.cta_label_ios | escape }}"
+              data-cns-label-android="{{ section.settings.cta_label_android | escape }}"
+              data-cns-scroll-to="{{ section.settings.scroll_to | handle }}"
+              data-cns-placering="b-hero"
+            >{{ section.settings.cta_label }}</a>
+          {%- endif -%}
+
+          {%- if section.settings.cta2_label != blank -%}
+            <a class="cnsb-btn cnsb-btn--ghost" href="{{ section.settings.cta2_url | default: '#' }}">
+              {{- section.settings.cta2_label -}}
+            </a>
+          {%- endif -%}
+        </div>
+
+        {%- if section.blocks.size > 0 -%}
+          <ul class="cnsb-hero__points">
+            {%- for block in section.blocks -%}
+              <li class="cnsb-hero__point" {{ block.shopify_attributes }}>
+                <span class="cnsb-tick">
+                  <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true" focusable="false">
+                    <path d="M2.5 6.5L5 9l4.5-5.5" stroke="#8A6B4E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                {{ block.settings.label }}
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+
+      <div class="cnsb-hero__media">
+        {% render 'cnsb-phone', image: section.settings.image, alt: section.settings.title %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="{{ 'cns-store.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "B — åbning",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "bg",
+      "label": "Baggrund",
+      "options": [
+        { "value": "cream", "label": "Cremehvid" },
+        { "value": "soft", "label": "Lys sand" },
+        { "value": "sand", "label": "Sand" }
+      ],
+      "default": "cream"
+    },
+    { "type": "text", "id": "badge", "label": "Mærkat", "default": "7 dage gratis" },
+    { "type": "text", "id": "title", "label": "Overskrift", "default": "Alt du skal bruge — fra uge 4 til første skridt" },
+    { "type": "textarea", "id": "lead", "label": "Brødtekst" },
+    { "type": "image_picker", "id": "image", "label": "Skærmbillede" },
+    { "type": "text", "id": "cta_label", "label": "Knappens tekst", "default": "Hent appen" },
+    { "type": "text", "id": "cta_label_ios", "label": "Knappens tekst på iPhone", "default": "Hent i App Store" },
+    { "type": "text", "id": "cta_label_android", "label": "Knappens tekst på Android", "default": "Hent på Google Play" },
+    { "type": "text", "id": "scroll_to", "label": "Rul til", "default": "b-pris" },
+    { "type": "text", "id": "cta2_label", "label": "Anden knap" },
+    { "type": "text", "id": "cta2_url", "label": "Anden knaps adresse" }
+  ],
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "point",
+      "name": "Punkt",
+      "settings": [{ "type": "text", "id": "label", "label": "Tekst" }]
+    }
+  ],
+  "presets": [{ "name": "B — åbning" }]
+}
+{% endschema %}

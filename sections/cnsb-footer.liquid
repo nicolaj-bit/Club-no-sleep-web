@@ -1,0 +1,83 @@
+{%- comment -%}
+  Side B — bund. Mørk, så siden lukker roligt, og de juridiske links
+  altid kan findes. Ligger i skabelonen og ikke i footergruppen, fordi
+  den kun hører til denne side.
+{%- endcomment -%}
+
+<footer class="cnsb cnsb-footer">
+  <div class="cnsb-wrap">
+    <div class="cnsb-footer__top">
+      <div>
+        <div class="cnsb-footer__brand">{{ section.settings.brand }}</div>
+        {%- if section.settings.intro != blank -%}
+          <p class="cnsb-footer__intro">{{ section.settings.intro }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%}
+        Blokkens kolonne er en tekst ("1"/"2") og ikke et tal, så der
+        løbes igennem tekster. Sammenlignes en tekst med et tal i Liquid,
+        passer de aldrig, og alle links ville forsvinde.
+      {%- endcomment -%}
+      {%- assign kolonner = '1,2' | split: ',' -%}
+      {%- for kolonne in kolonner -%}
+        <div class="cnsb-footer__kol">
+          {%- assign overskrift = section.settings.col1_title -%}
+          {%- if kolonne == '2' -%}{%- assign overskrift = section.settings.col2_title -%}{%- endif -%}
+          {%- if overskrift != blank -%}<h4>{{ overskrift }}</h4>{%- endif -%}
+          <ul>
+            {%- for block in section.blocks -%}
+              {%- if block.settings.column == kolonne -%}
+                <li {{ block.shopify_attributes }}>
+                  <a href="{{ block.settings.url | default: '#' }}">{{ block.settings.label }}</a>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="cnsb-footer__bund">
+      <span>{{ section.settings.bottom_left }}</span>
+      <span>{{ section.settings.bottom_right }}</span>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "B — bund",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "brand", "label": "Navn", "default": "Club No Sleep" },
+    { "type": "textarea", "id": "intro", "label": "Tekst" },
+    { "type": "text", "id": "col1_title", "label": "Første kolonnes overskrift", "default": "Juridisk" },
+    { "type": "text", "id": "col2_title", "label": "Anden kolonnes overskrift", "default": "Hent appen" },
+    { "type": "text", "id": "bottom_left", "label": "Nederst til venstre" },
+    { "type": "text", "id": "bottom_right", "label": "Nederst til højre" }
+  ],
+  "max_blocks": 12,
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Link",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Tekst" },
+        { "type": "text", "id": "url", "label": "Adresse" },
+        {
+          "type": "select",
+          "id": "column",
+          "label": "Kolonne",
+          "options": [
+            { "value": "1", "label": "Første" },
+            { "value": "2", "label": "Anden" }
+          ],
+          "default": "1"
+        }
+      ]
+    }
+  ],
+  "presets": [{ "name": "B — bund" }]
+}
+{% endschema %}

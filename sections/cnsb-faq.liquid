@@ -1,0 +1,71 @@
+{%- comment -%}
+  Side B — spørgsmål og svar. Den gravide, der leder efter oplysninger,
+  har indvendinger, før hun henter noget. De skal besvares på siden.
+
+  Bygget med <details>, så svarene kan foldes ud uden JavaScript — og
+  så de stadig kan findes af en søgemaskine.
+{%- endcomment -%}
+
+<section class="cnsb cnsb-section{% if section.settings.bg != 'cream' %} cnsb-section--{{ section.settings.bg }}{% endif %}">
+  {%- if section.settings.anchor != blank -%}
+    <span id="{{ section.settings.anchor | handle }}"></span>
+  {%- endif -%}
+
+  <div class="cnsb-wrap">
+    <div class="cnsb-head cnsb-center">
+      {%- if section.settings.kicker != blank -%}
+        <p class="cnsb-kicker">{{ section.settings.kicker }}</p>
+      {%- endif -%}
+      <h2 class="cnsb-h2">{{ section.settings.title }}</h2>
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="cnsb-faq">
+        {%- for block in section.blocks -%}
+          <details {{ block.shopify_attributes }}>
+            <summary>
+              <span>{{ block.settings.question }}</span>
+              <span class="cnsb-faq__plus" aria-hidden="true"></span>
+            </summary>
+            <div class="cnsb-faq__svar">{{ block.settings.answer }}</div>
+          </details>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "B — spørgsmål og svar",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "bg",
+      "label": "Baggrund",
+      "options": [
+        { "value": "cream", "label": "Cremehvid" },
+        { "value": "soft", "label": "Lys sand" },
+        { "value": "sand", "label": "Sand" }
+      ],
+      "default": "soft"
+    },
+    { "type": "text", "id": "anchor", "label": "Ankernavn" },
+    { "type": "text", "id": "kicker", "label": "Lille overskrift" },
+    { "type": "text", "id": "title", "label": "Overskrift", "default": "Spørgsmål vi tit får" }
+  ],
+  "max_blocks": 12,
+  "blocks": [
+    {
+      "type": "qa",
+      "name": "Spørgsmål",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Spørgsmål" },
+        { "type": "richtext", "id": "answer", "label": "Svar" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "B — spørgsmål og svar" }]
+}
+{% endschema %}

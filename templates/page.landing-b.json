@@ -1,0 +1,502 @@
+{
+  "sections": {
+    "header": {
+      "type": "cnsb-header",
+      "settings": {
+        "brand": "Club No Sleep",
+        "cta_label": "Hent appen",
+        "scroll_to": "b-pris"
+      },
+      "blocks": {
+        "l1": {
+          "type": "menu_link",
+          "settings": {
+            "label": "Graviditet",
+            "url": "#b-graviditet"
+          }
+        },
+        "l2": {
+          "type": "menu_link",
+          "settings": {
+            "label": "I appen",
+            "url": "#b-appen"
+          }
+        },
+        "l3": {
+          "type": "menu_link",
+          "settings": {
+            "label": "Spørgsmål",
+            "url": "#b-faq"
+          }
+        },
+        "l4": {
+          "type": "menu_link",
+          "settings": {
+            "label": "Pris",
+            "url": "#b-pris"
+          }
+        }
+      },
+      "block_order": [
+        "l1",
+        "l2",
+        "l3",
+        "l4"
+      ]
+    },
+    "hero": {
+      "type": "cnsb-hero",
+      "settings": {
+        "bg": "cream",
+        "badge": "7 dage gratis",
+        "title": "Fra de to streger til det første skridt",
+        "lead": "Club No Sleep følger dig gennem graviditeten og videre ind i barselstiden. Uge for uge, nat for nat — samlet i én app, så du ikke skal lede ni steder efter svar.",
+        "cta_label": "Hent appen",
+        "cta_label_ios": "Hent i App Store",
+        "cta_label_android": "Hent på Google Play",
+        "scroll_to": "b-pris",
+        "cta2_label": "Se hvad du får",
+        "cta2_url": "#b-appen"
+      },
+      "blocks": {
+        "p1": {
+          "type": "point",
+          "settings": {
+            "label": "Gratis i 7 dage"
+          }
+        },
+        "p2": {
+          "type": "point",
+          "settings": {
+            "label": "Din partner er altid med"
+          }
+        },
+        "p3": {
+          "type": "point",
+          "settings": {
+            "label": "Dansk, og lavet i Danmark"
+          }
+        },
+        "p4": {
+          "type": "point",
+          "settings": {
+            "label": "Du vælger selv hvad du deler"
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3",
+        "p4"
+      ]
+    },
+    "uger": {
+      "type": "cnsb-weeks",
+      "settings": {
+        "bg": "soft",
+        "anchor": "b-graviditet",
+        "kicker": "Mens du venter",
+        "title": "Graviditet uge for uge",
+        "lead": "Hver uge får du at vide, hvad der sker med barnet og med din egen krop. Ikke en mursten af tekst — det du har brug for, netop den uge du står i."
+      },
+      "blocks": {
+        "u1": {
+          "type": "week",
+          "settings": {
+            "week": "8",
+            "title": "På størrelse med en hindbær",
+            "text": "Hjertet slår, og de første træk tegner sig. Kvalmen er på sit højeste for mange."
+          }
+        },
+        "u2": {
+          "type": "week",
+          "settings": {
+            "week": "12",
+            "title": "Første scanning",
+            "text": "Nakkefoldsscanningen. Vi forklarer hvad de måler, og hvad tallene betyder."
+          }
+        },
+        "u3": {
+          "type": "week",
+          "settings": {
+            "week": "20",
+            "title": "Halvvejs",
+            "text": "Misdannelsesscanningen, og for mange de første spark man kan mærke udefra."
+          }
+        },
+        "u4": {
+          "type": "week",
+          "settings": {
+            "week": "28",
+            "title": "Tredje trimester",
+            "text": "Barnet åbner øjnene. Nu begynder det at give mening at pakke tasken."
+          }
+        },
+        "u5": {
+          "type": "week",
+          "settings": {
+            "week": "36",
+            "title": "Snart",
+            "text": "Barnet lægger sig til rette. Vi går igennem tegnene på, at fødslen nærmer sig."
+          }
+        },
+        "u6": {
+          "type": "week",
+          "settings": {
+            "week": "40",
+            "title": "Terminen",
+            "text": "De færreste føder præcis i dag. Hvad der sker, hvis du går over tiden."
+          }
+        }
+      },
+      "block_order": [
+        "u1",
+        "u2",
+        "u3",
+        "u4",
+        "u5",
+        "u6"
+      ]
+    },
+    "appen": {
+      "type": "cnsb-features",
+      "settings": {
+        "bg": "cream",
+        "anchor": "b-appen",
+        "kicker": "Hele appen",
+        "title": "Dette finder du i appen",
+        "lead": "Ni ting, du ellers ville skulle hente ni apps for at få."
+      },
+      "blocks": {
+        "f1": {
+          "type": "feature",
+          "settings": {
+            "title": "Graviditet uge for uge",
+            "text": "Følg din graviditet fra uge til uge med daglig opdatering om babyen og din krop."
+          }
+        },
+        "f2": {
+          "type": "feature",
+          "settings": {
+            "title": "Live søvnlog",
+            "text": "Følg barnets søvn i realtid. Timeren regner ud fra klokkeslæt, så den er rigtig, selv om appen har været lukket."
+          }
+        },
+        "f3": {
+          "type": "feature",
+          "settings": {
+            "title": "Tigerspring",
+            "text": "Få besked når dit barn går ind i et nyt udviklingsspring — med tegn og tips."
+          }
+        },
+        "f4": {
+          "type": "feature",
+          "settings": {
+            "title": "Milepæle",
+            "text": "Gem og del de store øjeblikke med billeder — dit barns første smil, tand, skridt."
+          }
+        },
+        "f5": {
+          "type": "feature",
+          "settings": {
+            "title": "Nattensomhed",
+            "text": "Et trygt rum for mødre der er vågne om natten — I er ikke alene."
+          }
+        },
+        "f6": {
+          "type": "feature",
+          "settings": {
+            "title": "Fælles kalender",
+            "text": "Del kalender med din partner — jordemoder, scanninger og aftaler ét sted."
+          }
+        },
+        "f7": {
+          "type": "feature",
+          "settings": {
+            "title": "Babyvenlige caféer",
+            "text": "Find caféer i dit område hvor det er trygt at amme og være med baby."
+          }
+        },
+        "f8": {
+          "type": "feature",
+          "settings": {
+            "title": "Fællesskab",
+            "text": "Mød andre mødre i nærheden, stil spørgsmål og find svar sammen."
+          }
+        },
+        "f9": {
+          "type": "feature",
+          "settings": {
+            "title": "Valg & frihed",
+            "text": "Alt er frivilligt — du vælger selv hvad du vil dele og bruge i appen."
+          }
+        }
+      },
+      "block_order": [
+        "f1",
+        "f2",
+        "f3",
+        "f4",
+        "f5",
+        "f6",
+        "f7",
+        "f8",
+        "f9"
+      ]
+    },
+    "partner": {
+      "type": "cnsb-split",
+      "settings": {
+        "bg": "soft",
+        "flip": false,
+        "anchor": "b-partner",
+        "kicker": "I to",
+        "title": "Du skal ikke stå med det hele alene",
+        "lead": "Én konto inkluderer altid en gratis bruger mere. Din partner ser de samme aftaler, den samme søvnlog og de samme tigerspring — uden at betale for det."
+      },
+      "blocks": {
+        "p1": {
+          "type": "point",
+          "settings": {
+            "label": "Fælles kalender med jordemoder og scanninger"
+          }
+        },
+        "p2": {
+          "type": "point",
+          "settings": {
+            "label": "Begge kan starte og stoppe søvnloggen"
+          }
+        },
+        "p3": {
+          "type": "point",
+          "settings": {
+            "label": "Milepæle og billeder samme sted"
+          }
+        },
+        "p4": {
+          "type": "point",
+          "settings": {
+            "label": "Invitationen tager et halvt minut"
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3",
+        "p4"
+      ]
+    },
+    "natten": {
+      "type": "cnsb-split",
+      "settings": {
+        "bg": "cream",
+        "flip": true,
+        "anchor": "b-natten",
+        "kicker": "Klokken er fire",
+        "title": "Der er altid nogen vågen",
+        "lead": "Nattensomhed er den del af appen, der kun handler om de timer, hvor resten af verden sover. Skriv med andre, der sidder med et barn på armen lige nu.",
+        "cta_label": "Hent appen",
+        "scroll_to": "b-pris"
+      },
+      "blocks": {
+        "n1": {
+          "type": "point",
+          "settings": {
+            "label": "Ingen rådgivning udefra — bare mødre, der er vågne"
+          }
+        },
+        "n2": {
+          "type": "point",
+          "settings": {
+            "label": "Du kan blokere og anmelde, hvis nogen går over stregen"
+          }
+        },
+        "n3": {
+          "type": "point",
+          "settings": {
+            "label": "Du bestemmer selv, om du vil skrive eller bare læse"
+          }
+        }
+      },
+      "block_order": [
+        "n1",
+        "n2",
+        "n3"
+      ]
+    },
+    "faq": {
+      "type": "cnsb-faq",
+      "settings": {
+        "bg": "soft",
+        "anchor": "b-faq",
+        "kicker": "Før du henter",
+        "title": "Spørgsmål vi tit får"
+      },
+      "blocks": {
+        "q1": {
+          "type": "qa",
+          "settings": {
+            "question": "Kan jeg bruge appen, før barnet er født?",
+            "answer": "<p>Ja. Graviditetsdelen følger dig fra de første uger, og den fælles kalender er tænkt til jordemoderaftaler og scanninger. Søvnloggen og tigerspring venter til barnet er her.</p>"
+          }
+        },
+        "q2": {
+          "type": "qa",
+          "settings": {
+            "question": "Hvad koster det efter de 7 dage?",
+            "answer": "<p>Prisen står i appen og i App Store og Google Play, før du siger ja. Prøveperioden er gratis, og du kan opsige den inde i butikken, før den udløber — så bliver der ikke trukket noget.</p>"
+          }
+        },
+        "q3": {
+          "type": "qa",
+          "settings": {
+            "question": "Skal min partner betale?",
+            "answer": "<p>Nej. Én konto giver altid plads til en bruger mere uden ekstra betaling.</p>"
+          }
+        },
+        "q4": {
+          "type": "qa",
+          "settings": {
+            "question": "Hvad sker der med mine oplysninger?",
+            "answer": "<p>De bliver i appen og bliver ikke solgt videre. Du vælger selv, hvad du deler med din partner og med fællesskabet. Det hele står i privatlivspolitikken.</p>"
+          }
+        },
+        "q5": {
+          "type": "qa",
+          "settings": {
+            "question": "Virker den på både iPhone og Android?",
+            "answer": "<p>Ja, appen findes begge steder, og du kan skifte telefon uden at miste noget.</p>"
+          }
+        },
+        "q6": {
+          "type": "qa",
+          "settings": {
+            "question": "Er den på dansk?",
+            "answer": "<p>Ja. Appen er skrevet på dansk af en dansk virksomhed, LALATOTO of Denmark ApS.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6"
+      ]
+    },
+    "pris": {
+      "type": "cnsb-plan",
+      "settings": {
+        "bg": "sand",
+        "anchor": "b-pris",
+        "kicker": "Medlemskab",
+        "title": "Prøv klubben i en uge",
+        "badge": "7 dage gratis",
+        "price_note": "Derefter det beløb, der står i App Store og Google Play.",
+        "cta_label": "Hent appen",
+        "cta_label_ios": "Hent i App Store",
+        "cta_label_android": "Hent på Google Play",
+        "fine": "Prøveperioden løber i 7 dage og går derefter automatisk over i et abonnement, medmindre du opsiger den mindst 24 timer før. Opsigelsen sker i App Store eller Google Play."
+      },
+      "blocks": {
+        "b1": {
+          "type": "line",
+          "settings": {
+            "label": "Hele appen, intet er låst"
+          }
+        },
+        "b2": {
+          "type": "line",
+          "settings": {
+            "label": "En gratis bruger mere til din partner"
+          }
+        },
+        "b3": {
+          "type": "line",
+          "settings": {
+            "label": "Opsig når du vil, direkte i butikken"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3"
+      ]
+    },
+    "bund": {
+      "type": "cnsb-footer",
+      "settings": {
+        "brand": "Club No Sleep",
+        "intro": "Din trygge havn som ny forælder — søvn, fællesskab og viden samlet ét sted. Skabt i Danmark af LALATOTO of Denmark ApS.",
+        "col1_title": "Juridisk",
+        "col2_title": "Hent appen",
+        "bottom_left": "© 2026 Club No Sleep · Alle rettigheder forbeholdes",
+        "bottom_right": "Skabt med omhu i Danmark"
+      },
+      "blocks": {
+        "k1": {
+          "type": "link",
+          "settings": {
+            "label": "Handelsbetingelser",
+            "url": "/pages/handelsbetingelser",
+            "column": "1"
+          }
+        },
+        "k2": {
+          "type": "link",
+          "settings": {
+            "label": "Privatlivspolitik",
+            "url": "/pages/privatlivspolitik",
+            "column": "1"
+          }
+        },
+        "k3": {
+          "type": "link",
+          "settings": {
+            "label": "hello@clubnosleep.com",
+            "url": "mailto:hello@clubnosleep.com",
+            "column": "1"
+          }
+        },
+        "k4": {
+          "type": "link",
+          "settings": {
+            "label": "App Store",
+            "url": "https://apps.apple.com/app/id6764388095",
+            "column": "2"
+          }
+        },
+        "k5": {
+          "type": "link",
+          "settings": {
+            "label": "Google Play",
+            "url": "https://play.google.com/store/apps/details?id=com.base699f47a86e7e0a874d1159ed.app",
+            "column": "2"
+          }
+        }
+      },
+      "block_order": [
+        "k1",
+        "k2",
+        "k3",
+        "k4",
+        "k5"
+      ]
+    }
+  },
+  "order": [
+    "header",
+    "hero",
+    "uger",
+    "appen",
+    "partner",
+    "natten",
+    "faq",
+    "pris",
+    "bund"
+  ]
+}

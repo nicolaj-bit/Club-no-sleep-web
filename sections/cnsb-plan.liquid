@@ -1,0 +1,116 @@
+{%- comment -%}
+  Side B — medlemskab.
+
+  Prøveperiodens vilkår og prisen skal stå tydeligt før købet, og
+  småteksten om automatisk fornyelse skal blive stående. Det er et krav
+  fra Apple, ikke en smagssag.
+{%- endcomment -%}
+
+{%- liquid
+  assign ios = settings.cns_app_store_url | default: 'https://apps.apple.com/app/id6764388095'
+  assign android = settings.cns_google_play_url | default: 'https://play.google.com/store/apps/details?id=com.base699f47a86e7e0a874d1159ed.app'
+-%}
+
+<section class="cnsb cnsb-section{% if section.settings.bg != 'cream' %} cnsb-section--{{ section.settings.bg }}{% endif %}">
+  {%- if section.settings.anchor != blank -%}
+    <span id="{{ section.settings.anchor | handle }}"></span>
+  {%- endif -%}
+
+  <div class="cnsb-wrap">
+    <div class="cnsb-head cnsb-center">
+      {%- if section.settings.kicker != blank -%}
+        <p class="cnsb-kicker">{{ section.settings.kicker }}</p>
+      {%- endif -%}
+      <h2 class="cnsb-h2">{{ section.settings.title }}</h2>
+    </div>
+
+    <div class="cnsb-plan">
+      {%- if section.settings.badge != blank -%}
+        <span class="cnsb-badge" style="margin-bottom: 6px;">{{ section.settings.badge }}</span>
+      {%- endif -%}
+
+      {%- if section.settings.price != blank -%}
+        <div class="cnsb-plan__pris">{{ section.settings.price }}</div>
+      {%- endif -%}
+
+      {%- if section.settings.price_note != blank -%}
+        <p class="cnsb-plan__note">{{ section.settings.price_note }}</p>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <ul class="cnsb-liste">
+          {%- for block in section.blocks -%}
+            <li {{ block.shopify_attributes }}>
+              <span class="cnsb-tick">
+                <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true" focusable="false">
+                  <path d="M2.5 6.5L5 9l4.5-5.5" stroke="#8A6B4E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <span>{{ block.settings.label }}</span>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if section.settings.cta_label != blank -%}
+        <div class="cnsb-btns" style="justify-content: center;">
+          <a
+            class="cnsb-btn"
+            href="{{ ios }}"
+            data-cns-store-link
+            data-cns-ios="{{ ios }}"
+            data-cns-android="{{ android }}"
+            data-cns-label-ios="{{ section.settings.cta_label_ios | escape }}"
+            data-cns-label-android="{{ section.settings.cta_label_android | escape }}"
+            data-cns-placering="b-plan"
+          >{{ section.settings.cta_label }}</a>
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.fine != blank -%}
+        <p class="cnsb-plan__fine">{{ section.settings.fine }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<script src="{{ 'cns-store.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "B — medlemskab",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "bg",
+      "label": "Baggrund",
+      "options": [
+        { "value": "cream", "label": "Cremehvid" },
+        { "value": "soft", "label": "Lys sand" },
+        { "value": "sand", "label": "Sand" }
+      ],
+      "default": "sand"
+    },
+    { "type": "text", "id": "anchor", "label": "Ankernavn", "default": "b-pris" },
+    { "type": "text", "id": "kicker", "label": "Lille overskrift" },
+    { "type": "text", "id": "title", "label": "Overskrift", "default": "Prøv klubben i en uge" },
+    { "type": "text", "id": "badge", "label": "Mærkat", "default": "7 dage gratis" },
+    { "type": "text", "id": "price", "label": "Pris" },
+    { "type": "text", "id": "price_note", "label": "Under prisen" },
+    { "type": "text", "id": "cta_label", "label": "Knappens tekst", "default": "Hent appen" },
+    { "type": "text", "id": "cta_label_ios", "label": "Knappens tekst på iPhone", "default": "Hent i App Store" },
+    { "type": "text", "id": "cta_label_android", "label": "Knappens tekst på Android", "default": "Hent på Google Play" },
+    { "type": "textarea", "id": "fine", "label": "Småtekst" }
+  ],
+  "max_blocks": 8,
+  "blocks": [
+    {
+      "type": "line",
+      "name": "Linje",
+      "settings": [{ "type": "text", "id": "label", "label": "Tekst" }]
+    }
+  ],
+  "presets": [{ "name": "B — medlemskab" }]
+}
+{% endschema %}

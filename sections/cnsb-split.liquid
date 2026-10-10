@@ -1,0 +1,102 @@
+{%- comment -%}
+  Side B — tekst ved siden af et skærmbillede. Bruges flere gange med
+  forskelligt indhold: deling med partneren, fællesskabet om natten.
+  Billedet kan ligge til venstre eller højre, så siden ikke bliver ensformig.
+{%- endcomment -%}
+
+{%- liquid
+  assign ios = settings.cns_app_store_url | default: 'https://apps.apple.com/app/id6764388095'
+  assign android = settings.cns_google_play_url | default: 'https://play.google.com/store/apps/details?id=com.base699f47a86e7e0a874d1159ed.app'
+-%}
+
+<section class="cnsb cnsb-section{% if section.settings.bg != 'cream' %} cnsb-section--{{ section.settings.bg }}{% endif %}">
+  {%- if section.settings.anchor != blank -%}
+    <span id="{{ section.settings.anchor | handle }}"></span>
+  {%- endif -%}
+
+  <div class="cnsb-wrap">
+    <div class="cnsb-split{% if section.settings.flip %} cnsb-split--flip{% endif %}">
+      <div>
+        {%- if section.settings.kicker != blank -%}
+          <p class="cnsb-kicker">{{ section.settings.kicker }}</p>
+        {%- endif -%}
+        <h2 class="cnsb-h2">{{ section.settings.title }}</h2>
+        {%- if section.settings.lead != blank -%}
+          <p class="cnsb-lead" style="margin-top: 16px;">{{ section.settings.lead }}</p>
+        {%- endif -%}
+
+        {%- if section.blocks.size > 0 -%}
+          <ul class="cnsb-liste">
+            {%- for block in section.blocks -%}
+              <li {{ block.shopify_attributes }}>
+                <span class="cnsb-tick">
+                  <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true" focusable="false">
+                    <path d="M2.5 6.5L5 9l4.5-5.5" stroke="#8A6B4E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                <span>{{ block.settings.label }}</span>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        {%- if section.settings.cta_label != blank -%}
+          <div class="cnsb-btns" style="margin-top: 32px;">
+            <a
+              class="cnsb-btn"
+              href="{{ ios }}"
+              data-cns-store-link
+              data-cns-ios="{{ ios }}"
+              data-cns-android="{{ android }}"
+              data-cns-scroll-to="{{ section.settings.scroll_to | handle }}"
+              data-cns-placering="b-{{ section.settings.anchor | handle | default: 'split' }}"
+            >{{ section.settings.cta_label }}</a>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="cnsb-split__media">
+        {% render 'cnsb-phone', image: section.settings.image, alt: section.settings.title %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="{{ 'cns-store.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "B — tekst og skærm",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "bg",
+      "label": "Baggrund",
+      "options": [
+        { "value": "cream", "label": "Cremehvid" },
+        { "value": "soft", "label": "Lys sand" },
+        { "value": "sand", "label": "Sand" }
+      ],
+      "default": "cream"
+    },
+    { "type": "checkbox", "id": "flip", "label": "Billedet til venstre", "default": false },
+    { "type": "text", "id": "anchor", "label": "Ankernavn" },
+    { "type": "text", "id": "kicker", "label": "Lille overskrift" },
+    { "type": "text", "id": "title", "label": "Overskrift" },
+    { "type": "textarea", "id": "lead", "label": "Brødtekst" },
+    { "type": "image_picker", "id": "image", "label": "Skærmbillede" },
+    { "type": "text", "id": "cta_label", "label": "Knappens tekst" },
+    { "type": "text", "id": "scroll_to", "label": "Rul til", "default": "b-pris" }
+  ],
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "point",
+      "name": "Punkt",
+      "settings": [{ "type": "text", "id": "label", "label": "Tekst" }]
+    }
+  ],
+  "presets": [{ "name": "B — tekst og skærm" }]
+}
+{% endschema %}

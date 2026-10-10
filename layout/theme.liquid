@@ -299,6 +299,14 @@
     {{ 'cns.css' | asset_url | stylesheet_tag }}
 
     {%- comment -%}
+      Side B i splittesten har sit eget stilark. Det hentes kun på den
+      side, så forsiden ikke skal vente på filer, den ikke bruger.
+    {%- endcomment -%}
+    {%- if template.suffix == 'landing-b' -%}
+      {{ 'cnsb.css' | asset_url | stylesheet_tag }}
+    {%- endif -%}
+
+    {%- comment -%}
       Farverne kommer fra temaindstillingerne, så de kan rettes ét sted.
       Blokken står efter cns.css og overskriver dens standardværdier.
 
@@ -373,7 +381,7 @@
       {%- render 'cart-drawer' -%}
     {%- endif -%}
 
-    {% sections 'header-group' %}
+    {%- unless template.suffix == 'landing-b' -%}{% sections 'header-group' %}{%- endunless -%}
 
     <main
       id="MainContent"
@@ -385,7 +393,7 @@
       {{ content_for_layout }}
     </main>
 
-    {% sections 'footer-group' %}
+    {%- unless template.suffix == 'landing-b' -%}{% sections 'footer-group' %}{%- endunless -%}
 
     <ul hidden>
       <li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t }}</li>

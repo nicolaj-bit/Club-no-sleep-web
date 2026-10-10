@@ -1,0 +1,76 @@
+{%- comment -%}
+  Side B — graviditet uge for uge. Den gravide skal kunne se med det
+  samme, at appen følger hende fra nu af og frem, ikke først når barnet
+  er født. Stribens kort kan rulles vandret på telefonen.
+{%- endcomment -%}
+
+<section class="cnsb cnsb-section{% if section.settings.bg != 'cream' %} cnsb-section--{{ section.settings.bg }}{% endif %}">
+  {%- if section.settings.anchor != blank -%}
+    <span id="{{ section.settings.anchor | handle }}"></span>
+  {%- endif -%}
+
+  <div class="cnsb-wrap">
+    <div class="cnsb-head">
+      {%- if section.settings.kicker != blank -%}
+        <p class="cnsb-kicker">{{ section.settings.kicker }}</p>
+      {%- endif -%}
+      <h2 class="cnsb-h2">{{ section.settings.title }}</h2>
+      {%- if section.settings.lead != blank -%}
+        <p class="cnsb-lead" style="margin-top: 16px;">{{ section.settings.lead }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <ul class="cnsb-weeks__strip">
+        {%- for block in section.blocks -%}
+          <li class="cnsb-week" {{ block.shopify_attributes }}>
+            {%- if block.settings.week != blank -%}
+              <div class="cnsb-week__no">{{ block.settings.week }}</div>
+            {%- endif -%}
+            <div class="cnsb-week__t">{{ block.settings.title }}</div>
+            {%- if block.settings.text != blank -%}
+              <p class="cnsb-week__d">{{ block.settings.text }}</p>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "B — uge for uge",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "bg",
+      "label": "Baggrund",
+      "options": [
+        { "value": "cream", "label": "Cremehvid" },
+        { "value": "soft", "label": "Lys sand" },
+        { "value": "sand", "label": "Sand" }
+      ],
+      "default": "soft"
+    },
+    { "type": "text", "id": "anchor", "label": "Ankernavn" },
+    { "type": "text", "id": "kicker", "label": "Lille overskrift" },
+    { "type": "text", "id": "title", "label": "Overskrift", "default": "Graviditet uge for uge" },
+    { "type": "textarea", "id": "lead", "label": "Brødtekst" }
+  ],
+  "max_blocks": 12,
+  "blocks": [
+    {
+      "type": "week",
+      "name": "Uge",
+      "settings": [
+        { "type": "text", "id": "week", "label": "Uge" },
+        { "type": "text", "id": "title", "label": "Overskrift" },
+        { "type": "textarea", "id": "text", "label": "Tekst" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "B — uge for uge" }]
+}
+{% endschema %}

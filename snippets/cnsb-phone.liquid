@@ -1,0 +1,14 @@
+{%- comment -%}
+  Telefonrammen til side B. Skærmen følger billedets eget forhold
+  (9:19.5), så skærmbilleder ikke bliver beskåret. Står der intet
+  billede, vises en rolig plads i stedet for et tomt hul.
+{%- endcomment -%}
+<div class="cnsb-phone">
+  <div class="cnsb-phone__screen">
+    {%- if image != blank -%}
+      {{ image | image_url: width: 760 | image_tag: alt: alt, loading: 'lazy', widths: '300,440,600,760' }}
+    {%- else -%}
+      <div class="cnsb-phone__tom">Vælg et skærmbillede i temaeditoren</div>
+    {%- endif -%}
+  </div>
+</div>
