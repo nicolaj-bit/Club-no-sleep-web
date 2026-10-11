@@ -1262,6 +1262,15 @@
   scroll-margin-top: calc(var(--cns-header-h) + 24px);
 }
 
+/* Overskrifterne hedder nu noget, der kan læses i adresselinjen. De
+   gamle numre lever videre som et usynligt anker inde i overskriften,
+   så links, der allerede er delt, ikke dør. Ankeret skal have samme
+   afstand til toppen som overskriften — ellers lander det bag headeren,
+   og man tror, man er havnet det forkerte sted. */
+.cns-legal__body .cns-legal__alias {
+  scroll-margin-top: calc(var(--cns-header-h) + 24px);
+}
+
 .cns-legal__body p {
   margin: 0 0 18px;
   /* Adresse- og kontaktblokke er skrevet med linjeskift inde i afsnittet.
