@@ -15,11 +15,25 @@
       <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
     {%- endunless -%}
 
+    {%- comment -%}
+      Dawn klistrer butikkens navn bag på titlen, medmindre titlen allerede
+      indeholder det. Sammenligningen var ordret, og butikken hedder
+      «Clubnosleep» i ét ord, mens titlen skriver «Club No Sleep» i tre. De
+      matchede derfor aldrig, navnet kom på to gange, titlen blev for lang,
+      og Google klippede og flyttede rundt i den i søgeresultatet.
+
+      Mellemrum og store bogstaver fjernes før sammenligningen, så de to
+      skrivemåder tæller som det samme navn.
+    {%- endcomment -%}
+    {%- liquid
+      assign cns_titel = page_title | downcase | replace: ' ', ''
+      assign cns_butik = shop.name | downcase | replace: ' ', ''
+    -%}
     <title>
-      {{ page_title }}
+      {{- page_title -}}
       {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
       {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
-      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+      {%- unless cns_titel contains cns_butik %} &ndash; {{ shop.name }}{% endunless -%}
     </title>
 
     {% if page_description %}
