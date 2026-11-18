@@ -61,6 +61,8 @@
         </nav>
       {%- endif -%}
 
+      {% render 'cns-sprog' %}
+
       {%- if section.settings.cta_label != blank -%}
         <a
           class="cns-header__cta"
@@ -107,6 +109,7 @@
           {{- section.settings.cta_label -}}
         </a>
       {%- endif -%}
+      {% render 'cns-sprog' %}
     </div>
   </header>
 </div>

@@ -1255,6 +1255,54 @@
   margin-top: 0;
 }
 
+/* ---- sprogvælger ----
+
+   To knapper, der ligner tekst. Den aktive er lysere end den anden, så
+   man kan se hvor man er uden at skulle læse. Formularen må ikke
+   forstyrre headerens rækkefølge, derfor display:flex og ingen margin. */
+
+.cns-sprog {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin: 0;
+}
+
+.cns-sprog__knap {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 6px 8px;
+  font: inherit;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  color: var(--cns-sand-soft);
+  cursor: pointer;
+  border-radius: 6px;
+  transition: color 0.18s ease, background-color 0.18s ease;
+}
+
+.cns-sprog__knap:hover {
+  color: var(--cns-sand);
+  background-color: rgba(237, 225, 208, 0.08);
+}
+
+.cns-sprog__knap.is-aktiv {
+  color: var(--cns-glow);
+}
+
+/* Det aktive sprog er allerede valgt. Markøren skal ikke love, at der
+   sker noget ved at trykke. */
+.cns-sprog__knap.is-aktiv {
+  cursor: default;
+}
+
+.cns-sprog__knap:focus-visible {
+  outline: 2px solid var(--cns-glow);
+  outline-offset: 2px;
+}
+
 /* Klikker man i indholdsfortegnelsen, må overskriften ikke havne
    inde under den faste header. */
 .cns-legal__body h2,
