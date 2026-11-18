@@ -1,42 +1,62 @@
 {%- comment -%}
   Club No Sleep — sprogvælger.
 
-  To knapper i stedet for Dawns rullemenu. Der er kun to sprog, og en
-  menu, man først skal åbne, er tre klik til det, der kan klares med ét.
+  En lille rullemenu med en klode, det aktive sprog og en pil. Før stod
+  «DA EN» nøgent mellem menupunkterne og knappen og læste som to ekstra
+  menupunkter. Nu har den en form, så den ligner noget, man kan trykke på.
 
-  Bygget uden JavaScript. Shopifys localization-formular skifter sprog
-  på serveren, så vælgeren virker, selv hvis et script fejler — og det
-  er netop i den situation, man har mest brug for at kunne skifte.
+  Bygget på <details>, altså uden JavaScript. Shopifys
+  localization-formular skifter sprog på serveren, så vælgeren virker,
+  selv hvis et script fejler — og det er netop i den situation, man har
+  mest brug for at kunne skifte.
 
-  Vises kun, hvis butikken har mere end ét udgivet sprog. Står der kun
-  dansk, skrives der ingenting ud.
+  Hver knap bærer selv sin locale_code. Dawn lægger et skjult felt i
+  formularen, fordi dens egen menu sætter værdien med JavaScript; havde
+  vi begge dele, ville locale_code blive sendt to gange.
+
+  Vises kun, hvis butikken har mere end ét udgivet sprog.
 {%- endcomment -%}
 
 {%- if localization.available_languages.size > 1 -%}
-  {%- comment -%}
-    Dawn lægger et skjult locale_code-felt i formularen, fordi dens egen
-    rullemenu sætter værdien med JavaScript og submit-knappen intet navn
-    har. Her bærer hver knap selv sin værdi. Beholdt man begge dele, ville
-    formularen sende locale_code to gange, og hvilken der vandt, ville
-    afhænge af, hvordan serveren læser gentagne felter. Derfor kun knapperne.
-  {%- endcomment -%}
   {%- form 'localization', class: 'cns-sprog' -%}
-    {%- for sprog in localization.available_languages -%}
-      {%- assign aktiv = false -%}
-      {%- if sprog.iso_code == localization.language.iso_code -%}{%- assign aktiv = true -%}{%- endif -%}
+    <details class="cns-sprog__hus">
+      <summary class="cns-sprog__nu" aria-label="{{ 'localization.language_label' | t }}">
+        <svg class="cns-sprog__klode" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true" focusable="false">
+          <circle cx="8" cy="8" r="6.25" stroke="currentColor" stroke-width="1.1"/>
+          <path d="M1.75 8h12.5" stroke="currentColor" stroke-width="1.1"/>
+          <path d="M8 1.75c1.6 1.7 2.5 3.9 2.5 6.25S9.6 12.55 8 14.25C6.4 12.55 5.5 10.35 5.5 8S6.4 3.45 8 1.75z" stroke="currentColor" stroke-width="1.1"/>
+        </svg>
+        <span>{{ localization.language.iso_code | upcase }}</span>
+        <svg class="cns-sprog__pil" width="9" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true" focusable="false">
+          <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </summary>
 
-      <button
-        type="submit"
-        name="locale_code"
-        value="{{ sprog.iso_code }}"
-        class="cns-sprog__knap{% if aktiv %} is-aktiv{% endif %}"
-        lang="{{ sprog.iso_code }}"
-        hreflang="{{ sprog.iso_code }}"
-        {% if aktiv %}aria-current="true"{% endif %}
-      >
-        {{- sprog.iso_code | upcase -}}
-        <span class="visually-hidden"> — {{ sprog.endonym_name }}</span>
-      </button>
-    {%- endfor -%}
+      <div class="cns-sprog__liste">
+        {%- for sprog in localization.available_languages -%}
+          {%- assign aktiv = false -%}
+          {%- if sprog.iso_code == localization.language.iso_code -%}{%- assign aktiv = true -%}{%- endif -%}
+
+          <button
+            type="submit"
+            name="locale_code"
+            value="{{ sprog.iso_code }}"
+            class="cns-sprog__valg{% if aktiv %} is-aktiv{% endif %}"
+            lang="{{ sprog.iso_code }}"
+            hreflang="{{ sprog.iso_code }}"
+            {% if aktiv %}aria-current="true"{% endif %}
+          >
+            <span class="cns-sprog__flueben" aria-hidden="true">
+              {%- if aktiv -%}
+                <svg width="11" height="11" viewBox="0 0 12 12" fill="none" focusable="false">
+                  <path d="M2.5 6.5L5 9l4.5-5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              {%- endif -%}
+            </span>
+            {{ sprog.endonym_name | capitalize }}
+          </button>
+        {%- endfor -%}
+      </div>
+    </details>
   {%- endform -%}
 {%- endif -%}

@@ -1257,51 +1257,123 @@
 
 /* ---- sprogvælger ----
 
-   To knapper, der ligner tekst. Den aktive er lysere end den anden, så
-   man kan se hvor man er uden at skulle læse. Formularen må ikke
-   forstyrre headerens rækkefølge, derfor display:flex og ingen margin. */
+   En lille rullemenu i stedet for to nøgne bogstaver. Den skal ligne et
+   søskendebarn til «Hent appen»-knappen: samme højde, samme runding, men
+   dæmpet, så den ikke konkurrerer med den.
 
-.cns-sprog {
+   Bygget på <details>, så den åbner og lukker uden JavaScript. */
+
+.cns-sprog { margin: 0; display: flex; }
+
+.cns-sprog__hus { position: relative; }
+
+.cns-sprog__nu {
+  list-style: none;
   display: flex;
   align-items: center;
-  gap: 2px;
-  margin: 0;
-}
-
-.cns-sprog__knap {
-  appearance: none;
-  background: none;
-  border: 0;
-  padding: 6px 8px;
-  font: inherit;
+  gap: 7px;
+  height: 34px;
+  padding: 0 11px;
+  border: 1px solid rgba(237, 225, 208, 0.18);
+  border-radius: 999px;
   font-size: 12px;
   letter-spacing: 0.08em;
-  line-height: 1;
   color: var(--cns-sand-soft);
   cursor: pointer;
-  border-radius: 6px;
-  transition: color 0.18s ease, background-color 0.18s ease;
+  user-select: none;
+  transition: color 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
 }
 
-.cns-sprog__knap:hover {
+/* Safari tegner ellers en trekant foran. */
+.cns-sprog__nu::-webkit-details-marker { display: none; }
+
+.cns-sprog__nu:hover,
+.cns-sprog__hus[open] .cns-sprog__nu {
   color: var(--cns-sand);
-  background-color: rgba(237, 225, 208, 0.08);
+  border-color: rgba(244, 220, 174, 0.42);
+  background-color: rgba(237, 225, 208, 0.06);
 }
 
-.cns-sprog__knap.is-aktiv {
-  color: var(--cns-glow);
-}
-
-/* Det aktive sprog er allerede valgt. Markøren skal ikke love, at der
-   sker noget ved at trykke. */
-.cns-sprog__knap.is-aktiv {
-  cursor: default;
-}
-
-.cns-sprog__knap:focus-visible {
+.cns-sprog__nu:focus-visible {
   outline: 2px solid var(--cns-glow);
   outline-offset: 2px;
 }
+
+.cns-sprog__klode { flex: 0 0 auto; opacity: 0.85; }
+
+.cns-sprog__pil { flex: 0 0 auto; transition: transform 0.22s ease; }
+.cns-sprog__hus[open] .cns-sprog__pil { transform: rotate(180deg); }
+
+/* Listen ligger oven på siden og må ikke skubbe headeren ud af form. */
+.cns-sprog__liste {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 60;
+  min-width: 164px;
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+  background-color: #1b1611;
+  border: 1px solid rgba(237, 225, 208, 0.14);
+  border-radius: 14px;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.45);
+}
+
+.cns-sprog__valg {
+  appearance: none;
+  background: none;
+  border: 0;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  padding: 9px 11px;
+  font: inherit;
+  font-size: 14px;
+  letter-spacing: normal;
+  text-align: left;
+  color: var(--cns-sand-soft);
+  border-radius: 9px;
+  cursor: pointer;
+  transition: color 0.16s ease, background-color 0.16s ease;
+}
+
+.cns-sprog__valg:hover {
+  color: var(--cns-sand);
+  background-color: rgba(237, 225, 208, 0.07);
+}
+
+.cns-sprog__valg.is-aktiv { color: var(--cns-glow); cursor: default; }
+
+.cns-sprog__valg:focus-visible {
+  outline: 2px solid var(--cns-glow);
+  outline-offset: -2px;
+}
+
+/* Fluebenet har fast bredde, så de to sprognavne står på linje,
+   uanset hvilket der er valgt. */
+.cns-sprog__flueben {
+  flex: 0 0 auto;
+  width: 11px;
+  height: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* I menuen på telefon er der plads, og der er ingen grund til at gemme
+   sprogene bag et tryk mere. */
+.cns-header__panel .cns-sprog { margin-top: 6px; }
+.cns-header__panel .cns-sprog__liste {
+  position: static;
+  min-width: 0;
+  box-shadow: none;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+.cns-header__panel .cns-sprog__nu { display: none; }
 
 /* Klikker man i indholdsfortegnelsen, må overskriften ikke havne
    inde under den faste header. */
