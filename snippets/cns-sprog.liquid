@@ -1,0 +1,42 @@
+{%- comment -%}
+  Club No Sleep — sprogvælger.
+
+  To knapper i stedet for Dawns rullemenu. Der er kun to sprog, og en
+  menu, man først skal åbne, er tre klik til det, der kan klares med ét.
+
+  Bygget uden JavaScript. Shopifys localization-formular skifter sprog
+  på serveren, så vælgeren virker, selv hvis et script fejler — og det
+  er netop i den situation, man har mest brug for at kunne skifte.
+
+  Vises kun, hvis butikken har mere end ét udgivet sprog. Står der kun
+  dansk, skrives der ingenting ud.
+{%- endcomment -%}
+
+{%- if localization.available_languages.size > 1 -%}
+  {%- comment -%}
+    Dawn lægger et skjult locale_code-felt i formularen, fordi dens egen
+    rullemenu sætter værdien med JavaScript og submit-knappen intet navn
+    har. Her bærer hver knap selv sin værdi. Beholdt man begge dele, ville
+    formularen sende locale_code to gange, og hvilken der vandt, ville
+    afhænge af, hvordan serveren læser gentagne felter. Derfor kun knapperne.
+  {%- endcomment -%}
+  {%- form 'localization', class: 'cns-sprog' -%}
+    {%- for sprog in localization.available_languages -%}
+      {%- assign aktiv = false -%}
+      {%- if sprog.iso_code == localization.language.iso_code -%}{%- assign aktiv = true -%}{%- endif -%}
+
+      <button
+        type="submit"
+        name="locale_code"
+        value="{{ sprog.iso_code }}"
+        class="cns-sprog__knap{% if aktiv %} is-aktiv{% endif %}"
+        lang="{{ sprog.iso_code }}"
+        hreflang="{{ sprog.iso_code }}"
+        {% if aktiv %}aria-current="true"{% endif %}
+      >
+        {{- sprog.iso_code | upcase -}}
+        <span class="visually-hidden"> — {{ sprog.endonym_name }}</span>
+      </button>
+    {%- endfor -%}
+  {%- endform -%}
+{%- endif -%}
